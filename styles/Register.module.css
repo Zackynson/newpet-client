@@ -97,12 +97,10 @@
   height: 25px;
   border: none;
   border-radius: 2px;
-  margin-top: 20px;
   background-color: #78cae3;
   cursor: pointer;
   transition: opacity .3s;
-  border: 1px solid #000;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .login-btn:hover{
