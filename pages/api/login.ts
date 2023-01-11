@@ -31,7 +31,7 @@ export default async function handler(
   } catch (error: any) {
 
     console.log(error.response)
-    return res.status(error.response.status).json({ message: 'Email ou senha invalidos' })
+    return res.status(error.response.status).json({ message:error.response.data.message })
   }
    
 }

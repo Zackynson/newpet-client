@@ -21,19 +21,21 @@ export default function Home() {
     try {
       const axiosInstance = axios.create()
   
-      const { data } = await axiosInstance.post('/api/login', {email, password})
+      await axiosInstance.post('/api/register', {name, email, password, confirmPassword})
   
+      const { data } = await axiosInstance.post('/api/login', { email, password })
+
       setUser(data.user)
       toast.success('Bem vindo ' + data.user.name)
       
     } catch (error:any) {
-      if(error.response.status === 401) {
-        toast.error('e-mail ou senha inválidos')
+      if(error.response.status === 403 && error.response.data.message === 'User already registered') {
+        toast.error('Usuário ja cadastrado')
       }
       console.error(error)
     }
     setLoading(false)
-  },[email, password])
+  },[confirmPassword, email, name, password])
 
 
 
@@ -54,7 +56,7 @@ export default function Home() {
           <div className={styles.login}>
             <h1>NEWPET</h1>
             <div className={styles['label-container']}>
-              <label  className={styles.label} htmlFor="name" placeholder='Seu nome'>Nome</label>
+              <label  className={styles.label} htmlFor="name" placeholder='Seu nome'>nome</label>
               <input type="text" name='name' onChange={v => setName(v.currentTarget.value)} />
             </div>
             <div className={styles['label-container']}>
