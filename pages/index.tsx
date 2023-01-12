@@ -2,36 +2,26 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import pugBackground from '../public/assets/pug_yellow.jpg'
 import { useCallback, useMemo, useState } from 'react'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
+import { useAuth } from '../contexts/AuthContext'
+import Spinner from '@components/Spinner'
+
 
 export default function Home() {
-  const [loading, setLoading] = useState<boolean>(false)
   const [user, setUser] = useState<any>()
-  const [email, setEmail] = useState<string>()
-  const [password, setPassword] = useState<string>()
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
 
+  const {isAuthenticated, login,loading } = useAuth()
 
-  const login =  useCallback(async() => {
-    setLoading(true)
-    try {
-      const axiosInstance = axios.create()
-  
-      const { data } = await axiosInstance.post('/api/login', {email, password})
-  
-      setUser(data.user)
-      toast.success('Bem vindo ' + data.user.name)
-      
-    } catch (error:any) {
-      if(error.response.status === 401) {
-        toast.error('e-mail ou senha inválidos')
-      }
-      console.error(error)
-    }
+  const authenticate = useCallback(async () => {
+    if(!email?.length) toast.error('Email é obrigatório')
+    if(!password?.length) toast.error('Senha é obrigatória')
 
-    setLoading(false)
-  },[email, password])
+    login(email, password)
+  },[email, password,login])
+
 
 
 
@@ -54,15 +44,20 @@ export default function Home() {
             </div>
             <div className={styles['label-container']}>
               <label className={styles.label} htmlFor="password" placeholder='super secreta'>senha</label>
-             <input type="password" name='password' onChange={v => setPassword(v.currentTarget.value)}/>
+             <input  type="password" name='password' onChange={v => setPassword(v.currentTarget.value)}/>
             </div>
-            <button type='button' onClick={login} className={styles['login-btn']}>Entrar</button>
-            <div className={styles['label-container']}>
-              <small style={{textAlign: 'center', marginTop: 10}}>Ainda não tem uma conta?</small>
-              <Link href='/register' style={{textAlign: 'center', marginTop: 10}}>Crie uma agora</Link>
-            </div>
-          </div>
 
+            {loading 
+            ? <Spinner/> 
+            : <><button disabled={loading}  type='button' onClick={authenticate} className={styles['login-btn']}>Entrar</button>
+              <div className={styles['label-container']}>
+                <small style={{textAlign: 'center', marginTop: 10}}>Ainda não tem uma conta?</small>
+                <Link href='/register' style={{textAlign: 'center', marginTop: 10}}>Crie uma agora</Link>
+              </div>
+              </>
+            }
+            
+          </div>
 
           <div className={styles.aside} style={{backgroundImage: `url('${pugBackground.src}')`}}>
             <p>Chegou a hora de encontrar seu novo pet <br></br> com o melhor app de adoção de animais do Brasil</p>

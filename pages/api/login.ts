@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios, { AxiosError } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { api } from '../../services/api'
 
 type Data = {
   user?: any, 
@@ -15,13 +16,15 @@ export default async function handler(
   const {email, password} = req.body
 
   try {
-    const loginResponse = await axios.post('https://ssn4zldt26.execute-api.us-east-1.amazonaws.com/dev/auth/login', {
+    const loginResponse = await api.post('/auth/login', {
       email, password
     })
 
     const token = loginResponse.data.token
 
-    const userResponse = await axios.get('https://ssn4zldt26.execute-api.us-east-1.amazonaws.com/dev/auth/me', {
+    api.defaults.headers['authorization'] = 'Bearer ' + token;
+
+    const userResponse = await api.get('/auth/me', {
       headers: {
         Authorization: 'Bearer ' + token
       },

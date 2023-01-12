@@ -1,0 +1,14 @@
+.card{
+  color: #ddd;
+  background-color: #242526;
+  width: 450px;
+  height: 650px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.info {
+  margin: 10px 5px 5px 5px
+}

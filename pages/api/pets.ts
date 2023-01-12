@@ -8,17 +8,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const {name, email, password, confirmPassword} = req.body
 
   try {
-    const loginResponse = await api.post('/users', {
-      name, email, password, confirmPassword
-    })
+    const petsResponse = await api.get('pets')
 
-    res.status(200).json(loginResponse.data)
+    res.status(200).json(petsResponse.data.data)
   } catch (error: any) {
 
     console.log(error.response)
     return res.status(error.response.status).json({ message:error.response.data.message })
   }
+   
 }
