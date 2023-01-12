@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -10,7 +11,7 @@ const Header = () => {
 
   return <div style={{ width: '100%', padding: '1rem 1rem', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
     <div style={ { display:'flex', alignItems: 'center', justifyContent: 'center', background: '#e4ebef', height: 35, width:35, borderRadius: '50%'}}>
-      <span style={{paddingTop: '0.25rem',fontFamily: 'Modak', fontSize: '2.25rem', color: '#242526', fontWeight: 'lighter'}}>N</span>
+      <Link href="/pets"><span style={{paddingTop: '0.25rem',fontFamily: 'Modak', fontSize: '2.25rem', color: '#242526', fontWeight: 'lighter'}}>N</span></Link>
     </div>
     <div onClick={logout}>
       <div style={{width:35, height:35, borderRadius: '50%', overflow: 'hidden', objectFit: 'contain'}}> 

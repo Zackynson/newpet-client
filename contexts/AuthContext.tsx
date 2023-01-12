@@ -38,7 +38,7 @@ export function AuthProvider({children}:{children:any}){
   const logout = useCallback(async ():Promise<void> => {
     destroyCookie(undefined, 'newpet-token');
     setUser(null)
-    await router.push('app')
+    await router.push('pets')
   },[router])
 
 
@@ -57,7 +57,7 @@ export function AuthProvider({children}:{children:any}){
 
         setUser(data.user)
         setLoading(false)
-        await router.push('app')
+        await router.push('pets')
       } catch (error) {
         logout()
       }
@@ -97,7 +97,7 @@ export function AuthProvider({children}:{children:any}){
       } 
 
       setLoading(false)
-      await router.push('app')
+      await router.push('pets')
     } catch (error: any) {
       if(error?.response?.status === 401) {
         toast.error('e-mail ou senha inválidos')

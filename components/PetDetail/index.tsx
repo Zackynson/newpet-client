@@ -9,7 +9,7 @@ import styles from './styles.module.css';
 import moment from 'moment';
 import Link from 'next/link';
 
-const PetCard = ({ pet }: { pet: Pet }) => {
+const PetDetail = ({ pet }: { pet: Pet }) => {
 
   const calculateAge = (date: string) => {
     try {
@@ -30,9 +30,14 @@ const PetCard = ({ pet }: { pet: Pet }) => {
     return <></>
   }
 
-  return <Link href={'pets/' + pet._id}> <div className={styles.card}>
-    <Carousel emulateTouch showStatus={false} showThumbs={false} showIndicators={pet.images.length > 1} dynamicHeight={false}>
-      {pet.images.map((i: string) => (
+  if(!pet) return <></>
+  if(pet) {
+    console.log(pet)
+  }
+
+  return <div className={styles.card}>
+    <Carousel emulateTouch showStatus={false} showThumbs={false} showIndicators={pet?.images?.length > 1} dynamicHeight={false}>
+      {pet?.images?.map((i: string) => (
         <div key={i}>
           <Image
             loading='lazy'
@@ -50,7 +55,7 @@ const PetCard = ({ pet }: { pet: Pet }) => {
     <div className={styles.info}>
       <h3>{pet.name} - {pet.breed} {calculateAge(pet.birthDate)}</h3>
     </div>
-  </div></Link>;
+  </div>;
 }
 
-export default PetCard;
+export default PetDetail;

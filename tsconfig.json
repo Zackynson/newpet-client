@@ -21,7 +21,7 @@
       "@styles/*": ["./styles/*"],
       "@types/*": ["./types/*"],
       "@services/*": ["./services/*"],
-      "@public/*": ["./pages/*"],
+      "@public/*": ["./public/*"],
       "@pages/*": ["./pages/*"],
     }
   },

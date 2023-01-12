@@ -74,7 +74,7 @@ export default function Register() {
             </div>
 
             {loading
-              ? <Spinner />
+              ? <Spinner type='alt' />
               : <>
                 <button type='button' onClick={createAndLogin} className={styles['login-btn']}>Entrar</button>
                 <div className={styles['label-container']}>
