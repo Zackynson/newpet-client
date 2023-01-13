@@ -6,21 +6,48 @@ import { toast } from 'react-toastify'
 import Link from 'next/link'
 import { useAuth } from '@contexts/AuthContext'
 import Spinner from '@components/Spinner'
+import {
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Icon,
+  FormControl,
+  FormLabel,
+} from '@chakra-ui/react'
+import { useForm } from 'react-hook-form'
+import { ErrorMessage } from '@hookform/error-message'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
 export default function Home() {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [show, setShow] = useState<boolean>()
+
+  const handleClick = () => {
+    setShow(!show)
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>()
 
   const { login, loading } = useAuth()
 
-  const disableButton = useMemo(() => !email || !password, [email, password])
+  type Inputs = {
+    email: string
+    password: string
+  }
 
-  const authenticate = useCallback(async () => {
-    if (!email?.length) return toast.error('Email é obrigatório')
-    if (!password?.length) return toast.error('Senha é obrigatória')
+  const authenticate = useCallback(
+    async (data: Inputs) => {
+      if (!data.email?.length) return toast.error('Email é obrigatório')
+      if (!data.password?.length) return toast.error('Senha é obrigatória')
 
-    login(email, password)
-  }, [email, password, login])
+      await login(data.email, data.password)
+    },
+    [login],
+  )
 
   return (
     <>
@@ -36,34 +63,62 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.card}>
-          <div className={styles.login}>
+          <form className={styles.login} onSubmit={handleSubmit(authenticate)}>
             <h1>NEWPET</h1>
             <div className={styles['label-container']}>
-              <label
-                className={styles.label}
-                htmlFor="email"
-                placeholder="seu melhor e-mail"
-              >
-                e-mail
-              </label>
-              <input
-                type="text"
+              <FormControl>
+                <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="email">
+                  e-mail
+                </FormLabel>
+                <Input
+                  size={'sm'}
+                  variant="flushed"
+                  {...register('email', { required: 'Campo obrigatório' })}
+                  type="text"
+                  name="email"
+                />
+              </FormControl>
+              <ErrorMessage
+                as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                errors={errors}
                 name="email"
-                onChange={(v) => setEmail(v.currentTarget.value)}
               />
             </div>
             <div className={styles['label-container']}>
-              <label
-                className={styles.label}
-                htmlFor="password"
-                placeholder="super secreta"
-              >
-                senha
-              </label>
-              <input
-                type="password"
+              <FormControl>
+                <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="password">
+                  senha
+                </FormLabel>
+                <InputGroup size="sm">
+                  <Input
+                    {...register('password', { required: 'Campo obrigatório' })}
+                    name="password"
+                    pr="4.5rem"
+                    type={show ? 'text' : 'password'}
+                    placeholder="Enter password"
+                    variant={'flushed'}
+                  />
+                  <InputRightElement width="4rem">
+                    <Button
+                      h="1rem"
+                      variant={'outline'}
+                      size="sm"
+                      onClick={handleClick}
+                    >
+                      {show ? (
+                        <Icon as={AiOutlineEyeInvisible} />
+                      ) : (
+                        <Icon as={AiOutlineEye} />
+                      )}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+
+              <ErrorMessage
+                as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                errors={errors}
                 name="password"
-                onChange={(v) => setPassword(v.currentTarget.value)}
               />
             </div>
 
@@ -71,30 +126,32 @@ export default function Home() {
               <Spinner />
             ) : (
               <>
-                <button
-                  disabled={loading || disableButton}
-                  type="button"
-                  onClick={authenticate}
-                  className={styles['login-btn']}
+                <Button
+                  variant={'solid'}
+                  type="submit"
+                  colorScheme={'yellow'}
+                  w={200}
+                  h={6}
+                  mt={'3'}
                 >
                   Entrar
-                </button>
-                <div className={styles['label-container']}>
-                  <small
-                    style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}
-                  >
-                    Ainda não tem uma conta?
-                  </small>
-                  <Link
-                    href="/register"
-                    style={{ textAlign: 'center', marginTop: 10 }}
-                  >
-                    Crie uma agora
-                  </Link>
-                </div>
+                </Button>
+                {/* <div className={styles['label-container']}> */}
+                <small
+                  style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}
+                >
+                  Ainda não tem uma conta?
+                </small>
+                <Link
+                  href="/register"
+                  style={{ textAlign: 'center', marginTop: 10 }}
+                >
+                  Crie uma agora
+                </Link>
+                {/* </div> */}
               </>
             )}
-          </div>
+          </form>
 
           <div
             className={styles.aside}
