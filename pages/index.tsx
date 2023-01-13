@@ -8,7 +8,7 @@ import Header from '@components/Header'
 import PetCard from '@components/PetCard'
 import { Pet } from 'types/Pet'
 import styles from './styles.module.css'
-import { Spinner } from '@chakra-ui/react'
+import { Box, Flex, HStack, Spinner } from '@chakra-ui/react'
 
 function Pets() {
   const [pets, setPets] = useState([])
@@ -43,11 +43,7 @@ function Pets() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div style={{ textAlign: 'center', width: '100vw', marginTop: '2rem' }}>
-        <h2>Bichinhos próximos de você</h2>
-      </div>
-
-      <div className={styles['pets-container']}>
+      <Flex gap={'5'} p="10" wrap={'wrap'}>
         {loading ? (
           <div
             style={{
@@ -65,11 +61,11 @@ function Pets() {
           <></>
         )}
         {pets.length ? (
-          pets?.map((p: Pet) => <PetCard key={`${p._id}1`} pet={p} />)
+          pets?.map((p: Pet) => <PetCard key={`${p._id}`} pet={p} />)
         ) : (
           <></>
         )}
-      </div>
+      </Flex>
     </>
   )
 }

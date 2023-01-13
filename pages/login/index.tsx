@@ -15,6 +15,9 @@ import {
   FormLabel,
   Progress,
   Spinner,
+  Card,
+  HStack,
+  Text,
 } from '@chakra-ui/react'
 
 import { useForm } from 'react-hook-form'
@@ -64,101 +67,114 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <div className={styles.card}>
-          <form className={styles.login} onSubmit={handleSubmit(authenticate)}>
-            <h1>NEWPET</h1>
-            <div className={styles['label-container']}>
-              <FormControl>
-                <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="email">
-                  e-mail
-                </FormLabel>
-                <Input
-                  size={'sm'}
-                  variant="flushed"
-                  {...register('email', { required: 'Campo obrigatório' })}
-                  type="text"
+        <Card w={'container.lg'}>
+          <HStack>
+            <form
+              className={styles.login}
+              onSubmit={handleSubmit(authenticate)}
+            >
+              <h1>NEWPET</h1>
+              <div className={styles['label-container']}>
+                <FormControl>
+                  <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="email">
+                    e-mail
+                  </FormLabel>
+                  <Input
+                    size={'sm'}
+                    variant="flushed"
+                    {...register('email', { required: 'Campo obrigatório' })}
+                    type="text"
+                    name="email"
+                  />
+                </FormControl>
+                <ErrorMessage
+                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                  errors={errors}
                   name="email"
                 />
-              </FormControl>
-              <ErrorMessage
-                as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                errors={errors}
-                name="email"
-              />
-            </div>
+              </div>
+              <div
+                className={styles['label-container']}
+                style={{ marginTop: 20 }}
+              >
+                <FormControl>
+                  <FormLabel
+                    fontSize={'smaller'}
+                    size={'sm'}
+                    htmlFor="password"
+                  >
+                    senha
+                  </FormLabel>
+                  <InputGroup size="sm">
+                    <Input
+                      {...register('password', {
+                        required: 'Campo obrigatório',
+                      })}
+                      name="password"
+                      pr="4.5rem"
+                      type={show ? 'text' : 'password'}
+                      placeholder="Enter password"
+                      variant={'flushed'}
+                    />
+                    <InputRightElement width="4rem">
+                      <Button
+                        h="1rem"
+                        variant={'outline'}
+                        size="sm"
+                        onClick={handleClick}
+                      >
+                        {show ? (
+                          <Icon as={AiOutlineEyeInvisible} />
+                        ) : (
+                          <Icon as={AiOutlineEye} />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                </FormControl>
+
+                <ErrorMessage
+                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                  errors={errors}
+                  name="password"
+                />
+              </div>
+
+              <Button
+                isLoading={loading}
+                variant={'solid'}
+                type="submit"
+                colorScheme={'yellow'}
+                w={200}
+                h={6}
+                mt={'3'}
+              >
+                Entrar
+              </Button>
+              {/* <div className={styles['label-container']}> */}
+              <small
+                style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}
+              >
+                Ainda não tem uma conta?
+              </small>
+              <Link
+                href="/register"
+                style={{ textAlign: 'center', marginTop: 10 }}
+              >
+                Crie uma agora
+              </Link>
+            </form>
             <div
-              className={styles['label-container']}
-              style={{ marginTop: 20 }}
+              className={styles.aside}
+              style={{ backgroundImage: `url('${pugBackground.src}')` }}
             >
-              <FormControl>
-                <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="password">
-                  senha
-                </FormLabel>
-                <InputGroup size="sm">
-                  <Input
-                    {...register('password', { required: 'Campo obrigatório' })}
-                    name="password"
-                    pr="4.5rem"
-                    type={show ? 'text' : 'password'}
-                    placeholder="Enter password"
-                    variant={'flushed'}
-                  />
-                  <InputRightElement width="4rem">
-                    <Button
-                      h="1rem"
-                      variant={'outline'}
-                      size="sm"
-                      onClick={handleClick}
-                    >
-                      {show ? (
-                        <Icon as={AiOutlineEyeInvisible} />
-                      ) : (
-                        <Icon as={AiOutlineEye} />
-                      )}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
-
-              <ErrorMessage
-                as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                errors={errors}
-                name="password"
-              />
+              <Text mt={'20'}>
+                Chegou a hora de encontrar seu novo pet <br></br> com o melhor
+                app de adoção de animais do Brasil
+              </Text>
             </div>
-
-            <Button
-              isLoading={loading}
-              variant={'solid'}
-              type="submit"
-              colorScheme={'yellow'}
-              w={200}
-              h={6}
-              mt={'3'}
-            >
-              Entrar
-            </Button>
-            {/* <div className={styles['label-container']}> */}
-            <small style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}>
-              Ainda não tem uma conta?
-            </small>
-            <Link
-              href="/register"
-              style={{ textAlign: 'center', marginTop: 10 }}
-            >
-              Crie uma agora
-            </Link>
-          </form>
-          <div
-            className={styles.aside}
-            style={{ backgroundImage: `url('${pugBackground.src}')` }}
-          >
-            <p>
-              Chegou a hora de encontrar seu novo pet <br></br> com o melhor app
-              de adoção de animais do Brasil
-            </p>
-          </div>
-        </div>
+          </HStack>
+        </Card>
       </main>
     </>
   )
