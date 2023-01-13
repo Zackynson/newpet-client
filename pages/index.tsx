@@ -6,9 +6,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Header from '@components/Header'
 import PetCard from '@components/PetCard'
-import Spinner from '@components/Spinner'
 import { Pet } from 'types/Pet'
 import styles from './styles.module.css'
+import { Spinner } from '@chakra-ui/react'
 
 function Pets() {
   const [pets, setPets] = useState([])
@@ -59,7 +59,7 @@ function Pets() {
               justifyContent: 'center',
             }}
           >
-            <Spinner />
+            <Spinner speed="0.65s" color="black" size="lg" />
           </div>
         ) : (
           <></>

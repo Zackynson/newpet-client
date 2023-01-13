@@ -7,10 +7,12 @@ import { parseCookies } from 'nookies'
 import { useAuth } from '@contexts/AuthContext'
 import AvatarPlaceholder from '@public/assets/avatar.png'
 
-import styles from './styles.module.scss'
+import { Divider, Flex, HStack, LinkBox, StackDivider } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 const Header = ({}) => {
   const { user, logout } = useAuth()
+  const { asPath } = useRouter()
 
   return (
     <div
@@ -50,16 +52,39 @@ const Header = ({}) => {
           </span>
         </Link>
       </div>
-      <nav className={styles.menu}>
-        <ul>
-          <li>
-            <Link href="/">Encontrar pets</Link>
-          </li>
-          <li>
-            <Link href="/register-pet">Cadastrar</Link>
-          </li>
-        </ul>
-      </nav>
+      <HStack divider={<StackDivider borderColor={'whiteAlpha.500'} />} gap={5}>
+        <LinkBox
+          borderBottom={'1px'}
+          borderBottomColor={
+            asPath === '/' || asPath.startsWith('/pets')
+              ? 'yellow.400'
+              : 'unset'
+          }
+          color={'white'}
+        >
+          <Link href="/">Encontrar</Link>
+        </LinkBox>
+
+        <LinkBox
+          borderBottom={'1px'}
+          borderBottomColor={
+            asPath.startsWith('/register-pet') ? 'yellow.400' : 'unset'
+          }
+          color={'white'}
+        >
+          <Link href="/register-pet">Cadastrar</Link>
+        </LinkBox>
+
+        <LinkBox
+          borderBottom={'1px'}
+          borderBottomColor={
+            asPath.startsWith('/profile') ? 'yellow.400' : 'unset'
+          }
+          color={'white'}
+        >
+          <Link href="/profile">Perfil</Link>
+        </LinkBox>
+      </HStack>
       <div onClick={logout}>
         <div
           style={{

@@ -2,10 +2,10 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import Header from '@components/Header'
-import Spinner from '@components/Spinner'
 import { useRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
 import Card from '@components/Card'
+import { Spinner } from '@chakra-ui/react'
 
 function UserPage() {
   const router = useRouter()

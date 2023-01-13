@@ -6,7 +6,6 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
 import { useAuth } from '@contexts/AuthContext'
-import Spinner from '@components/Spinner'
 import DoubleCard from '@components/DoubleCard'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
@@ -222,26 +221,27 @@ export default function Register() {
                 />
               </div>
 
-              {loading ? (
-                <Spinner type="alt" />
-              ) : (
-                <>
-                  <button type="submit" className={styles['login-btn']}>
-                    Entrar
-                  </button>
-                  <div className={styles['label-container']}>
-                    <small style={{ textAlign: 'center', marginTop: 10 }}>
-                      Já possui uma conta?
-                    </small>
-                    <Link
-                      href="/"
-                      style={{ textAlign: 'center', marginTop: 10 }}
-                    >
-                      Faça login
-                    </Link>
-                  </div>
-                </>
-              )}
+              <>
+                <Button
+                  isLoading={loading}
+                  variant={'solid'}
+                  type="submit"
+                  colorScheme={'cyan'}
+                  w={200}
+                  h={6}
+                  mt={'3'}
+                >
+                  Entrar
+                </Button>
+                <div className={styles['label-container']}>
+                  <small style={{ textAlign: 'center', marginTop: 10 }}>
+                    Já possui uma conta?
+                  </small>
+                  <Link href="/" style={{ textAlign: 'center', marginTop: 10 }}>
+                    Faça login
+                  </Link>
+                </div>
+              </>
             </form>
           }
         />
