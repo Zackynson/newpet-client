@@ -1,13 +1,11 @@
-.card{
-  color: #ddd;
-  width: 450px;
-  height: 500px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  overflow: hidden;
-  flex: 1;
-}
-
-.info {
-  margin: 10px 5px 5px 5px
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  width: 100vw;
+  min-height: 100vh;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 5rem;
 }

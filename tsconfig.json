@@ -19,7 +19,7 @@
       "@components/*": ["./components/*"],
       "@contexts/*": ["./contexts/*"],
       "@styles/*": ["./styles/*"],
-      "@types/*": ["./types/*"],
+      "types/*": ["./types/*"],
       "@services/*": ["./services/*"],
       "@public/*": ["./public/*"],
       "@pages/*": ["./pages/*"],

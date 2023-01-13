@@ -9,15 +9,11 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
 
-  console.log(req.query)
   try {
     const petsResponse = await api.get('pets/' +  req.query.id)
 
-    console.log(petsResponse.data.data)
     res.status(200).json(petsResponse.data.data)
   } catch (error: any) {
-
-    console.log(error.response.data)
     return res.status(error.response.status).json({ message:error.response.data.message })
   }
    

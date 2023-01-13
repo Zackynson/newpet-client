@@ -1,0 +1,17 @@
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  justify-items: center;
+  align-items: center;
+  max-width: 850px;
+  min-width: 850px;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: black;
+  background-color: white;
+  min-height: 600px;
+  border-radius: 9px;
+  border-top-right-radius: 10px;
+
+}
