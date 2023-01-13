@@ -1,12 +1,20 @@
-import { randomUUID } from 'crypto'
-import Image from 'next/image'
 import React from 'react'
 import { Pet } from 'types/Pet'
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import styles from './styles.module.css'
 import moment from 'moment'
 import Link from 'next/link'
+import {
+  Box,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Heading,
+  Image,
+  Stack,
+  StackDivider,
+  Text,
+} from '@chakra-ui/react'
 
 const PetCard = ({ pet }: { pet: Pet }) => {
   const calculateAge = (date: string) => {
@@ -18,7 +26,7 @@ const PetCard = ({ pet }: { pet: Pet }) => {
         return (
           <>
             {' '}
-            - {years} {years === 1 ? 'ano' : 'anos'}
+            {years} {years === 1 ? 'ano' : 'anos'}
           </>
         )
 
@@ -27,7 +35,7 @@ const PetCard = ({ pet }: { pet: Pet }) => {
         return (
           <>
             {' '}
-            - {months} {months === 1 ? 'ano' : 'meses'}
+            {months} {months === 1 ? 'ano' : 'meses'}
           </>
         )
 
@@ -35,7 +43,7 @@ const PetCard = ({ pet }: { pet: Pet }) => {
       return (
         <>
           {' '}
-          - {days} {days === 1 ? 'dia' : 'dias'}
+          {days} {days === 1 ? 'dia' : 'dias'}
         </>
       )
     } catch (error) {}
@@ -45,23 +53,33 @@ const PetCard = ({ pet }: { pet: Pet }) => {
 
   return (
     <Link href={'pets/' + pet._id}>
-      <div className={styles.card}>
-        <Image
-          loading="eager"
-          style={{ objectFit: 'cover' }}
-          width={500}
-          height={350}
-          quality={100}
-          src={pet?.images?.[0]}
-          alt={pet.name}
-        />
-
-        <div className={styles.info}>
-          <h3>
-            {pet.name} - {pet.breed} {calculateAge(pet.birthDate)}
-          </h3>
-        </div>
-      </div>
+      <Card w={'lg'}>
+        <CardHeader>
+          <Heading size="md">{pet.name}</Heading>
+        </CardHeader>
+        <Stack divider={<StackDivider />}>
+          <CardBody>
+            <Stack divider={<StackDivider />}>
+              <Box>
+                <Image
+                  borderRadius="lg"
+                  w={'xl'}
+                  style={{ objectFit: 'cover' }}
+                  height={350}
+                  src={pet?.images?.[0]}
+                  alt={pet.name}
+                  pt={-2}
+                />
+              </Box>
+            </Stack>
+          </CardBody>
+          <CardFooter>
+            <Text fontSize="sm">
+              {pet.name} - {pet.breed} - {calculateAge(pet.birthDate)}
+            </Text>
+          </CardFooter>
+        </Stack>
+      </Card>
     </Link>
   )
 }
