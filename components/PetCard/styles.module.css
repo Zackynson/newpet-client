@@ -1,11 +1,12 @@
 .card{
-  color: #ddd;
+  color: #222;
   width: 450px;
   height: 500px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   overflow: hidden;
   flex: 1;
+  background-color: #ddd;
 }
 
 .info {

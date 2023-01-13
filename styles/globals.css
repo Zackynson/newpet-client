@@ -9,6 +9,8 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
+  
+
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
     #16abff33 0deg,
@@ -42,6 +44,9 @@
   --primary: #ecb606;
   --secondary: #78cae3;
   --secondary-lighter: #93d5e9;
+
+  --bg-primary-gradient: linear-gradient(45deg, var(--primary), #f5f1f5f7) no-repeat;
+  --bg-secondary-gradient: linear-gradient(45deg,  #f5f1f5f7,var(--secondary));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -90,7 +95,9 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  background-color: rgb(24, 25, 26);
+  background: #222;
+  background-size: contain;
+  background-attachment: fixed;
 }
 
 body {

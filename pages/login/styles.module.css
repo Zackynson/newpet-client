@@ -5,7 +5,10 @@
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
-  background: linear-gradient(45deg, #78cae3, #f5f1f5f7);
+  
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: var(--bg-primary-gradient)
 }
 
 .card {
@@ -40,7 +43,7 @@
   background-size: cover;
   color: aliceblue;
 
-  padding-bottom: 50%;
+  padding-bottom: 45%;
 }
 
 .login {
@@ -75,7 +78,7 @@
   color: #000;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #78cae3;
+  border-bottom: 1px solid #ecb606;
   outline: 0;
 }
 
@@ -83,7 +86,7 @@
 .login h1 {
   font-family: 'Modak';
   letter-spacing: 1px;
-  color: #78cae3;
+  color: #ecb606;
   text-shadow: -1px -1px 0 #555, 1px -1px 0 #555, -1px 1px 0 #555, 1px 1px 0 #555;
   font-size: 3rem;
   font-weight: lighter;
@@ -97,7 +100,7 @@
   height: 25px;
   border: none;
   border-radius: 2px;
-  background-color: #78cae3;
+  background-color: #ecb606;
   cursor: pointer;
   transition: opacity .3s;
   margin-top: 1rem;
@@ -108,7 +111,8 @@
 }
 
 .login-btn:active{
-  background-color: #056284;
+  background-color: #846605;
+  
 }
 
 

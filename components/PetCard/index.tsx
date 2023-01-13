@@ -1,10 +1,9 @@
 import { randomUUID } from 'crypto'
 import Image from 'next/image'
 import React from 'react'
-import { Pet } from '../../types/Pet'
+import { Pet } from 'types/Pet'
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
-import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import styles from './styles.module.css'
 import moment from 'moment'
 import Link from 'next/link'
@@ -46,29 +45,16 @@ const PetCard = ({ pet }: { pet: Pet }) => {
 
   return (
     <Link href={'pets/' + pet._id}>
-      {' '}
       <div className={styles.card}>
-        <Carousel
-          emulateTouch
-          showStatus={false}
-          showThumbs={false}
-          showIndicators={pet.images.length > 1}
-          dynamicHeight={false}
-        >
-          {pet.images.map((i: string) => (
-            <div key={i}>
-              <Image
-                loading="eager"
-                style={{ objectFit: 'cover' }}
-                width={500}
-                height={350}
-                quality={100}
-                src={i}
-                alt={i}
-              />
-            </div>
-          ))}
-        </Carousel>
+        <Image
+          loading="eager"
+          style={{ objectFit: 'cover' }}
+          width={500}
+          height={350}
+          quality={100}
+          src={pet?.images?.[0]}
+          alt={pet.name}
+        />
 
         <div className={styles.info}>
           <h3>

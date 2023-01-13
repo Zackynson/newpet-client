@@ -5,7 +5,10 @@
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
-  background: linear-gradient(45deg, #ecb606, #f5f1f5f7);
+  
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: var(--bg-secondary-gradient)
 }
 
 .card {
@@ -40,7 +43,7 @@
   background-size: cover;
   color: aliceblue;
 
-  padding-bottom: 45%;
+  padding-bottom: 50%;
 }
 
 .login {
@@ -71,19 +74,19 @@
   color: #555;
 }
 
-.label-container input {
+/* .label-container input {
   color: #000;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #ecb606;
+  border-bottom: 1px solid #78cae3;
   outline: 0;
-}
+} */
 
 
 .login h1 {
   font-family: 'Modak';
   letter-spacing: 1px;
-  color: #ecb606;
+  color: #78cae3;
   text-shadow: -1px -1px 0 #555, 1px -1px 0 #555, -1px 1px 0 #555, 1px 1px 0 #555;
   font-size: 3rem;
   font-weight: lighter;
@@ -97,7 +100,7 @@
   height: 25px;
   border: none;
   border-radius: 2px;
-  background-color: #ecb606;
+  background-color: #78cae3;
   cursor: pointer;
   transition: opacity .3s;
   margin-top: 1rem;
@@ -108,8 +111,7 @@
 }
 
 .login-btn:active{
-  background-color: #846605;
-  
+  background-color: #056284;
 }
 
 

@@ -1,42 +1,20 @@
-import axios from 'axios'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import { useCallback, useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
 import Header from '@components/Header'
 import Spinner from '@components/Spinner'
-import { Pet } from 'types/Pet'
 import { useRouter } from 'next/router'
-import PetDetail from '@components/PetDetail'
+import { useAuth } from '@contexts/AuthContext'
+import Card from '@components/Card'
 
-function PetDetailPage() {
-  const [pet, setPet] = useState<Pet>()
-  const [loading, setLoading] = useState<boolean>(false)
+function UserPage() {
   const router = useRouter()
-  const { id } = router.query
-
-  const loadPet = useCallback(async () => {
-    setLoading(true)
-    try {
-      const res = await axios.get('/api/pets/' + id)
-      setPet(res.data)
-    } catch (error) {
-      console.error(error)
-      toast.error('Ocorreu um erro ao buscar os pets')
-    }
-
-    setLoading(false)
-  }, [id])
-
-  useEffect(() => {
-    loadPet()
-  }, [])
+  const { user, loading } = useAuth()
 
   return (
     <>
       <Head>
-        <title>NEWPET | {pet?.name}</title>
+        <title>NEWPET | {user?.name}</title>
         <meta
           name="description"
           content="O melhor app de adoção de animais do Brasil"
@@ -59,7 +37,20 @@ function PetDetailPage() {
           <Spinner />
         </div>
       ) : (
-        <PetDetail pet={pet as Pet} />
+        <>
+          <h1
+            style={{
+              textAlign: 'center',
+              marginTop: '2rem',
+              marginBottom: '2rem',
+            }}
+          >
+            {user?.name}
+          </h1>
+          <Card>
+            <div style={{ flex: 1, width: '100%', height: '100%' }}>oi</div>
+          </Card>
+        </>
       )}
     </>
   )
@@ -82,4 +73,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 }
 
-export default PetDetailPage
+export default UserPage

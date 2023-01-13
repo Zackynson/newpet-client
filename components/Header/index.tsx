@@ -1,10 +1,13 @@
+import React from 'react'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { parseCookies } from 'nookies'
-import React from 'react'
-import { useAuth } from '../../contexts/AuthContext'
-import AvatarPlaceholder from '../../public/assets/avatar.png'
+
+import { useAuth } from '@contexts/AuthContext'
+import AvatarPlaceholder from '@public/assets/avatar.png'
+
+import styles from './styles.module.scss'
 
 const Header = ({}) => {
   const { user, logout } = useAuth()
@@ -18,6 +21,7 @@ const Header = ({}) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        background: '#111',
       }}
     >
       <div
@@ -31,7 +35,7 @@ const Header = ({}) => {
           borderRadius: '50%',
         }}
       >
-        <Link href="/pets">
+        <Link href="/">
           <span
             style={{
               paddingTop: '0.25rem',
@@ -46,6 +50,16 @@ const Header = ({}) => {
           </span>
         </Link>
       </div>
+      <nav className={styles.menu}>
+        <ul>
+          <li>
+            <Link href="/">Encontrar pets</Link>
+          </li>
+          <li>
+            <Link href="/register-pet">Cadastrar</Link>
+          </li>
+        </ul>
+      </nav>
       <div onClick={logout}>
         <div
           style={{
@@ -57,8 +71,6 @@ const Header = ({}) => {
           }}
         >
           <Image
-            placeholder="blur"
-            blurDataURL={AvatarPlaceholder.blurDataURL}
             src={user?.avatar || AvatarPlaceholder}
             loading="eager"
             alt="avatar"
@@ -78,7 +90,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!token) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/login',
         permanent: false,
       },
     }

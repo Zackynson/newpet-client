@@ -1,0 +1,21 @@
+.menu {
+  ul {
+    display: flex;
+    list-style: none;
+    flex-direction: row;
+    gap: 1rem;
+
+    li{
+      position: relative;
+      ::after{
+        content: '';
+        display: block;
+        position: absolute;
+
+        height: 0.125rem;
+        width: 100%;
+        background-color: var(--primary);
+      }
+    }
+  }
+}

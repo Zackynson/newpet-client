@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import axios, { AxiosError } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { api } from '../../services/api'
+import { api } from '@services/api'
 
 type Data = {
   user?: any, 

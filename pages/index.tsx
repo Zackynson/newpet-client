@@ -1,69 +1,94 @@
+import axios from 'axios'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import pugBackground from '../public/assets/pug_yellow.jpg'
-import { useCallback, useMemo, useState } from 'react'
+import { parseCookies } from 'nookies'
+import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Link from 'next/link'
-import { useAuth } from '../contexts/AuthContext'
+import Header from '@components/Header'
+import PetCard from '@components/PetCard'
 import Spinner from '@components/Spinner'
+import { Pet } from 'types/Pet'
+import styles from './styles.module.css'
 
+function Pets() {
+  const [pets, setPets] = useState([])
+  const [loading, setLoading] = useState<boolean>(false)
 
-export default function Home() {
-  const [user, setUser] = useState<any>()
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const loadPets = useCallback(async () => {
+    setLoading(true)
+    try {
+      const res = await axios.get('/api/pets')
+      setPets(res.data)
+    } catch (error) {
+      console.error(error)
+      toast.error('Ocorreu um erro ao buscar os pets')
+    }
 
-  const {isAuthenticated, login,loading } = useAuth()
+    setLoading(false)
+  }, [])
 
-  const authenticate = useCallback(async () => {
-    if(!email?.length) toast.error('Email é obrigatório')
-    if(!password?.length) toast.error('Senha é obrigatória')
-
-    login(email, password)
-  },[email, password,login])
-
-
-
+  useEffect(() => {
+    loadPets()
+  }, [loadPets])
 
   return (
     <>
       <Head>
-        <title>NEWPET | LOGIN 🐶</title>
-        <meta name="description" content="O melhor app de adoção de animais do Brasil" />
+        <title>NEWPET</title>
+        <meta
+          name="description"
+          content="O melhor app de adoção de animais do Brasil"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      <main className={styles.main}>
-        <div className={styles.card}>
-          <div className={styles.login}>
-            <h1>NEWPET</h1>
-            <div className={styles['label-container']}>
-              <label  className={styles.label} htmlFor="email" placeholder='seu melhor e-mail'>e-mail</label>
-              <input type="text" name='email' onChange={v => setEmail(v.currentTarget.value)} />
-            </div>
-            <div className={styles['label-container']}>
-              <label className={styles.label} htmlFor="password" placeholder='super secreta'>senha</label>
-             <input  type="password" name='password' onChange={v => setPassword(v.currentTarget.value)}/>
-            </div>
 
-            {loading 
-            ? <Spinner/> 
-            : <><button disabled={loading}  type='button' onClick={authenticate} className={styles['login-btn']}>Entrar</button>
-              <div className={styles['label-container']}>
-                <small style={{textAlign: 'center', marginTop: 10}}>Ainda não tem uma conta?</small>
-                <Link href='/register' style={{textAlign: 'center', marginTop: 10}}>Crie uma agora</Link>
-              </div>
-              </>
-            }
-            
-          </div>
+      <div style={{ textAlign: 'center', width: '100vw', marginTop: '2rem' }}>
+        <h2>Bichinhos próximos de você</h2>
+      </div>
 
-          <div className={styles.aside} style={{backgroundImage: `url('${pugBackground.src}')`}}>
-            <p>Chegou a hora de encontrar seu novo pet <br></br> com o melhor app de adoção de animais do Brasil</p>
+      <div className={styles['pets-container']}>
+        {loading ? (
+          <div
+            style={{
+              alignSelf: 'center',
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Spinner />
           </div>
-        </div>
-      </main>
+        ) : (
+          <></>
+        )}
+        {pets.length ? (
+          pets?.map((p: Pet) => <PetCard key={`${p._id}1`} pet={p} />)
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['newpet-token']: token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
+
+export default Pets
