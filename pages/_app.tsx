@@ -5,11 +5,9 @@ import { AuthProvider } from '../contexts/AuthContext'
 import Layout from '@components/Layout'
 import { ChakraProvider } from '@chakra-ui/react'
 
-import theme from './theme'
-
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme} resetCSS cssVarsRoot="body">
+    <ChakraProvider resetCSS cssVarsRoot="body">
       <AuthProvider>
         <Layout>
           <Component {...pageProps} />
