@@ -5,7 +5,6 @@ import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
 import { useAuth } from '@contexts/AuthContext'
-import Spinner from '@components/Spinner'
 import {
   Button,
   Input,
@@ -14,7 +13,10 @@ import {
   Icon,
   FormControl,
   FormLabel,
+  Progress,
+  Spinner,
 } from '@chakra-ui/react'
+
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
@@ -84,7 +86,10 @@ export default function Home() {
                 name="email"
               />
             </div>
-            <div className={styles['label-container']}>
+            <div
+              className={styles['label-container']}
+              style={{ marginTop: 20 }}
+            >
               <FormControl>
                 <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="password">
                   senha
@@ -122,37 +127,28 @@ export default function Home() {
               />
             </div>
 
-            {loading ? (
-              <Spinner />
-            ) : (
-              <>
-                <Button
-                  variant={'solid'}
-                  type="submit"
-                  colorScheme={'yellow'}
-                  w={200}
-                  h={6}
-                  mt={'3'}
-                >
-                  Entrar
-                </Button>
-                {/* <div className={styles['label-container']}> */}
-                <small
-                  style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}
-                >
-                  Ainda não tem uma conta?
-                </small>
-                <Link
-                  href="/register"
-                  style={{ textAlign: 'center', marginTop: 10 }}
-                >
-                  Crie uma agora
-                </Link>
-                {/* </div> */}
-              </>
-            )}
+            <Button
+              isLoading={loading}
+              variant={'solid'}
+              type="submit"
+              colorScheme={'yellow'}
+              w={200}
+              h={6}
+              mt={'3'}
+            >
+              Entrar
+            </Button>
+            {/* <div className={styles['label-container']}> */}
+            <small style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}>
+              Ainda não tem uma conta?
+            </small>
+            <Link
+              href="/register"
+              style={{ textAlign: 'center', marginTop: 10 }}
+            >
+              Crie uma agora
+            </Link>
           </form>
-
           <div
             className={styles.aside}
             style={{ backgroundImage: `url('${pugBackground.src}')` }}
