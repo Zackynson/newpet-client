@@ -15,6 +15,15 @@ import {
   InputGroup,
   InputRightElement,
   Icon,
+  Card,
+  HStack,
+  Heading,
+  Image,
+  Box,
+  Center,
+  Container,
+  Flex,
+  useMediaQuery,
 } from '@chakra-ui/react'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 type Inputs = {
@@ -26,8 +35,10 @@ type Inputs = {
 
 export default function Register() {
   const [loading, setLoading] = useState<boolean>(false)
-  const [show, setShow] = useState<boolean>(false)
-  const handleClick = () => setShow(!show)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [isMobile] = useMediaQuery('(max-width: 768px)')
+
+  const handleClick = () => setShowPassword(!showPassword)
 
   const {
     register,
@@ -41,13 +52,6 @@ export default function Register() {
       setLoading(true)
 
       try {
-        const requiredFields: string[] = [
-          'name',
-          'email',
-          'password',
-          'confirmPassword',
-        ]
-
         // register user
         await axios.post('/api/register', data)
 
@@ -91,23 +95,40 @@ export default function Register() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <DoubleCard
-          left={
-            <div
-              className={styles.aside}
-              style={{
-                backgroundImage: `url('${catBackground.src}')`,
-                backgroundSize: 'cover',
-              }}
-            ></div>
-          }
-          right={
+      <Flex
+        w={'100%'}
+        h={'100vh'}
+        align="center"
+        justify={'center'}
+        alignItems="center"
+      >
+        <Card
+          w={isMobile ? 'container.sm' : 'container.lg'}
+          p={isMobile ? '10' : ''}
+          m={10}
+          minH={isMobile ? '' : 'xl'}
+          maxH={isMobile ? '' : '2xl'}
+          overflow={'hidden'}
+        >
+          <HStack>
+            <Box h={'100%'} display={isMobile ? 'none' : 'block'}>
+              <Image alt="cat" src={catBackground.src} />
+            </Box>
             <form
+              style={{ height: '100%', marginBottom: '2rem' }}
               className={styles.login}
               onSubmit={handleSubmit(createAndLogin)}
             >
-              <h1>NEWPET</h1>
+              <Heading
+                fontWeight={'thin'}
+                color={'#78cae3'}
+                fontFamily={'Modak'}
+                fontSize={'3rem'}
+                letterSpacing={1}
+                textShadow="-1px -1px 0 #555, 1px -1px 0 #555, -1px 1px 0 #555, 1px 1px 0 #555;"
+              >
+                NEWPET
+              </Heading>
               <div className={styles['label-container']}>
                 <label
                   className={styles.label}
@@ -156,11 +177,12 @@ export default function Register() {
                 </label>
                 <InputGroup size="sm">
                   <Input
-                    {...register('password', { required: 'Campo obrigatório' })}
+                    {...register('password', {
+                      required: 'Campo obrigatório',
+                    })}
                     name="password"
                     pr="4.5rem"
-                    type={show ? 'text' : 'password'}
-                    placeholder="Enter password"
+                    type={showPassword ? 'text' : 'password'}
                     variant={'flushed'}
                   />
                   <InputRightElement width="4rem">
@@ -170,7 +192,7 @@ export default function Register() {
                       size="sm"
                       onClick={handleClick}
                     >
-                      {show ? (
+                      {showPassword ? (
                         <Icon as={AiOutlineEyeInvisible} />
                       ) : (
                         <Icon as={AiOutlineEye} />
@@ -196,7 +218,7 @@ export default function Register() {
                     })}
                     name="confirmPassword"
                     pr="4.5rem"
-                    type={show ? 'text' : 'password'}
+                    type={showPassword ? 'text' : 'password'}
                     variant={'flushed'}
                   />
                   <InputRightElement width="4rem">
@@ -206,7 +228,7 @@ export default function Register() {
                       size="sm"
                       onClick={handleClick}
                     >
-                      {show ? (
+                      {showPassword ? (
                         <Icon as={AiOutlineEyeInvisible} />
                       ) : (
                         <Icon as={AiOutlineEye} />
@@ -226,7 +248,9 @@ export default function Register() {
                   isLoading={loading}
                   variant={'solid'}
                   type="submit"
-                  colorScheme={'cyan'}
+                  bg={'#78cae3'}
+                  color={'white'}
+                  colorScheme="cyan"
                   w={200}
                   h={6}
                   mt={'3'}
@@ -243,9 +267,9 @@ export default function Register() {
                 </div>
               </>
             </form>
-          }
-        />
-      </main>
+          </HStack>
+        </Card>
+      </Flex>
     </>
   )
 }

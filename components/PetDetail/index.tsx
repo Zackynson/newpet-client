@@ -48,31 +48,12 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
             <Heading>Galeria de {pet.name}</Heading>
           </CardHeader>
 
-          <Modal isCentered size="xl" isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
-            <ModalContent>
-              <ModalHeader>Galeria</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <Carousel emulateTouch selectedItem={imageIndex || 0}>
-                  {pet?.images?.map((i: string) => (
-                    <Image
-                      key={i}
-                      objectFit="cover"
-                      h={'lg'}
-                      src={i}
-                      alt={pet.name}
-                    />
-                  ))}
-                </Carousel>
-              </ModalBody>
-              <ModalFooter>
-                <Button onClick={onClose}>Fechar</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
-
-          <Flex justify={'center'} align={'center'} gap={10}>
+          <Flex
+            justify={'start'}
+            align={'center'}
+            wrap="wrap"
+            gap={{ base: 0, md: 1 }}
+          >
             {pet?.images?.map((i: string, index: number) => (
               <Box key={i}>
                 <Image
@@ -90,6 +71,36 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
               </Box>
             ))}
           </Flex>
+
+          <Modal isCentered size="xl" isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
+            <ModalContent>
+              <ModalHeader>Galeria</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Carousel
+                  swipeable
+                  emulateTouch
+                  showThumbs={false}
+                  selectedItem={imageIndex || 0}
+                  onChange={(i) => setImageIndex(i)}
+                >
+                  {pet?.images?.map((i: string) => (
+                    <Image
+                      key={i}
+                      objectFit="cover"
+                      h={'lg'}
+                      src={i}
+                      alt={pet.name}
+                    />
+                  ))}
+                </Carousel>
+              </ModalBody>
+              <ModalFooter>
+                <Button onClick={onClose}>Fechar</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </Card>
       </VStack>
     </Container>

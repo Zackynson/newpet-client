@@ -13,11 +13,13 @@ import {
   Icon,
   FormControl,
   FormLabel,
-  Progress,
-  Spinner,
   Card,
   HStack,
   Text,
+  Flex,
+  Divider,
+  Box,
+  useMediaQuery,
 } from '@chakra-ui/react'
 
 import { useForm } from 'react-hook-form'
@@ -26,6 +28,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
 export default function Home() {
   const [show, setShow] = useState<boolean>()
+  const [isMobile] = useMediaQuery('(max-width: 768px)')
 
   const handleClick = () => {
     setShow(!show)
@@ -66,8 +69,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <Card w={'container.lg'}>
+      <Flex
+        w={'100%'}
+        h={'100vh'}
+        align="center"
+        justify={'center'}
+        alignItems="center"
+      >
+        <Card
+          w={isMobile ? 'container.sm' : 'container.lg'}
+          p={isMobile ? '10' : ''}
+          m={10}
+        >
           <HStack>
             <form
               className={styles.login}
@@ -113,7 +126,6 @@ export default function Home() {
                       name="password"
                       pr="4.5rem"
                       type={show ? 'text' : 'password'}
-                      placeholder="Enter password"
                       variant={'flushed'}
                     />
                     <InputRightElement width="4rem">
@@ -151,7 +163,6 @@ export default function Home() {
               >
                 Entrar
               </Button>
-              {/* <div className={styles['label-container']}> */}
               <small
                 style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}
               >
@@ -164,7 +175,8 @@ export default function Home() {
                 Crie uma agora
               </Link>
             </form>
-            <div
+            <Box
+              display={isMobile ? 'none' : 'block'}
               className={styles.aside}
               style={{ backgroundImage: `url('${pugBackground.src}')` }}
             >
@@ -172,10 +184,10 @@ export default function Home() {
                 Chegou a hora de encontrar seu novo pet <br></br> com o melhor
                 app de adoção de animais do Brasil
               </Text>
-            </div>
+            </Box>
           </HStack>
         </Card>
-      </main>
+      </Flex>
     </>
   )
 }
