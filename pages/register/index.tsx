@@ -181,14 +181,15 @@ export default function Register() {
                       required: 'Campo obrigatório',
                     })}
                     name="password"
-                    pr="4.5rem"
+                    pr="2.5rem"
                     type={showPassword ? 'text' : 'password'}
                     variant={'flushed'}
                   />
                   <InputRightElement width="4rem">
                     <Button
                       h="1rem"
-                      variant={'outline'}
+                      ml={'6'}
+                      variant={'ghost'}
                       size="sm"
                       onClick={handleClick}
                     >
@@ -217,14 +218,15 @@ export default function Register() {
                       required: 'Campo obrigatório',
                     })}
                     name="confirmPassword"
-                    pr="4.5rem"
+                    pr="2.5rem"
                     type={showPassword ? 'text' : 'password'}
                     variant={'flushed'}
                   />
                   <InputRightElement width="4rem">
                     <Button
                       h="1rem"
-                      variant={'outline'}
+                      ml={6}
+                      variant={'ghost'}
                       size="sm"
                       onClick={handleClick}
                     >

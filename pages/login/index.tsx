@@ -124,14 +124,15 @@ export default function Home() {
                         required: 'Campo obrigatório',
                       })}
                       name="password"
-                      pr="4.5rem"
+                      pr="2.5rem"
                       type={show ? 'text' : 'password'}
                       variant={'flushed'}
                     />
                     <InputRightElement width="4rem">
                       <Button
                         h="1rem"
-                        variant={'outline'}
+                        ml={'6'}
+                        variant={'ghost'}
                         size="sm"
                         onClick={handleClick}
                       >
