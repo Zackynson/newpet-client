@@ -1,13 +1,11 @@
 import React from 'react'
-import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { parseCookies } from 'nookies'
 
 import { useAuth } from '@contexts/AuthContext'
 import AvatarPlaceholder from '@public/assets/avatar.png'
 
-import { Divider, Flex, HStack, LinkBox, StackDivider } from '@chakra-ui/react'
+import { HStack, LinkBox, StackDivider } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 const Header = ({}) => {
@@ -86,7 +84,7 @@ const Header = ({}) => {
           <Link href="/profile">Perfil</Link>
         </LinkBox>
       </HStack>
-      <div onClick={logout}>
+      <Link href="/profile">
         <div
           style={{
             width: 35,
@@ -105,26 +103,9 @@ const Header = ({}) => {
             quality={100}
           />
         </div>
-      </div>
+      </Link>
     </div>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['newpet-token']: token } = parseCookies(ctx)
-
-  if (!token) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    }
-  }
-
-  return {
-    props: {},
-  }
 }
 
 export default Header

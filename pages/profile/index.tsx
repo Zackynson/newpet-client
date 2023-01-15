@@ -1,17 +1,14 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import Header from '@components/Header'
-import { useRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
-import { Spinner } from '@chakra-ui/react'
+import { Button, Center, Container, Spinner } from '@chakra-ui/react'
 
 function UserPage() {
-  const router = useRouter()
-  const { user, loading } = useAuth()
+  const { user, loading, logout } = useAuth()
 
   return (
-    <>
+    <Container maxW={'container.xl'}>
       <Head>
         <title>NEWPET | {user?.name}</title>
         <meta
@@ -48,7 +45,18 @@ function UserPage() {
           </h1>
         </>
       )}
-    </>
+
+      <Center>
+        <Button
+          isLoading={loading}
+          onClick={logout}
+          maxW="xl"
+          colorScheme="red"
+        >
+          Sair
+        </Button>
+      </Center>
+    </Container>
   )
 }
 
