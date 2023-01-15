@@ -21,14 +21,14 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
-import { dogBreeds } from './dog-breeds'
 import { Breed } from 'types/BreedList'
-import { catBreeds } from './cat-breeds'
 import axios from 'axios'
 import { api } from '@services/api'
 import { toast } from 'react-toastify'
 import { SingleDatepicker } from 'chakra-dayzed-datepicker'
 import moment from 'moment'
+import { dogBreeds } from '@libs/pets/dog-breeds'
+import { catBreeds } from '@libs/pets/cat-breeds'
 
 const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
