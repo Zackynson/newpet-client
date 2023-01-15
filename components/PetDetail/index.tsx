@@ -49,13 +49,13 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
           </CardHeader>
 
           <Flex
-            justify={'start'}
+            justify={pet?.images?.length > 1 ? 'start' : 'center'}
             align={'center'}
             wrap="wrap"
             gap={{ base: 0, md: 1 }}
           >
             {pet?.images?.map((i: string, index: number) => (
-              <Box key={i}>
+              <Box key={i + index}>
                 <Image
                   cursor="pointer"
                   onClick={() => {
@@ -74,8 +74,22 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
 
           <Modal isCentered size="xl" isOpen={isOpen} onClose={onClose}>
             <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
-            <ModalContent>
-              <ModalHeader>Galeria</ModalHeader>
+            <ModalContent
+              onKeyDown={(e) => {
+                if (['d', 'ArrowRight'].includes(e.key)) {
+                  setImageIndex(
+                    imageIndex === pet.images.length - 1 ? 0 : imageIndex + 1,
+                  )
+                }
+
+                if (['a', 'ArrowLeft'].includes(e.key)) {
+                  setImageIndex(
+                    imageIndex === 0 ? pet.images.length - 1 : imageIndex - 1,
+                  )
+                }
+              }}
+            >
+              <ModalHeader>Galeria de {pet.name}</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <Carousel
@@ -85,9 +99,9 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
                   selectedItem={imageIndex || 0}
                   onChange={(i) => setImageIndex(i)}
                 >
-                  {pet?.images?.map((i: string) => (
+                  {pet?.images?.map((i: string, index: number) => (
                     <Image
-                      key={i}
+                      key={i + index}
                       objectFit="cover"
                       h={'lg'}
                       src={i}
