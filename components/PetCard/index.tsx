@@ -16,6 +16,8 @@ import {
   Text,
 } from '@chakra-ui/react'
 
+import fallbackimage from '@public/assets/fallback.png'
+
 const PetCard = ({ pet }: { pet: Pet }) => {
   const calculateAge = (date: string) => {
     try {
@@ -65,10 +67,12 @@ const PetCard = ({ pet }: { pet: Pet }) => {
                   borderRadius="lg"
                   w={'xl'}
                   style={{ objectFit: 'cover' }}
+                  objectFit="cover"
                   height={350}
                   src={pet?.images?.[0]}
                   alt={pet.name}
                   pt={-2}
+                  fallbackSrc={fallbackimage.src}
                 />
               </Box>
             </Stack>

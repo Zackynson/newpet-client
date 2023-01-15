@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosHeaders } from 'axios'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
@@ -9,6 +9,7 @@ import PetCard from '@components/PetCard'
 import { Pet } from 'types/Pet'
 import styles from './styles.module.css'
 import { Box, Flex, HStack, Spinner } from '@chakra-ui/react'
+import { api } from '@services/api'
 
 function Pets() {
   const [pets, setPets] = useState([])
@@ -17,7 +18,11 @@ function Pets() {
   const loadPets = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await axios.get('/api/pets')
+      const res = await axios.get('/api/pets', {
+        headers: {
+          authorization: api.defaults.headers.authorization as string,
+        },
+      })
       setPets(res.data)
     } catch (error) {
       console.error(error)

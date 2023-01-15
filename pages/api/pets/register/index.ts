@@ -10,7 +10,7 @@ export default async function handler(
 ) {
 
   try {
-    const petsResponse = await api.get('pets/' +  req.query.id, {
+    const petsResponse = await api.post('pets', req.body, {
       headers: {
         authorization: req.headers.authorization
       }
@@ -18,6 +18,8 @@ export default async function handler(
 
     res.status(200).json(petsResponse.data.data)
   } catch (error: any) {
+
+    console.log(error.response)
     return res.status(error.response.status).json({ message:error.response.data.message })
   }
    

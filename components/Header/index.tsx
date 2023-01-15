@@ -56,7 +56,8 @@ const Header = ({}) => {
         <LinkBox
           borderBottom={'1px'}
           borderBottomColor={
-            asPath === '/' || asPath.startsWith('/pets')
+            asPath === '/' ||
+            (asPath.startsWith('/pets') && !asPath.endsWith('register'))
               ? 'yellow.400'
               : 'unset'
           }
@@ -68,11 +69,11 @@ const Header = ({}) => {
         <LinkBox
           borderBottom={'1px'}
           borderBottomColor={
-            asPath.startsWith('/register-pet') ? 'yellow.400' : 'unset'
+            asPath.startsWith('/pets/register') ? 'yellow.400' : 'unset'
           }
           color={'white'}
         >
-          <Link href="/register-pet">Cadastrar</Link>
+          <Link href="/pets/register">Cadastrar</Link>
         </LinkBox>
 
         <LinkBox

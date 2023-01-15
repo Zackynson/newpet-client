@@ -4,7 +4,6 @@ import { parseCookies } from 'nookies'
 import Header from '@components/Header'
 import { useRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
-import Card from '@components/Card'
 import { Spinner } from '@chakra-ui/react'
 
 function UserPage() {
@@ -47,9 +46,6 @@ function UserPage() {
           >
             {user?.name}
           </h1>
-          <Card>
-            <div style={{ flex: 1, width: '100%', height: '100%' }}>oi</div>
-          </Card>
         </>
       )}
     </>

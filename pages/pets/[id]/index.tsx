@@ -9,6 +9,7 @@ import { Pet } from 'types/Pet'
 import { useRouter } from 'next/router'
 import PetDetail from '@components/PetDetail'
 import { Spinner } from '@chakra-ui/react'
+import { api } from '@services/api'
 
 function PetDetailPage() {
   const [pet, setPet] = useState<Pet>()
@@ -19,7 +20,12 @@ function PetDetailPage() {
   const loadPet = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await axios.get('/api/pets/' + id)
+      const res = await axios.get('/api/pets/' + id, {
+        headers: {
+          authorization: api.defaults.headers.authorization as string,
+        },
+      })
+
       setPet(res.data)
     } catch (error) {
       console.error(error)

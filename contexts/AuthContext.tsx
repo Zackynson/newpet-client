@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: any }) {
   const logout = useCallback(async (): Promise<void> => {
     destroyCookie(undefined, 'newpet-token')
     setUser(null)
-    await router.push('/login')
+    router.reload()
   }, [router])
 
   const getInfoFromToken = useCallback(
