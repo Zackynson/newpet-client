@@ -259,22 +259,22 @@ function UpdatePetPage() {
                     minDate={minDate}
                     propsConfigs={{
                       dateNavBtnProps: {
-                        colorScheme: 'yellow',
+                        colorScheme: 'blue',
                         variant: 'solid',
                       },
                       dayOfMonthBtnProps: {
                         selectedBtnProps: {
-                          borderColor: 'yellow.300',
-                          bg: 'yellow.400',
+                          borderColor: 'blue.300',
+                          bg: 'blue.400',
                           _hover: {
-                            bg: 'yellow.500',
+                            bg: 'blue.500',
                           },
                         },
                         defaultBtnProps: {
-                          borderColor: 'yellow.300',
-                          bg: 'yellow.100',
+                          borderColor: 'blue.300',
+                          bg: 'blue.100',
                           _hover: {
-                            bg: 'yellow.400',
+                            bg: 'blue.400',
                           },
                         },
                       },
@@ -406,7 +406,7 @@ function UpdatePetPage() {
                 <Button
                   isLoading={loading}
                   mt={6}
-                  colorScheme="yellow"
+                  colorScheme="blue"
                   type="submit"
                 >
                   Atualizar

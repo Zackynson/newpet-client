@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from './styles.module.css'
-import pugBackground from '@public/assets/pug_yellow.jpg'
+import pugBackground from '@public/assets/blue_dog.jpg'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
@@ -157,7 +157,7 @@ export default function Home() {
                 isLoading={loading}
                 variant={'solid'}
                 type="submit"
-                colorScheme={'yellow'}
+                colorScheme={'blue'}
                 w={200}
                 h={6}
                 mt={'3'}

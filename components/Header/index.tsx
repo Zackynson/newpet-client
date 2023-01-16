@@ -56,9 +56,12 @@ const Header = ({}) => {
           borderBottomColor={
             asPath === '/' ||
             (asPath.startsWith('/pets') && !asPath.endsWith('register'))
-              ? 'yellow.400'
+              ? 'blue.500'
               : 'unset'
           }
+          _hover={{
+            borderBottomColor: 'blue.300',
+          }}
           color={'white'}
         >
           <Link href="/">Encontrar</Link>
@@ -67,8 +70,11 @@ const Header = ({}) => {
         <LinkBox
           borderBottom={'1px'}
           borderBottomColor={
-            asPath.startsWith('/pets/register') ? 'yellow.400' : 'unset'
+            asPath.startsWith('/pets/register') ? 'blue.500' : 'unset'
           }
+          _hover={{
+            borderBottomColor: 'blue.300',
+          }}
           color={'white'}
         >
           <Link href="/pets/register">Cadastrar</Link>
@@ -77,8 +83,11 @@ const Header = ({}) => {
         <LinkBox
           borderBottom={'1px'}
           borderBottomColor={
-            asPath.startsWith('/profile') ? 'yellow.400' : 'unset'
+            asPath.startsWith('/profile') ? 'blue.500' : 'unset'
           }
+          _hover={{
+            borderBottomColor: 'blue.300',
+          }}
           color={'white'}
         >
           <Link href="/profile">Perfil</Link>

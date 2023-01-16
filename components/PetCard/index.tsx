@@ -57,23 +57,33 @@ const PetCard = ({ pet }: { pet: Pet }) => {
     <Card w={'xs'}>
       <Stack divider={<StackDivider />}>
         <CardBody>
-          <Stack divider={<StackDivider />}>
-            <Box>
-              <Image
-                borderRadius="lg"
-                w={'100%'}
-                height={200}
-                objectFit="cover"
-                src={pet?.images?.[0]}
-                alt={pet.name}
-                pt={-2}
-                fallbackSrc={fallbackimage.src}
-              />
-            </Box>
-          </Stack>
+          <Image
+            borderRadius="lg"
+            w={'100%'}
+            height={200}
+            objectFit="cover"
+            src={pet?.images?.[0]}
+            alt={pet.name}
+            pt={-2}
+            fallbackSrc={fallbackimage.src}
+          />
         </CardBody>
-        <CardFooter display="flex" justify="center" alignItems="center">
-          <Heading textAlign="center" textTransform="capitalize" size="sm">
+        <CardFooter
+          textAlign="center"
+          textTransform="capitalize"
+          display="flex"
+          justify="center"
+          alignItems="center"
+          py={2}
+        >
+          <Heading
+            overflow={'auto'}
+            textAlign="center"
+            textTransform="capitalize"
+            size="sm"
+            mb={2}
+            color="blue.500"
+          >
             {pet.name}
           </Heading>
         </CardFooter>
