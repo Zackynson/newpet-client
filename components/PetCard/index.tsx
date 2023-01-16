@@ -54,37 +54,31 @@ const PetCard = ({ pet }: { pet: Pet }) => {
   }
 
   return (
-    <Link href={'pets/' + pet._id}>
-      <Card w={'lg'}>
-        <CardHeader>
-          <Heading size="md">{pet.name}</Heading>
-        </CardHeader>
-        <Stack divider={<StackDivider />}>
-          <CardBody>
-            <Stack divider={<StackDivider />}>
-              <Box>
-                <Image
-                  borderRadius="lg"
-                  w={'xl'}
-                  style={{ objectFit: 'cover' }}
-                  objectFit="cover"
-                  height={350}
-                  src={pet?.images?.[0]}
-                  alt={pet.name}
-                  pt={-2}
-                  fallbackSrc={fallbackimage.src}
-                />
-              </Box>
-            </Stack>
-          </CardBody>
-          <CardFooter>
-            <Text fontSize="sm">
-              {pet.name} - {pet.breed} - {calculateAge(pet.birthDate)}
-            </Text>
-          </CardFooter>
-        </Stack>
-      </Card>
-    </Link>
+    <Card w={'xs'}>
+      <Stack divider={<StackDivider />}>
+        <CardBody>
+          <Stack divider={<StackDivider />}>
+            <Box>
+              <Image
+                borderRadius="lg"
+                w={'100%'}
+                height={200}
+                objectFit="cover"
+                src={pet?.images?.[0]}
+                alt={pet.name}
+                pt={-2}
+                fallbackSrc={fallbackimage.src}
+              />
+            </Box>
+          </Stack>
+        </CardBody>
+        <CardFooter display="flex" justify="center" alignItems="center">
+          <Heading textAlign="center" textTransform="capitalize" size="sm">
+            {pet.name}
+          </Heading>
+        </CardFooter>
+      </Stack>
+    </Card>
   )
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import Link from 'next/link'
 import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
 import { Carousel } from 'react-responsive-carousel'
 
@@ -29,12 +29,12 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react'
-import Link from 'next/link'
+import { useAuth } from '@contexts/AuthContext'
 
 const PetDetail = ({ pet }: { pet?: Pet }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [imageIndex, setImageIndex] = useState<number>(0)
-
+  const { user } = useAuth()
   if (!pet)
     return (
       <Link href="/">
@@ -51,7 +51,16 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
       <VStack spacing="24px" direction={'column'}>
         <Card w="100%">
           <CardHeader>
-            <Heading> Informações</Heading>
+            <Flex justify={'space-between'}>
+              <Heading> Informações</Heading>
+              {pet?.ownerId === user?._id ? (
+                <Link href={'/pets/' + pet?._id + '/update'}>
+                  <Button>Editar</Button>
+                </Link>
+              ) : (
+                <></>
+              )}
+            </Flex>
           </CardHeader>
           <CardBody>
             <PetInfo pet={pet} />

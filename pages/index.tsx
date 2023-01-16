@@ -8,8 +8,9 @@ import Header from '@components/Header'
 import PetCard from '@components/PetCard'
 import { Pet } from 'types/Pet'
 import styles from './styles.module.css'
-import { Box, Flex, HStack, Spinner } from '@chakra-ui/react'
+import { Box, Center, Container, Flex, HStack, Spinner } from '@chakra-ui/react'
 import { api } from '@services/api'
+import Link from 'next/link'
 
 function Pets() {
   const [pets, setPets] = useState([])
@@ -48,48 +49,37 @@ function Pets() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex gap={'5'} p="10" wrap={'wrap'}>
-        {loading ? (
-          <div
-            style={{
-              alignSelf: 'center',
-              width: '100vw',
-              height: '100vh',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Spinner speed="0.65s" color="black" size="lg" />
-          </div>
-        ) : (
-          <></>
-        )}
-        {pets.length ? (
-          pets?.map((p: Pet) => <PetCard key={`${p._id}`} pet={p} />)
-        ) : (
-          <></>
-        )}
-      </Flex>
+      <Container maxW="max">
+        <Flex gap={'5'} justify="center" p="10" wrap={'wrap'}>
+          {loading ? (
+            <div
+              style={{
+                alignSelf: 'center',
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Spinner speed="0.65s" color="black" size="lg" />
+            </div>
+          ) : (
+            <></>
+          )}
+          {pets.length ? (
+            pets?.map((p: Pet) => (
+              <Link key={`${p._id}`} href={'pets/' + p._id}>
+                <PetCard pet={p} />
+              </Link>
+            ))
+          ) : (
+            <></>
+          )}
+        </Flex>
+      </Container>
     </>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['newpet-token']: token } = parseCookies(ctx)
-
-  if (!token) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    }
-  }
-
-  return {
-    props: {},
-  }
 }
 
 export default Pets

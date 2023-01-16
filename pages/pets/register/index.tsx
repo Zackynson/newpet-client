@@ -38,7 +38,7 @@ type Input = {
   birthDate: string
 }
 
-function PetDetailPage() {
+function RegisterPetPage() {
   const [pet, setPet] = useState<Pet>()
   const [loading, setLoading] = useState<boolean>(false)
   const [animalType, setAnimalType] = useState('dog')
@@ -199,4 +199,4 @@ function PetDetailPage() {
   )
 }
 
-export default PetDetailPage
+export default RegisterPetPage
