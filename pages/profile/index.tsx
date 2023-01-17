@@ -9,6 +9,7 @@ import {
   Flex,
   Heading,
   Spinner,
+  VStack,
 } from '@chakra-ui/react'
 import { useCallback, useState } from 'react'
 import { useEffect } from 'react'
@@ -84,17 +85,29 @@ function UserPage() {
         </>
       )}
 
-      <Heading mb={5}>Seus pets</Heading>
-
-      <Flex gap={10} wrap="wrap">
+      <Flex gap={10} align="center" justify={'center'} wrap="wrap">
         {userPets.length ? (
-          userPets?.map((pet: Pet) => (
-            <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
-              <PetCard key={`${pet._id}`} pet={pet} />
-            </Link>
-          ))
+          <>
+            <Heading mb={5}>Seus pets</Heading>
+
+            {userPets?.map((pet: Pet) => (
+              <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
+                <PetCard key={`${pet._id}`} pet={pet} />
+              </Link>
+            ))}
+          </>
         ) : (
-          <></>
+          <VStack mt={10}>
+            <Heading size={'md'} textAlign={'center'}>
+              Você ainda não cadastrou nenhum pet
+            </Heading>
+
+            <Link href="/pets/register">
+              <Button variant={'link'} colorScheme="blue">
+                Cadastre agora
+              </Button>
+            </Link>
+          </VStack>
         )}
       </Flex>
 
@@ -105,6 +118,7 @@ function UserPage() {
           maxW="xl"
           colorScheme="red"
           my={8}
+          variant="link"
         >
           Sair
         </Button>

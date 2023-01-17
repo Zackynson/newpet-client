@@ -1,14 +1,12 @@
-import axios, { AxiosHeaders } from 'axios'
+import axios from 'axios'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Header from '@components/Header'
 import PetCard from '@components/PetCard'
 import { Pet } from 'types/Pet'
-import styles from './styles.module.css'
-import { Box, Center, Container, Flex, HStack, Spinner } from '@chakra-ui/react'
+import { Center, Container, Flex, Heading, Spinner } from '@chakra-ui/react'
 import { api } from '@services/api'
 import Link from 'next/link'
 
@@ -74,7 +72,11 @@ function Pets() {
               </Link>
             ))
           ) : (
-            <></>
+            <Center>
+              <Heading mt={5} textAlign={'center'} size="md">
+                Não encontramos nenhum pet baseado nos seus filtros 😿
+              </Heading>
+            </Center>
           )}
         </Flex>
       </Container>
