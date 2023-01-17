@@ -79,21 +79,8 @@ const Header = ({}) => {
         >
           <Link href="/pets/register">Cadastrar</Link>
         </LinkBox>
-
-        <LinkBox
-          borderBottom={'1px'}
-          borderBottomColor={
-            asPath.startsWith('/profile') ? 'blue.500' : 'unset'
-          }
-          _hover={{
-            borderBottomColor: 'blue.300',
-          }}
-          color={'white'}
-        >
-          <Link href="/profile">Perfil</Link>
-        </LinkBox>
       </HStack>
-      <Link href="/profile">
+      <Link href="/profile" title="Perfil">
         <div
           style={{
             width: 35,
