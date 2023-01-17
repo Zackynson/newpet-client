@@ -43,6 +43,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<Inputs>()
   const { login } = useAuth()
@@ -179,6 +180,10 @@ export default function Register() {
                   <Input
                     {...register('password', {
                       required: 'Campo obrigatório',
+                      minLength: {
+                        value: 8,
+                        message: 'A senha deve conter no minimo 8 letras',
+                      },
                     })}
                     name="password"
                     pr="2.5rem"
@@ -216,6 +221,10 @@ export default function Register() {
                   <Input
                     {...register('confirmPassword', {
                       required: 'Campo obrigatório',
+                      minLength: 8,
+                      validate: (value) =>
+                        value === getValues('password') ||
+                        'Senha e confirmação de senha devem ser iguais',
                     })}
                     name="confirmPassword"
                     pr="2.5rem"
