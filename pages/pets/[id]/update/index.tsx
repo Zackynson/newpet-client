@@ -33,13 +33,17 @@ import moment from 'moment'
 import { dogBreeds } from '@libs/pets/dog-breeds'
 import { catBreeds } from '@libs/pets/cat-breeds'
 import ReactImageUploading from 'react-images-uploading'
+import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
+import { PetType } from 'types/enums/pet-type.enum'
+import { PetSize } from 'types/enums/pet-size.enum'
 
 const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
   name: string
-  type: 'cat' | 'dog' | string
+  type: PetType
   breed: string
   birthDate: string
+  size: PetSize
 }
 
 function UpdatePetPage() {
@@ -49,6 +53,8 @@ function UpdatePetPage() {
   const [animalBreedList, setAnimalBreedList] = useState<Breed[]>([])
   const [date, setDate] = useState<Date>(new Date())
   const [images, setImages] = useState<any[]>([])
+  const [addressInfo, setAddressInfo] = useState<any>()
+
   const maxNumber = 5
 
   const onChangeImages = (imageList: any, addUpdateIndex: any) => {
@@ -83,7 +89,13 @@ function UpdatePetPage() {
       setValue('name', res?.data?.name as string)
       setValue('birthDate', res?.data?.birthDate as string)
       setValue('breed', res?.data?.breed as string)
-      setValue('type', res?.data?.type as string)
+      setValue('type', res?.data?.type as PetType)
+      setAddressInfo({
+        label: res?.data?.address,
+        value: {
+          description: res?.data?.address,
+        },
+      })
 
       if (res?.data?.birthDate?.length) {
         setDate(
@@ -115,7 +127,6 @@ function UpdatePetPage() {
     async (data: Partial<Pet>) => {
       setLoading(true)
 
-      console.log(images)
       try {
         if (images?.length) {
           // upload pet images
@@ -143,7 +154,11 @@ function UpdatePetPage() {
         await toast.promise(
           axios.post(
             `/api/pets/${id}/update-info/`,
-            { ...data, birthDate: date },
+            {
+              ...data,
+              birthDate: date,
+              address: addressInfo.value.description,
+            },
             {
               headers: {
                 authorization: api.defaults.headers.authorization as string,
@@ -165,7 +180,7 @@ function UpdatePetPage() {
 
       setLoading(false)
     },
-    [date, id, images, router],
+    [addressInfo, date, id, images, router],
   )
 
   return (
@@ -281,6 +296,23 @@ function UpdatePetPage() {
                     }}
                   />
                 </FormControl>
+
+                <FormLabel mt={10}>Porte</FormLabel>
+
+                <Select {...register('size', { required: true })} name="size">
+                  <option value="small">Pequeno</option>
+                  <option value="medium">Médio</option>
+                  <option value="big">Grande</option>
+                </Select>
+
+                <FormLabel mt={10}>Endereço onde ele está</FormLabel>
+                <GooglePlacesAutocomplete
+                  apiKey="AIzaSyBeAhriPkltT2Z0Pg--4Z5Sm7U7PWLjBAs"
+                  selectProps={{
+                    value: addressInfo,
+                    onChange: setAddressInfo,
+                  }}
+                />
 
                 <FormLabel mt={10}>Adicionar imagens</FormLabel>
 

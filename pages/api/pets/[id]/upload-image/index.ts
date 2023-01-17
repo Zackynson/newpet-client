@@ -34,5 +34,9 @@ export default async function handler(
 export const config = {
   api: {
     responseLimit: '8mb',
+    bodyParser:{
+      sizeLimit:'10mb',
+
+    }
   },
 }

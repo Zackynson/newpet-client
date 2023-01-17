@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pet } from 'types/Pet'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import {
   Button,
   Card,
@@ -29,21 +29,27 @@ import { SingleDatepicker } from 'chakra-dayzed-datepicker'
 import moment from 'moment'
 import { dogBreeds } from '@libs/pets/dog-breeds'
 import { catBreeds } from '@libs/pets/cat-breeds'
+import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
+import { PetType } from 'types/enums/pet-type.enum'
+import { PetSize } from 'types/enums/pet-size.enum'
 
 const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
   name: string
-  type: 'cat' | 'dog'
+  type: PetType
   breed: string
   birthDate: string
+  size: PetSize
 }
 
 function RegisterPetPage() {
-  const [pet, setPet] = useState<Pet>()
   const [loading, setLoading] = useState<boolean>(false)
   const [animalType, setAnimalType] = useState('dog')
   const [animalBreedList, setAnimalBreedList] = useState<Breed[]>(dogBreeds)
   const [date, setDate] = useState<Date>(new Date())
+  const [addressInfo, setAddressInfo] = useState<any>()
+
+  const router = useRouter()
   const {
     register,
     formState: { errors },
@@ -60,25 +66,35 @@ function RegisterPetPage() {
       setLoading(true)
 
       try {
-        const res = await axios.post(
-          '/api/pets/register',
-          { ...data, birthDate: date },
-          {
-            headers: {
-              authorization: api.defaults.headers.authorization as string,
+        await toast.promise(
+          axios.post(
+            '/api/pets/register',
+            {
+              ...data,
+              birthDate: date,
+              address: addressInfo?.value?.description,
             },
+            {
+              headers: {
+                authorization: api.defaults.headers.authorization as string,
+              },
+            },
+          ),
+          {
+            success: 'Pet cadastrado com sucesso',
+            pending: 'Cadastrando seu pet',
+            error: 'Ocorreu um erro ao cadastrar seu pet',
           },
         )
 
-        setPet(res.data)
+        router.push('/')
       } catch (error) {
         console.error(error)
-        toast.error('Ocorreu um erro cadastrar seu pet')
       }
 
       setLoading(false)
     },
-    [date],
+    [addressInfo, date, router],
   )
 
   return (
@@ -183,6 +199,21 @@ function RegisterPetPage() {
                 />
               </FormControl>
 
+              <FormLabel mt={10}>Porte</FormLabel>
+              <Select {...register('size', { required: true })} name="size">
+                <option value="small">Pequeno</option>
+                <option value="medium">Médio</option>
+                <option value="big">Grande</option>
+              </Select>
+
+              <FormLabel mt={10}>Endereço onde ele está</FormLabel>
+              <GooglePlacesAutocomplete
+                apiKey="AIzaSyBeAhriPkltT2Z0Pg--4Z5Sm7U7PWLjBAs"
+                selectProps={{
+                  value: addressInfo,
+                  onChange: setAddressInfo,
+                }}
+              />
               <Button
                 isLoading={loading}
                 mt={6}

@@ -9,14 +9,28 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
 
+
+  const {id} = req.query;
+  const {image} = req.body
+
+  if(!image)  return res.status(400).json({ message:'Imagem inválida' })
+
   try {
-    const petsResponse = await api.get('pets', {
+
+    const userResponse = await api.get('/auth/me', { headers: {
+      authorization: req.headers.authorization
+    }})
+
+
+    console.log(userResponse.data)
+
+    await api.post(`users/avatar` , {file: image}, {
       headers: {
         authorization: req.headers.authorization
       }
     })
 
-    res.status(200).json(petsResponse.data.data)
+    return res.status(200).json({ message: 'Imagem enviada com sucesso'})
   } catch (error: any) {
 
     console.log(error.response)

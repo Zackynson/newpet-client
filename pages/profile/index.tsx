@@ -1,9 +1,12 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
+import AvatarPlaceholder from '@public/assets/avatar.png'
 import { useAuth } from '@contexts/AuthContext'
 import {
+  Avatar,
   Button,
+  Card,
   Center,
   Container,
   Flex,
@@ -72,20 +75,30 @@ function UserPage() {
           <Spinner />
         </div>
       ) : (
-        <>
-          <h1
-            style={{
-              textAlign: 'center',
-              marginTop: '2rem',
-              marginBottom: '2rem',
-            }}
-          >
-            <Heading>{user?.name}</Heading>
-          </h1>
-        </>
+        <Center flexDirection={'column'}>
+          <Card>
+            <VStack>
+              <Avatar
+                src={user?.avatar || AvatarPlaceholder.src}
+                loading="eager"
+                objectFit="cover"
+                size={'2xl'}
+              />
+              <Heading my={10} textAlign={'center'}>
+                {user?.name}
+              </Heading>
+            </VStack>
+          </Card>
+        </Center>
       )}
 
-      <Flex gap={10} align="center" justify={'center'} wrap="wrap">
+      <Flex
+        gap={10}
+        align="center"
+        direction={'column'}
+        justify={'center'}
+        wrap="wrap"
+      >
         {userPets.length ? (
           <>
             <Heading mb={5}>Seus pets</Heading>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Pet } from 'types/Pet'
+import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
 
 import moment from 'moment'
 import Link from 'next/link'
@@ -60,7 +61,7 @@ const PetCard = ({ pet }: { pet: Pet }) => {
           <Image
             borderRadius="lg"
             w={'100%'}
-            height={200}
+            height={300}
             objectFit="cover"
             src={pet?.images?.[0]}
             alt={pet.name}

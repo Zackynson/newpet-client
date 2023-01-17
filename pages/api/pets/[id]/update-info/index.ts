@@ -19,7 +19,7 @@ export default async function handler(
       }
     })
 
-    return res.status(200).json({ message: 'Imagem enviada com sucesso'})
+    return res.status(200).json({ message: 'Dados atualizados com sucesso'})
   } catch (error: any) {
 
     console.log(error.response)

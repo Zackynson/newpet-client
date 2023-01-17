@@ -1,11 +1,10 @@
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { useAuth } from '@contexts/AuthContext'
 import AvatarPlaceholder from '@public/assets/avatar.png'
 
-import { HStack, LinkBox, StackDivider } from '@chakra-ui/react'
+import { HStack, LinkBox, StackDivider, Image, Avatar } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 const Header = ({}) => {
@@ -90,13 +89,12 @@ const Header = ({}) => {
             objectFit: 'contain',
           }}
         >
-          <Image
-            src={user?.avatar || AvatarPlaceholder}
+          <Avatar
+            src={user?.avatar || AvatarPlaceholder.src}
             loading="eager"
-            alt="avatar"
-            height={35}
-            width={35}
-            quality={100}
+            height={'100%'}
+            width={'100%'}
+            objectFit="cover"
           />
         </div>
       </Link>
