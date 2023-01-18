@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { api } from '@services/api'
+import axiosRetry from 'axios-retry';
 
 type Data = {
   user?: any, 
@@ -13,6 +14,8 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const {email, password} = req.body
+
+  axiosRetry(api, { retries: 3 });
 
   try {
     const loginResponse = await api.post('/auth/login', {

@@ -92,7 +92,6 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                 </VStack>
               </VStack>
               <VStack>
-                {' '}
                 <LinkBox>
                   <a
                     aria-label="Conversar no whatsapp"
