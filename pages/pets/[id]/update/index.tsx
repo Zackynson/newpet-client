@@ -18,7 +18,6 @@ import {
   Image,
   Input,
   Radio,
-  Icon,
   RadioGroup,
   Select,
   Spinner,
@@ -38,7 +37,6 @@ import ReactImageUploading from 'react-images-uploading'
 import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
 import { PetType } from 'types/enums/pet-type.enum'
 import { PetSize } from 'types/enums/pet-size.enum'
-import { FaCat, FaDog } from 'react-icons/fa'
 
 const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
@@ -235,14 +233,12 @@ function UpdatePetPage() {
                         {...register('type', { required: true })}
                         value="cat"
                       >
-                        <Icon as={FaCat} boxSize={8} />
                         <Text>Gato</Text>
                       </Radio>
                       <Radio
                         {...register('type', { required: true })}
                         value="dog"
                       >
-                        <Icon as={FaDog} boxSize={8} />
                         <Text>Cão</Text>
                       </Radio>
                     </Stack>
