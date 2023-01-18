@@ -44,8 +44,8 @@ type Input = {
 
 function RegisterPetPage() {
   const [loading, setLoading] = useState<boolean>(false)
-  const [animalType, setAnimalType] = useState('dog')
-  const [animalBreedList, setAnimalBreedList] = useState<Breed[]>(dogBreeds)
+  const [animalType, setAnimalType] = useState('cat')
+  const [animalBreedList, setAnimalBreedList] = useState<Breed[]>(catBreeds)
   const [date, setDate] = useState<Date>(new Date())
   const [addressInfo, setAddressInfo] = useState<any>()
 
@@ -109,7 +109,7 @@ function RegisterPetPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container mt={8} maxW="container.lg" color="#262626">
+      <Container my={8} maxW="container.lg" color="#262626">
         <Card>
           <CardHeader>
             <Heading>Cadastro de pet</Heading>

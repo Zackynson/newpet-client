@@ -11,6 +11,7 @@ import {
   useDisclosure,
   VStack,
   Text,
+  Icon,
   StackDivider,
   LinkBox,
 } from '@chakra-ui/react'
@@ -18,9 +19,8 @@ import { api } from '@services/api'
 import axios from 'axios'
 import { useCallback, useMemo, useState } from 'react'
 import {
-  AiOutlineInstagram,
   AiOutlineMail,
-  AiOutlineUser,
+  AiOutlinePhone,
   AiOutlineWhatsApp,
 } from 'react-icons/ai'
 
@@ -28,11 +28,10 @@ type Owner = {
   _id: string
   name: string
   email: string
-  createdAt: '2023-01-17T00:52:51.267Z'
-  updatedAt: '2023-01-17T15:20:50.923Z'
-  __v: 0
+  phone: string
   avatar: string
 }
+
 const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
   const [owner, setOwner] = useState<Owner>()
 
@@ -44,7 +43,7 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
         },
       })
 
-      setOwner(response.data)
+      setOwner(response.data as Owner)
     } catch (error: any) {
       console.log(error.response)
     }
@@ -62,13 +61,13 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
       <Button
         onClick={onOpen}
         w={'full'}
-        rightIcon={<AiOutlineUser />}
+        rightIcon={<Icon color={'white'} as={AiOutlinePhone} />}
         colorScheme={'whatsapp'}
       >
         Exibir contato do responsável
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} size="sm" onClose={onClose}>
         <ModalOverlay backdropFilter="blur(8px)" />
         <ModalContent>
           <ModalHeader>Responsável</ModalHeader>
@@ -86,54 +85,52 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                     size={'2xl'}
                     color="white"
                     bg={'purple.400'}
-                    src={owner?._id}
+                    src={owner?.avatar}
                   />
                   <Text>{owner?.name}</Text>
                 </VStack>
               </VStack>
               <VStack>
-                <LinkBox>
-                  <a
-                    aria-label="Conversar no whatsapp"
-                    href="https://wa.me/5551986595777"
-                  >
-                    <Button
-                      w="sm"
-                      colorScheme={'whatsapp'}
-                      rightIcon={<AiOutlineWhatsApp />}
+                {owner?.phone ? (
+                  <LinkBox>
+                    <a
+                      target={'_blank'}
+                      aria-label="Conversar no whatsapp"
+                      href={'https://wa.me/' + owner?.phone}
+                      rel="noreferrer"
                     >
-                      Chamar no whatsapp
-                    </Button>
-                  </a>
-                </LinkBox>
-                <LinkBox>
-                  <a
-                    aria-label="Conversar por email"
-                    href="mailto:crys.chb@hotmail.com"
-                  >
-                    <Button
-                      w="sm"
-                      colorScheme={'blue'}
-                      rightIcon={<AiOutlineMail />}
+                      <Button
+                        w="xs"
+                        colorScheme={'whatsapp'}
+                        rightIcon={<AiOutlineWhatsApp />}
+                      >
+                        Chamar no whatsapp
+                      </Button>
+                    </a>
+                  </LinkBox>
+                ) : (
+                  <></>
+                )}
+                {owner?.email ? (
+                  <LinkBox>
+                    <a
+                      target={'_blank'}
+                      aria-label="Conversar por email"
+                      href={`mailto:${owner.email}`}
+                      rel="noreferrer"
                     >
-                      Conversar por email
-                    </Button>
-                  </a>
-                </LinkBox>
-                <LinkBox>
-                  <a
-                    aria-label="Visitar no instagram"
-                    href="https://instagram.com/pultaqueopariu"
-                  >
-                    <Button
-                      w="sm"
-                      colorScheme={'messenger'}
-                      rightIcon={<AiOutlineInstagram />}
-                    >
-                      Visitar no instagram
-                    </Button>
-                  </a>
-                </LinkBox>
+                      <Button
+                        w="xs"
+                        colorScheme={'blue'}
+                        rightIcon={<AiOutlineMail />}
+                      >
+                        Conversar por email
+                      </Button>
+                    </a>
+                  </LinkBox>
+                ) : (
+                  <></>
+                )}
               </VStack>
             </VStack>
           </ModalBody>

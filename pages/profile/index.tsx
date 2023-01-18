@@ -11,6 +11,7 @@ import {
   Container,
   Flex,
   Heading,
+  LinkBox,
   Spinner,
   VStack,
 } from '@chakra-ui/react'
@@ -77,6 +78,11 @@ function UserPage() {
       ) : (
         <Center flexDirection={'column'}>
           <Card>
+            <LinkBox>
+              <Link href={'/profile/update'}>
+                <Button>Editar</Button>
+              </Link>
+            </LinkBox>
             <VStack>
               <Avatar
                 src={user?.avatar || AvatarPlaceholder.src}

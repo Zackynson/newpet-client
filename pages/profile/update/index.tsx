@@ -161,7 +161,11 @@ const UpdateUser = () => {
               </Center>
 
               <CardFooter>
-                <Button onClick={updateProfilePicture} w={'lg'}>
+                <Button
+                  colorScheme={'purple'}
+                  onClick={updateProfilePicture}
+                  w={'lg'}
+                >
                   Salvar
                 </Button>
               </CardFooter>

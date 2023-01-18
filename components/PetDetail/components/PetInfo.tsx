@@ -78,6 +78,7 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
         templateColumns={'repeat(4, 1fr)'}
         justifyContent="space-around"
         gap={'2'}
+        mt={4}
       >
         <Text>
           Nome: <strong> {pet.name}</strong>

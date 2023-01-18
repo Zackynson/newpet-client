@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { api } from '@services/api'
+import axiosRetry from 'axios-retry';
 
 
 
@@ -16,6 +17,7 @@ export default async function handler(
   if(!image)  return res.status(400).json({ message:'Imagem inválida' })
 
   try {
+
     await api.post(`pets/${id}/image` , {file: image.data_url}, {
       headers: {
         authorization: req.headers.authorization

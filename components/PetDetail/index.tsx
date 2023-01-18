@@ -35,10 +35,10 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
   return (
     <Container maxW={'container.lg'} py="10">
       <VStack spacing="24px" direction={'column'}>
-        <PetImages pet={pet}></PetImages>
         <Card w="100%">
           <CardBody>
             <VStack align={'start'} gap={2}>
+              <PetImages pet={pet}></PetImages>
               <PetInfo pet={pet} />
               <PetAddress pet={pet}></PetAddress>
               <OwnerInfo ownerId={pet?.ownerId} />

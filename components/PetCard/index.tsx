@@ -1,58 +1,26 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Pet } from 'types/Pet'
-import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
 
-import moment from 'moment'
-import Link from 'next/link'
 import {
-  Box,
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
   Heading,
   Image,
   Stack,
   StackDivider,
-  Text,
+  Icon,
+  CardHeader,
 } from '@chakra-ui/react'
 
 import fallbackimage from '@public/assets/fallback.png'
+import { FaCat, FaDog } from 'react-icons/fa'
 
 const PetCard = ({ pet }: { pet: Pet }) => {
-  const calculateAge = (date: string) => {
-    try {
-      var birthDate = moment(date, 'YYYYMMDD')
-
-      const years = moment().diff(birthDate, 'years')
-      if (years > 0)
-        return (
-          <>
-            {' '}
-            {years} {years === 1 ? 'ano' : 'anos'}
-          </>
-        )
-
-      const months = moment().diff(birthDate, 'months')
-      if (months > 0)
-        return (
-          <>
-            {' '}
-            {months} {months === 1 ? 'ano' : 'meses'}
-          </>
-        )
-
-      const days = moment().diff(birthDate, 'days')
-      return (
-        <>
-          {' '}
-          {days} {days === 1 ? 'dia' : 'dias'}
-        </>
-      )
-    } catch (error) {}
-
-    return <></>
-  }
+  const PetIcon = useMemo(
+    () => (pet.type === 'cat' ? <Icon as={FaCat} /> : <Icon as={FaDog} />),
+    [pet],
+  )
 
   return (
     <Card w={'xs'}>
@@ -80,7 +48,6 @@ const PetCard = ({ pet }: { pet: Pet }) => {
           <Heading
             overflow={'auto'}
             textAlign="center"
-            textTransform="capitalize"
             size="sm"
             mb={2}
             color="purple.500"
