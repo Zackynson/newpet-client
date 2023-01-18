@@ -5,10 +5,8 @@ import { AuthProvider } from '../contexts/AuthContext'
 import Layout from '@components/Layout'
 
 import {
-  Center,
   ChakraProvider,
   extendTheme,
-  Spinner,
   theme as chakraTheme,
 } from '@chakra-ui/react'
 import { StyleFunctionProps } from '@chakra-ui/theme-tools'
@@ -24,6 +22,9 @@ const theme = extendTheme(
         body: {
           bg: '#f9f9f9',
         },
+        h2:{
+          overflow: 'hidden !important' 
+        }
       }),
     },
   },

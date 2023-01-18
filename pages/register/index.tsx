@@ -6,9 +6,10 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
 import { useAuth } from '@contexts/AuthContext'
-import DoubleCard from '@components/DoubleCard'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
+import InputMask from 'react-input-mask'
+
 import {
   Button,
   Input,
@@ -31,6 +32,7 @@ type Inputs = {
   email: string
   password: string
   confirmPassword: string
+  phone: string
 }
 
 export default function Register() {
@@ -170,6 +172,34 @@ export default function Register() {
                   as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
                   errors={errors}
                   name="email"
+                />
+              </div>
+              <div className={styles['label-container']}>
+                <label
+                  className={styles.label}
+                  htmlFor="phone"
+                  placeholder="(12) 12345-1234"
+                >
+                  DDD + Telefone
+                </label>
+
+                <Input
+                  as={InputMask}
+                  mask="(99) 99999-9999"
+                  maskChar={null}
+                  size={'sm'}
+                  variant="flushed"
+                  {...register('phone', {
+                    required: 'Campo obrigatório',
+                  })}
+                  type="text"
+                  name="phone"
+                />
+
+                <ErrorMessage
+                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                  errors={errors}
+                  name="phone"
                 />
               </div>
               <div className={styles['label-container']}>

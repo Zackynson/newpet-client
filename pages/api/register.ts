@@ -8,11 +8,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const {name, email, password, confirmPassword} = req.body
+  const {name, email, password, confirmPassword, phone} = req.body
 
   try {
     const loginResponse = await api.post('/users', {
-      name, email, password, confirmPassword
+      name, email, password, confirmPassword, phone: phone?.replace(/\D/g, ''),
     })
 
     res.status(200).json(loginResponse.data)

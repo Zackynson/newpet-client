@@ -96,7 +96,7 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                     <a
                       target={'_blank'}
                       aria-label="Conversar no whatsapp"
-                      href={'https://wa.me/' + owner?.phone}
+                      href={`https://api.whatsapp.com/send/?phone=55${owner.phone}`}
                       rel="noreferrer"
                     >
                       <Button

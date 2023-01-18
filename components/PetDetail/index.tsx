@@ -17,7 +17,6 @@ import {
 } from '@chakra-ui/react'
 import PetImages from './components/PetImages'
 import PetAddress from './components/PetAddress'
-import { AiOutlineWhatsApp } from 'react-icons/ai'
 import OwnerInfo from './components/OwnerInfo'
 
 const PetDetail = ({ pet }: { pet?: Pet }) => {
