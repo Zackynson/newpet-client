@@ -230,7 +230,7 @@ function UpdatePetPage() {
                     defaultValue={pet?.type as string}
                     colorScheme="purple"
                   >
-                    <Stack spacing={4} direction="column">
+                    <Stack direction={'row'} spacing={4}>
                       <Radio
                         {...register('type', { required: true })}
                         value="cat"
@@ -259,7 +259,11 @@ function UpdatePetPage() {
                     defaultValue={pet?.breed}
                   >
                     {animalBreedList.map((breed) => (
-                      <option key={breed.name} value={breed.name}>
+                      <option
+                        selected={breed.name === pet?.breed}
+                        key={breed.name}
+                        value={breed.name}
+                      >
                         {breed.name}
                       </option>
                     ))}
