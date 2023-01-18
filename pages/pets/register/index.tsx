@@ -134,7 +134,8 @@ function RegisterPetPage() {
                 <RadioGroup
                   onChange={(value) => setAnimalType(value)}
                   name="type"
-                  defaultValue="dog"
+                  defaultValue="cat"
+                  colorScheme={'purple'}
                 >
                   <Stack spacing={4} direction="row">
                     <Radio
@@ -217,7 +218,7 @@ function RegisterPetPage() {
               <Button
                 isLoading={loading}
                 mt={6}
-                colorScheme="blue"
+                colorScheme="purple"
                 type="submit"
               >
                 Cadastrar

@@ -4,7 +4,14 @@ import Link from 'next/link'
 import { useAuth } from '@contexts/AuthContext'
 import AvatarPlaceholder from '@public/assets/avatar.png'
 
-import { HStack, LinkBox, StackDivider, Image, Avatar } from '@chakra-ui/react'
+import {
+  HStack,
+  LinkBox,
+  StackDivider,
+  Avatar,
+  Box,
+  Card,
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 const Header = ({}) => {
@@ -12,93 +19,113 @@ const Header = ({}) => {
   const { asPath } = useRouter()
 
   return (
-    <div
-      style={{
-        width: '100%',
-        padding: '1rem 1rem',
-        height: '50px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        background: '#111',
-      }}
-    >
-      <div
+    <Card>
+      <Box
+        backdropBlur={'3xl'}
+        background="purple.500"
+        h={'12'}
         style={{
+          width: '100%',
+          padding: '1rem 1rem',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          background: '#e4ebef',
-          height: 35,
-          width: 35,
-          borderRadius: '50%',
+          justifyContent: 'space-between',
         }}
       >
-        <Link href="/">
-          <span
-            style={{
-              paddingTop: '0.25rem',
-              fontFamily: 'Modak',
-              display: 'block',
-              fontSize: '2.25rem',
-              color: '#242526',
-              fontWeight: 'lighter',
-            }}
-          >
-            N
-          </span>
-        </Link>
-      </div>
-      <HStack divider={<StackDivider borderColor={'whiteAlpha.500'} />} gap={5}>
-        <LinkBox
-          borderBottom={'1px'}
-          borderBottomColor={
-            asPath === '/' ||
-            (asPath.startsWith('/pets') && !asPath.endsWith('register'))
-              ? 'blue.500'
-              : 'unset'
-          }
-          _hover={{
-            borderBottomColor: 'blue.300',
-          }}
-          color={'white'}
-        >
-          <Link href="/">Encontrar</Link>
-        </LinkBox>
-
-        <LinkBox
-          borderBottom={'1px'}
-          borderBottomColor={
-            asPath.startsWith('/pets/register') ? 'blue.500' : 'unset'
-          }
-          _hover={{
-            borderBottomColor: 'blue.300',
-          }}
-          color={'white'}
-        >
-          <Link href="/pets/register">Cadastrar</Link>
-        </LinkBox>
-      </HStack>
-      <Link href="/profile" title="Perfil">
         <div
           style={{
-            width: 35,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#e4ebef',
             height: 35,
+            width: 35,
             borderRadius: '50%',
-            overflow: 'hidden',
-            objectFit: 'contain',
           }}
         >
+          <Link href="/">
+            <span
+              style={{
+                paddingTop: '0.25rem',
+                fontFamily: 'Modak',
+                display: 'block',
+                fontSize: '2.25rem',
+                color: '#242526',
+                fontWeight: 'lighter',
+              }}
+            >
+              N
+            </span>
+          </Link>
+        </div>
+        <HStack
+          divider={<StackDivider borderColor={'whiteAlpha.500'} />}
+          gap={5}
+        >
+          <LinkBox
+            _after={{
+              content: '""',
+              position: 'absolute',
+              display: 'block',
+              height: '1',
+              width: '100%',
+              top: '8',
+              borderRadius: '1px',
+
+              background:
+                asPath === '/' ||
+                (asPath.startsWith('/pets') && !asPath.endsWith('register'))
+                  ? 'white'
+                  : 'unset',
+            }}
+            _hover={{
+              _after: {
+                background: 'whiteAlpha.700',
+              },
+            }}
+            color={'white'}
+          >
+            <Link href="/">Encontrar</Link>
+          </LinkBox>
+
+          <LinkBox
+            _after={{
+              content: '""',
+              position: 'absolute',
+              display: 'block',
+              height: '1',
+              width: '100%',
+              top: '8',
+              borderRadius: '1px',
+
+              background: asPath.startsWith('/pets/register')
+                ? 'white'
+                : 'unset',
+            }}
+            _hover={{
+              _after: {
+                background: 'whiteAlpha.700',
+              },
+            }}
+            color={'white'}
+          >
+            <Link href="/pets/register">Cadastrar</Link>
+          </LinkBox>
+        </HStack>
+        <Link href="/profile" title="Perfil">
           <Avatar
+            name={user?.name}
             src={user?.avatar || AvatarPlaceholder.src}
             loading="eager"
-            height={'100%'}
-            width={'100%'}
+            height={9}
+            width={9}
             objectFit="cover"
+            bg={'purple.500'}
+            color="white"
           />
-        </div>
-      </Link>
-    </div>
+        </Link>
+      </Box>
+    </Card>
   )
 }
 

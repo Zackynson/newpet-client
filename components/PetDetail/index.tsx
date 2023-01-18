@@ -18,6 +18,7 @@ import {
 import PetImages from './components/PetImages'
 import PetAddress from './components/PetAddress'
 import { AiOutlineWhatsApp } from 'react-icons/ai'
+import OwnerInfo from './components/OwnerInfo'
 
 const PetDetail = ({ pet }: { pet?: Pet }) => {
   if (!pet)
@@ -40,13 +41,7 @@ const PetDetail = ({ pet }: { pet?: Pet }) => {
             <VStack align={'start'} gap={2}>
               <PetInfo pet={pet} />
               <PetAddress pet={pet}></PetAddress>
-              <Button
-                w={'full'}
-                rightIcon={<AiOutlineWhatsApp />}
-                colorScheme={'whatsapp'}
-              >
-                Exibir contato do responsável
-              </Button>
+              <OwnerInfo ownerId={pet?.ownerId} />
             </VStack>
           </CardBody>
         </Card>

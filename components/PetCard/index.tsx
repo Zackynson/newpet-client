@@ -83,7 +83,7 @@ const PetCard = ({ pet }: { pet: Pet }) => {
             textTransform="capitalize"
             size="sm"
             mb={2}
-            color="blue.500"
+            color="purple.500"
           >
             {pet.name}
           </Heading>

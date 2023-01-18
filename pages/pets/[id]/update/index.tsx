@@ -18,10 +18,12 @@ import {
   Image,
   Input,
   Radio,
+  Icon,
   RadioGroup,
   Select,
   Spinner,
   Stack,
+  Text,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { Breed } from 'types/BreedList'
@@ -36,6 +38,7 @@ import ReactImageUploading from 'react-images-uploading'
 import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
 import { PetType } from 'types/enums/pet-type.enum'
 import { PetSize } from 'types/enums/pet-size.enum'
+import { FaCat, FaDog } from 'react-icons/fa'
 
 const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
@@ -57,7 +60,7 @@ function UpdatePetPage() {
 
   const maxNumber = 5
 
-  const onChangeImages = (imageList: any, addUpdateIndex: any) => {
+  const onChangeImages = (imageList: any, _addUpdateIndex: any) => {
     setImages(imageList)
   }
 
@@ -225,19 +228,22 @@ function UpdatePetPage() {
                     onChange={(value) => setAnimalType(value)}
                     name="type"
                     defaultValue={pet?.type as string}
+                    colorScheme="purple"
                   >
-                    <Stack spacing={4} direction="row">
+                    <Stack spacing={4} direction="column">
                       <Radio
                         {...register('type', { required: true })}
                         value="cat"
                       >
-                        Gato
+                        <Icon as={FaCat} boxSize={8} />
+                        <Text>Gato</Text>
                       </Radio>
                       <Radio
                         {...register('type', { required: true })}
                         value="dog"
                       >
-                        Cão
+                        <Icon as={FaDog} boxSize={8} />
+                        <Text>Cão</Text>
                       </Radio>
                     </Stack>
                   </RadioGroup>
@@ -274,22 +280,22 @@ function UpdatePetPage() {
                     minDate={minDate}
                     propsConfigs={{
                       dateNavBtnProps: {
-                        colorScheme: 'blue',
+                        colorScheme: 'purple',
                         variant: 'solid',
                       },
                       dayOfMonthBtnProps: {
                         selectedBtnProps: {
-                          borderColor: 'blue.300',
-                          bg: 'blue.400',
+                          borderColor: 'purple.300',
+                          bg: 'purple.400',
                           _hover: {
-                            bg: 'blue.500',
+                            bg: 'purple.500',
                           },
                         },
                         defaultBtnProps: {
-                          borderColor: 'blue.300',
-                          bg: 'blue.100',
+                          borderColor: 'purple.300',
+                          bg: 'purple.100',
                           _hover: {
-                            bg: 'blue.400',
+                            bg: 'purple.400',
                           },
                         },
                       },
@@ -311,6 +317,9 @@ function UpdatePetPage() {
                   selectProps={{
                     value: addressInfo,
                     onChange: setAddressInfo,
+                    placeholder:
+                      'Digite o endereço onde o pet pode ser encontrado',
+                    colorScheme: 'purple',
                   }}
                 />
 
@@ -428,7 +437,7 @@ function UpdatePetPage() {
                           h={40}
                           w={60}
                         >
-                          Click or Drop here
+                          Clique ou arraste até aqui
                         </Button>
                       </Grid>
                     </Box>
@@ -438,7 +447,7 @@ function UpdatePetPage() {
                 <Button
                   isLoading={loading}
                   mt={6}
-                  colorScheme="blue"
+                  colorScheme="purple"
                   type="submit"
                 >
                   Atualizar
