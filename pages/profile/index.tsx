@@ -11,6 +11,7 @@ import {
   Container,
   Flex,
   Heading,
+  HStack,
   LinkBox,
   Spinner,
   VStack,
@@ -77,12 +78,7 @@ function UserPage() {
         </div>
       ) : (
         <Center flexDirection={'column'}>
-          <Card>
-            <LinkBox>
-              <Link href={'/profile/update'}>
-                <Button>Editar</Button>
-              </Link>
-            </LinkBox>
+          <Card w={'xl'} p={'10'}>
             <VStack>
               <Avatar
                 src={user?.avatar || AvatarPlaceholder.src}
@@ -93,6 +89,11 @@ function UserPage() {
               <Heading my={10} textAlign={'center'}>
                 {user?.name}
               </Heading>
+              <LinkBox>
+                <Link href={'/profile/update'}>
+                  <Button>Editar</Button>
+                </Link>
+              </LinkBox>
             </VStack>
           </Card>
         </Center>
@@ -107,13 +108,15 @@ function UserPage() {
       >
         {userPets.length ? (
           <>
-            <Heading mb={5}>Seus pets</Heading>
+            <Heading mt={5}>Seus pets</Heading>
 
-            {userPets?.map((pet: Pet) => (
-              <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
-                <PetCard key={`${pet._id}`} pet={pet} />
-              </Link>
-            ))}
+            <HStack>
+              {userPets?.map((pet: Pet) => (
+                <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
+                  <PetCard key={`${pet._id}`} pet={pet} />
+                </Link>
+              ))}
+            </HStack>
           </>
         ) : (
           <VStack mt={10}>

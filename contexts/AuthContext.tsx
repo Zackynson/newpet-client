@@ -17,6 +17,7 @@ type User = {
   name: string
   email: string
   avatar: string
+  phone: string
   updatedAt?: string
   createdAt?: string
 }
