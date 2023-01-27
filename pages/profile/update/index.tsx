@@ -1,5 +1,7 @@
-// users/63bb29eb59818ee972ced9c0/avatar
+import { SmallCloseIcon } from '@chakra-ui/icons'
 import {
+  Avatar,
+  AvatarBadge,
   Box,
   Button,
   Card,
@@ -12,6 +14,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  IconButton,
   Image,
   Input,
   InputGroup,
@@ -22,21 +25,29 @@ import { useAuth } from '@contexts/AuthContext'
 import { UpdateUserDTO } from '@libs/dtos'
 import { api } from '@services/api'
 import axios from 'axios'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ReactImageUploading from 'react-images-uploading'
 import { toast } from 'react-toastify'
 
-// import { Container } from './styles';
-
 const UpdateUser = () => {
   const { user, loading } = useAuth()
+  const [initializedAvatar, setInitializedAvatar] = useState<boolean>(false)
   const [images, setImage] = useState<any>([])
   const { register, handleSubmit } = useForm<UpdateUserDTO>()
 
   const onChangeImages = (imageList: any, addUpdateIndex: any) => {
     setImage(imageList)
   }
+
+  useMemo(() => {
+    if (user && !initializedAvatar) {
+      setInitializedAvatar(true)
+      setImage([{ data_url: user.avatar }])
+    }
+  }, [user, initializedAvatar, setImage])
 
   const updateProfilePicture = useCallback(
     async (data: UpdateUserDTO) => {
@@ -84,8 +95,8 @@ const UpdateUser = () => {
   )
 
   return (
-    <Container maxW="container.lg">
-      <Center>
+    <Container h={'100%'} py={10} maxW="container.lg">
+      <Center h={'100%'}>
         <VStack flex={'1'}>
           <Card flex={1} w="lg">
             <CardHeader textAlign={'center'}>
@@ -140,7 +151,6 @@ const UpdateUser = () => {
                                 )}
                               </div>
                             )}
-                            {/* imagens que ja estao no pet */}
 
                             {imageList?.length ? (
                               imageList.map((image: any, index: any) => (
@@ -151,54 +161,30 @@ const UpdateUser = () => {
                                   key={index}
                                   className="image-item"
                                 >
-                                  <Image
-                                    border={'1px'}
-                                    src={image['data_url']}
-                                    alt=""
-                                    maxH={40}
-                                    maxW={40}
-                                    minW={40}
-                                    minH={40}
-                                    borderRadius="full"
-                                    flex={1}
-                                    objectFit="cover"
-                                    justifySelf="center"
-                                    alignSelf={'center'}
-                                  />
-                                  <Box>
-                                    <Button
-                                      my={2}
-                                      type="button"
-                                      variant={'outline'}
-                                      colorScheme="red"
-                                      onClick={() => onImageRemove(index)}
-                                    >
-                                      Remover
-                                    </Button>
-                                  </Box>
+                                  <Center>
+                                    <Avatar size="xl" src={image['data_url']}>
+                                      <AvatarBadge
+                                        as={IconButton}
+                                        size="sm"
+                                        rounded="full"
+                                        top="-10px"
+                                        colorScheme="red"
+                                        objectFit={'cover'}
+                                        objectPosition="center"
+                                        aria-label="remove Image"
+                                        icon={<SmallCloseIcon />}
+                                        onClick={() => onImageRemove(index)}
+                                      />
+                                    </Avatar>
+                                  </Center>
                                 </Flex>
                               ))
                             ) : (
-                              <Button
-                                type="button"
-                                style={
-                                  isDragging ? { color: 'red' } : undefined
-                                }
+                              <Avatar
                                 onClick={onImageUpload}
-                                {...dragProps}
-                                maxH={40}
-                                maxW={40}
-                                minW={40}
-                                minH={40}
-                                overflow="hidden"
-                                border={'1px'}
-                                borderRadius="full"
-                              >
-                                clique ou arraste
-                                <br /> uma imagem
-                                <br /> para alterar
-                                <br /> seu avatar
-                              </Button>
+                                size="xl"
+                                cursor={'pointer'}
+                              />
                             )}
                           </Box>
                         )}
@@ -234,6 +220,23 @@ const UpdateUser = () => {
       </Center>
     </Container>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['newpet-token']: token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
 
 export default UpdateUser
