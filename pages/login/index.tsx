@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Head from 'next/head'
 import styles from './styles.module.css'
 import pugBackground from '@public/assets/blue_dog.jpg'
@@ -17,9 +18,12 @@ import {
   HStack,
   Text,
   Flex,
-  Divider,
   Box,
   useMediaQuery,
+  VStack,
+  Image,
+  Heading,
+  useColorMode,
 } from '@chakra-ui/react'
 
 import { useForm } from 'react-hook-form'
@@ -29,6 +33,11 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 export default function Home() {
   const [show, setShow] = useState<boolean>()
   const [isMobile] = useMediaQuery('(max-width: 768px)')
+  const { setColorMode } = useColorMode()
+
+  useEffect(() => {
+    setColorMode('dark')
+  }, [setColorMode])
 
   const handleClick = () => {
     setShow(!show)
@@ -80,108 +89,126 @@ export default function Home() {
           w={isMobile ? 'container.sm' : 'container.lg'}
           p={isMobile ? '10' : ''}
           m={10}
+          minH={isMobile ? '' : 'xl'}
+          maxH={isMobile ? '' : '2xl'}
+          overflow={'hidden'}
         >
-          <HStack>
-            <form
-              className={styles.login}
+          <HStack w={'100%'} h="100%" flex={1}>
+            <FormControl
+              as="form"
+              flex="1"
+              h={'full'}
+              w={'full'}
               onSubmit={handleSubmit(authenticate)}
             >
-              <h1>NEWPET</h1>
-              <div className={styles['label-container']}>
-                <FormControl>
-                  <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="email">
-                    e-mail
-                  </FormLabel>
-                  <Input
-                    size={'sm'}
-                    variant="flushed"
-                    {...register('email', { required: 'Campo obrigatório' })}
-                    type="text"
+              <VStack>
+                <Heading
+                  fontFamily={'modak'}
+                  letterSpacing="px"
+                  fontSize={'3rem'}
+                  fontWeight="thin"
+                >
+                  NEWPET
+                </Heading>
+                <Box w={'200px'} pt={10} pb={4}>
+                  <FormControl>
+                    <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="email">
+                      e-mail
+                    </FormLabel>
+                    <Input
+                      size={'sm'}
+                      variant="flushed"
+                      {...register('email', { required: 'Campo obrigatório' })}
+                      type="text"
+                      name="email"
+                    />
+                  </FormControl>
+                  <ErrorMessage
+                    as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                    errors={errors}
                     name="email"
                   />
-                </FormControl>
-                <ErrorMessage
-                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                  errors={errors}
-                  name="email"
-                />
-              </div>
-              <div
-                className={styles['label-container']}
-                style={{ marginTop: 20 }}
-              >
-                <FormControl>
-                  <FormLabel
-                    fontSize={'smaller'}
-                    size={'sm'}
-                    htmlFor="password"
-                  >
-                    senha
-                  </FormLabel>
-                  <InputGroup size="sm">
-                    <Input
-                      {...register('password', {
-                        required: 'Campo obrigatório',
-                      })}
-                      name="password"
-                      pr="2.5rem"
-                      type={show ? 'text' : 'password'}
-                      variant={'flushed'}
-                    />
-                    <InputRightElement width="4rem">
-                      <Button
-                        h="1rem"
-                        ml={'6'}
-                        variant={'ghost'}
-                        size="sm"
-                        onClick={handleClick}
-                      >
-                        {show ? (
-                          <Icon as={AiOutlineEyeInvisible} />
-                        ) : (
-                          <Icon as={AiOutlineEye} />
-                        )}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
+                </Box>
+                <Box w={'200px'} pb={4}>
+                  <FormControl>
+                    <FormLabel
+                      fontSize={'smaller'}
+                      size={'sm'}
+                      htmlFor="password"
+                    >
+                      senha
+                    </FormLabel>
+                    <InputGroup size="sm">
+                      <Input
+                        {...register('password', {
+                          required: 'Campo obrigatório',
+                        })}
+                        name="password"
+                        pr="2.5rem"
+                        type={show ? 'text' : 'password'}
+                        variant={'flushed'}
+                      />
+                      <InputRightElement width="4rem">
+                        <Button
+                          h="1rem"
+                          ml={'6'}
+                          variant={'ghost'}
+                          size="sm"
+                          onClick={handleClick}
+                        >
+                          {show ? (
+                            <Icon as={AiOutlineEyeInvisible} />
+                          ) : (
+                            <Icon as={AiOutlineEye} />
+                          )}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
+                  </FormControl>
 
-                <ErrorMessage
-                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                  errors={errors}
-                  name="password"
-                />
-              </div>
+                  <ErrorMessage
+                    as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                    errors={errors}
+                    name="password"
+                  />
+                </Box>
 
-              <Button
-                isLoading={loading}
-                variant={'solid'}
-                type="submit"
-                colorScheme={'blue'}
-                w={200}
-                h={6}
-                mt={'3'}
-              >
-                Entrar
-              </Button>
-              <small
-                style={{ textAlign: 'center', opacity: 0.8, marginTop: 10 }}
-              >
-                Ainda não tem uma conta?
-              </small>
-              <Link
-                href="/register"
-                style={{ textAlign: 'center', marginTop: 10 }}
-              >
-                Crie uma agora
-              </Link>
-            </form>
+                <Button
+                  isLoading={loading}
+                  variant={'solid'}
+                  type="submit"
+                  colorScheme={'blue'}
+                  w={200}
+                  h={6}
+                  mt={'3'}
+                >
+                  Entrar
+                </Button>
+                <Text as="small" textAlign={'center'} opacity={0.8} pt={4}>
+                  Ainda não tem uma conta?
+                </Text>
+                <Link href="/register" style={{ textAlign: 'center' }}>
+                  Crie uma agora
+                </Link>
+              </VStack>
+            </FormControl>
+
             <Box
-              display={isMobile ? 'none' : 'block'}
-              className={styles.aside}
-              style={{ backgroundImage: `url('${pugBackground.src}')` }}
+              flex="1"
+              minH={'100%'}
+              objectFit="contain"
+              w={'full'}
+              display={{ base: 'none', lg: 'flex' }}
+              bg="red"
+              alignItems={'center'}
+              justifyContent={'center'}
             >
-              <Text mt={'20'}>
+              <Image
+                src={pugBackground.src}
+                position="relative"
+                alt="bulldog sitting with a blue background"
+              />
+              <Text color={'white'} position={'absolute'} top={'20'}>
                 Chegou a hora de encontrar seu novo pet <br></br> com o melhor
                 app de adoção de animais do Brasil
               </Text>

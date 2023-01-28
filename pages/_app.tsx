@@ -19,12 +19,9 @@ const theme = extendTheme(
     },
     styles: {
       global: (props: StyleFunctionProps) => ({
-        body: {
-          bg: '#f9f9f9',
+        h2: {
+          overflow: 'hidden !important',
         },
-        h2:{
-          overflow: 'hidden !important' 
-        }
       }),
     },
   },

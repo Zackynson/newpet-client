@@ -1,5 +1,6 @@
 // components/Layout.js
-import Header from '@components/Header'
+import AuthorizedHeader from '@components/Header/AuthorizedHeader'
+import NonAuthorizedHeader from '@components/Header/NonAuthorizedHeader'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
@@ -18,10 +19,13 @@ const Layout = ({
   const { asPath } = useRouter()
 
   return NOT_ALLOWED_HEADER_ROUTES.includes(asPath) ? (
-    <>{children}</>
+    <>
+      <NonAuthorizedHeader />
+      {children}
+    </>
   ) : (
     <>
-      <Header></Header>
+      <AuthorizedHeader />
       {children}
     </>
   )

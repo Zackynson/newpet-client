@@ -61,10 +61,10 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
       <Button
         onClick={onOpen}
         w={'full'}
-        rightIcon={<Icon color={'white'} as={AiOutlinePhone} />}
+        rightIcon={<Icon as={AiOutlineWhatsApp} />}
         colorScheme={'whatsapp'}
       >
-        Exibir contato do responsável
+        <Text>Exibir contato do responsável</Text>
       </Button>
 
       <Modal isOpen={isOpen} size="sm" onClose={onClose}>

@@ -60,7 +60,7 @@ function Pets() {
                 justifyContent: 'center',
               }}
             >
-              <Spinner speed="0.65s" color="black" size="lg" />
+              <Spinner speed="0.65s" size="lg" />
             </div>
           ) : (
             <></>

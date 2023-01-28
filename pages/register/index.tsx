@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import styles from './styles.module.css'
 import catBackground from '@public/assets/blue_cat.jpg'
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
@@ -21,10 +20,12 @@ import {
   Heading,
   Image,
   Box,
-  Center,
-  Container,
   Flex,
   useMediaQuery,
+  useColorMode,
+  FormControl,
+  FormLabel,
+  VStack,
 } from '@chakra-ui/react'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 type Inputs = {
@@ -39,6 +40,11 @@ export default function Register() {
   const [loading, setLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [isMobile] = useMediaQuery('(max-width: 768px)')
+  const { setColorMode } = useColorMode()
+
+  useEffect(() => {
+    setColorMode('dark')
+  }, [setColorMode])
 
   const handleClick = () => setShowPassword(!showPassword)
 
@@ -113,201 +119,192 @@ export default function Register() {
           maxH={isMobile ? '' : '2xl'}
           overflow={'hidden'}
         >
-          <HStack>
-            <Box h={'100%'} display={isMobile ? 'none' : 'block'}>
-              <Image alt="cat" src={catBackground.src} />
+          <HStack w={'100%'} h="100%" flex={1}>
+            <Box
+              objectFit={'cover'}
+              w="50%"
+              h={'100%'}
+              display={{ base: 'none', lg: 'block' }}
+            >
+              <Image objectFit={'cover'} alt="cat" src={catBackground.src} />
             </Box>
-            <form
-              style={{ height: '100%', marginBottom: '2rem' }}
-              className={styles.login}
+            <FormControl
+              as="form"
+              flex="1"
+              h={'full'}
+              w={'full'}
               onSubmit={handleSubmit(createAndLogin)}
             >
-              <Heading
-                fontWeight={'thin'}
-                color={'#78cae3'}
-                fontFamily={'Modak'}
-                fontSize={'3rem'}
-                letterSpacing={1}
-                textShadow="-1px -1px 0 #555, 1px -1px 0 #555, -1px 1px 0 #555, 1px 1px 0 #555;"
-              >
-                NEWPET
-              </Heading>
-              <div className={styles['label-container']}>
-                <label
-                  className={styles.label}
-                  htmlFor="name"
-                  placeholder="Seu nome"
+              <VStack>
+                <Heading
+                  fontFamily={'modak'}
+                  letterSpacing="px"
+                  fontSize={'3rem'}
+                  fontWeight="thin"
                 >
-                  nome
-                </label>
-                <Input
-                  size="sm"
-                  variant="flushed"
-                  {...register('name', { required: 'Campo obrigatório' })}
-                  type="text"
-                  name="name"
-                />
-                <ErrorMessage
-                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                  errors={errors}
-                  name="name"
-                />
-              </div>
-              <div className={styles['label-container']}>
-                <label
-                  className={styles.label}
-                  htmlFor="email"
-                  placeholder="seu melhor e-mail"
-                >
-                  e-mail
-                </label>
-                <Input
-                  size={'sm'}
-                  variant="flushed"
-                  {...register('email', { required: 'Campo obrigatório' })}
-                  type="text"
-                  name="email"
-                />
-                <ErrorMessage
-                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                  errors={errors}
-                  name="email"
-                />
-              </div>
-              <div className={styles['label-container']}>
-                <label
-                  className={styles.label}
-                  htmlFor="phone"
-                  placeholder="(12) 12345-1234"
-                >
-                  DDD + Telefone
-                </label>
+                  NEWPET
+                </Heading>
 
-                <Input
-                  as={InputMask}
-                  mask="(99) 99999-9999"
-                  maskChar={null}
-                  size={'sm'}
-                  variant="flushed"
-                  {...register('phone', {
-                    required: 'Campo obrigatório',
-                  })}
-                  type="text"
-                  name="phone"
-                />
-
-                <ErrorMessage
-                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                  errors={errors}
-                  name="phone"
-                />
-              </div>
-              <div className={styles['label-container']}>
-                <label className={styles.label} htmlFor="password">
-                  senha
-                </label>
-                <InputGroup size="sm">
+                <Box w={'200px'} pb={4}>
+                  <FormLabel fontSize={'smaller'} size={'sm'} htmlFor="name">
+                    name
+                  </FormLabel>
                   <Input
-                    {...register('password', {
+                    size="sm"
+                    variant="flushed"
+                    {...register('name', { required: 'Campo obrigatório' })}
+                    type="text"
+                    name="name"
+                  />
+                  <ErrorMessage
+                    as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                    errors={errors}
+                    name="name"
+                  />
+                </Box>
+                <Box w={'200px'} pb={4}>
+                  <FormLabel htmlFor="email" placeholder="seu melhor e-mail">
+                    e-mail
+                  </FormLabel>
+                  <Input
+                    size={'sm'}
+                    variant="flushed"
+                    {...register('email', { required: 'Campo obrigatório' })}
+                    type="text"
+                    name="email"
+                  />
+                  <ErrorMessage
+                    as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                    errors={errors}
+                    name="email"
+                  />
+                </Box>
+                <Box w={'200px'} pb={4}>
+                  <FormLabel htmlFor="phone" placeholder="(12) 12345-1234">
+                    DDD + Telefone
+                  </FormLabel>
+
+                  <Input
+                    as={InputMask}
+                    mask="(99) 99999-9999"
+                    maskChar={null}
+                    size={'sm'}
+                    variant="flushed"
+                    {...register('phone', {
                       required: 'Campo obrigatório',
-                      minLength: {
-                        value: 8,
-                        message: 'A senha deve conter no minimo 8 letras',
-                      },
                     })}
+                    type="text"
+                    name="phone"
+                  />
+
+                  <ErrorMessage
+                    as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                    errors={errors}
+                    name="phone"
+                  />
+                </Box>
+                <Box w={'200px'} pb={4}>
+                  <FormLabel htmlFor="password">senha</FormLabel>
+                  <InputGroup size="sm">
+                    <Input
+                      {...register('password', {
+                        required: 'Campo obrigatório',
+                        minLength: {
+                          value: 8,
+                          message: 'A senha deve conter no minimo 8 letras',
+                        },
+                      })}
+                      name="password"
+                      pr="2.5rem"
+                      type={showPassword ? 'text' : 'password'}
+                      variant={'flushed'}
+                    />
+                    <InputRightElement width="4rem">
+                      <Button
+                        h="1rem"
+                        ml={'6'}
+                        variant={'ghost'}
+                        size="sm"
+                        onClick={handleClick}
+                      >
+                        {showPassword ? (
+                          <Icon as={AiOutlineEyeInvisible} />
+                        ) : (
+                          <Icon as={AiOutlineEye} />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+
+                  <ErrorMessage
+                    as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                    errors={errors}
                     name="password"
-                    pr="2.5rem"
-                    type={showPassword ? 'text' : 'password'}
-                    variant={'flushed'}
                   />
-                  <InputRightElement width="4rem">
-                    <Button
-                      h="1rem"
-                      ml={'6'}
-                      variant={'ghost'}
-                      size="sm"
-                      onClick={handleClick}
-                    >
-                      {showPassword ? (
-                        <Icon as={AiOutlineEyeInvisible} />
-                      ) : (
-                        <Icon as={AiOutlineEye} />
-                      )}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-
-                <ErrorMessage
-                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                  errors={errors}
-                  name="password"
-                />
-              </div>
-              <div className={styles['label-container']}>
-                <label className={styles.label} htmlFor="confirmPassword">
-                  confirmação de senha
-                </label>
-                <InputGroup size="sm">
-                  <Input
-                    {...register('confirmPassword', {
-                      required: 'Campo obrigatório',
-                      minLength: 8,
-                      validate: (value) =>
-                        value === getValues('password') ||
-                        'Senha e confirmação de senha devem ser iguais',
-                    })}
+                </Box>
+                <Box w={'200px'} pb={4}>
+                  <FormLabel htmlFor="confirmPassword">
+                    confirmação de senha
+                  </FormLabel>
+                  <InputGroup size="sm">
+                    <Input
+                      {...register('confirmPassword', {
+                        required: 'Campo obrigatório',
+                        minLength: 8,
+                        validate: (value) =>
+                          value === getValues('password') ||
+                          'Senha e confirmação de senha devem ser iguais',
+                      })}
+                      name="confirmPassword"
+                      pr="2.5rem"
+                      type={showPassword ? 'text' : 'password'}
+                      variant={'flushed'}
+                    />
+                    <InputRightElement width="4rem">
+                      <Button
+                        h="1rem"
+                        ml={6}
+                        variant={'ghost'}
+                        size="sm"
+                        onClick={handleClick}
+                      >
+                        {showPassword ? (
+                          <Icon as={AiOutlineEyeInvisible} />
+                        ) : (
+                          <Icon as={AiOutlineEye} />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                  <ErrorMessage
+                    as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
+                    errors={errors}
                     name="confirmPassword"
-                    pr="2.5rem"
-                    type={showPassword ? 'text' : 'password'}
-                    variant={'flushed'}
                   />
-                  <InputRightElement width="4rem">
-                    <Button
-                      h="1rem"
-                      ml={6}
-                      variant={'ghost'}
-                      size="sm"
-                      onClick={handleClick}
-                    >
-                      {showPassword ? (
-                        <Icon as={AiOutlineEyeInvisible} />
-                      ) : (
-                        <Icon as={AiOutlineEye} />
-                      )}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                <ErrorMessage
-                  as={<p style={{ color: 'red', fontSize: '0.75rem' }}></p>}
-                  errors={errors}
-                  name="confirmPassword"
-                />
-              </div>
-
-              <>
-                <Button
-                  isLoading={loading}
-                  variant={'solid'}
-                  type="submit"
-                  bg={'#78cae3'}
-                  color={'white'}
-                  colorScheme="cyan"
-                  w={200}
-                  h={6}
-                  mt={'3'}
-                >
-                  Entrar
-                </Button>
-                <div className={styles['label-container']}>
+                </Box>
+                <>
+                  <Button
+                    isLoading={loading}
+                    variant={'solid'}
+                    type="submit"
+                    bg={'#78cae3'}
+                    color={'white'}
+                    colorScheme="cyan"
+                    w={200}
+                    h={6}
+                    mt={'3'}
+                  >
+                    Entrar
+                  </Button>
                   <small style={{ textAlign: 'center', marginTop: 10 }}>
                     Já possui uma conta?
                   </small>
                   <Link href="/" style={{ textAlign: 'center', marginTop: 10 }}>
                     Faça login
                   </Link>
-                </div>
-              </>
-            </form>
+                </>
+              </VStack>
+            </FormControl>
           </HStack>
         </Card>
       </Flex>
