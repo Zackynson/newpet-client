@@ -3,34 +3,25 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { api } from '@services/api'
 
 
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-
-
   const {id} = req.query;
   const {image} = req.body
 
-  if(!image)  return res.status(400).json({ message:'Imagem inválida' })
+  if(!image) { 
+    return res.status(400).json({ message:'Imagem inválida' })
+  }
 
   try {
-
-    const userResponse = await api.get('/auth/me', { headers: {
-      authorization: req.headers.authorization
-    }})
-
-
-    console.log(userResponse.data)
-
-    await api.post(`users/avatar` , {file: image}, {
+    await api.delete(`pets/${id}/image?imageUrl=${image}`, {
       headers: {
         authorization: req.headers.authorization
       }
     })
 
-    return res.status(200).json({ message: 'Imagem enviada com sucesso'})
+    return res.status(200).json({ message: 'Imagem removida com sucesso'})
   } catch (error: any) {
 
     console.log(error.response)
@@ -42,5 +33,8 @@ export default async function handler(
 export const config = {
   api: {
     responseLimit: '8mb',
+    bodyParser:{
+      sizeLimit:'10mb',
+    }
   },
 }

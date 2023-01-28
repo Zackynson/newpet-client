@@ -1,3 +1,4 @@
+import { EditIcon } from '@chakra-ui/icons'
 import {
   Button,
   Flex,
@@ -65,7 +66,11 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
         <Heading> Informações</Heading>
         {pet?.ownerId === user?._id ? (
           <Link href={'/pets/' + pet?._id + '/update'}>
-            <Button color="white" colorScheme={'purple'}>
+            <Button
+              rightIcon={<EditIcon />}
+              color="white"
+              colorScheme={'purple'}
+            >
               Editar
             </Button>
           </Link>

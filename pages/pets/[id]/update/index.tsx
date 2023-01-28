@@ -77,6 +77,37 @@ function UpdatePetPage() {
   const router = useRouter()
   const { id } = router.query
 
+  const onRemoveUploadedImages = useCallback(
+    async (imageUrl: string) => {
+      const t = await toast.promise(
+        axios.post(
+          `/api/pets/${id}/remove-image/`,
+          { image: imageUrl },
+          {
+            headers: {
+              authorization: api.defaults.headers.authorization as string,
+            },
+          },
+        ),
+        {
+          error: 'Ocorreu um erro ao remover essa imagem',
+          success: 'Imagem excluida com sucesso',
+          pending: 'Removendo imagem',
+        },
+      )
+
+      if (t.status === 200) {
+        const { images, ...rest } = pet as Pet
+
+        const filteredImages = images?.filter((i) => i !== imageUrl)
+        const updatedPet = { ...rest, images: filteredImages }
+
+        setPet(updatedPet)
+      }
+    },
+    [id, pet],
+  )
+
   const loadPet = useCallback(async () => {
     setLoading(true)
     try {
@@ -384,12 +415,11 @@ function UpdatePetPage() {
                             />
                             <Box>
                               <Button
-                                disabled
                                 my={2}
                                 type="button"
                                 variant={'outline'}
                                 colorScheme="red"
-                                onClick={() => onImageRemove(index)}
+                                onClick={() => onRemoveUploadedImages(image)}
                               >
                                 Remover
                               </Button>

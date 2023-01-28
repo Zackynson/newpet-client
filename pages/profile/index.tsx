@@ -5,14 +5,19 @@ import AvatarPlaceholder from '@public/assets/avatar.png'
 import { useAuth } from '@contexts/AuthContext'
 import {
   Avatar,
+  Box,
   Button,
   Card,
   Center,
   Container,
   Flex,
+  FormLabel,
   Heading,
+  HStack,
+  Input,
   LinkBox,
   Spinner,
+  StackDivider,
   VStack,
 } from '@chakra-ui/react'
 import { useCallback, useState } from 'react'
@@ -23,6 +28,7 @@ import { toast } from 'react-toastify'
 import { Pet } from 'types/Pet'
 import PetCard from '@components/PetCard'
 import Link from 'next/link'
+import { EditIcon } from '@chakra-ui/icons'
 
 function UserPage() {
   const { user, loading, logout } = useAuth()
@@ -51,7 +57,7 @@ function UserPage() {
   }, [loadPets])
 
   return (
-    <Container maxW={'container.xl'}>
+    <Container py={10} maxW={'container.xl'}>
       <Head>
         <title>NEWPET | {user?.name}</title>
         <meta
@@ -62,86 +68,111 @@ function UserPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {loading || loadingPets ? (
-        <div
-          style={{
-            alignSelf: 'center',
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Spinner />
-        </div>
-      ) : (
-        <Center flexDirection={'column'}>
-          <Card>
-            <LinkBox>
-              <Link href={'/profile/update'}>
-                <Button>Editar</Button>
-              </Link>
-            </LinkBox>
-            <VStack>
-              <Avatar
-                src={user?.avatar || AvatarPlaceholder.src}
-                loading="eager"
-                objectFit="cover"
-                size={'2xl'}
-              />
-              <Heading my={10} textAlign={'center'}>
-                {user?.name}
-              </Heading>
-            </VStack>
-          </Card>
-        </Center>
-      )}
-
-      <Flex
-        gap={10}
-        align="center"
-        direction={'column'}
-        justify={'center'}
-        wrap="wrap"
-      >
-        {userPets.length ? (
-          <>
-            <Heading mb={5}>Seus pets</Heading>
-
-            {userPets?.map((pet: Pet) => (
-              <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
-                <PetCard key={`${pet._id}`} pet={pet} />
-              </Link>
-            ))}
-          </>
+      <Card py={10}>
+        {loading || loadingPets ? (
+          <div
+            style={{
+              alignSelf: 'center',
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Spinner />
+          </div>
         ) : (
-          <VStack mt={10}>
-            <Heading size={'md'} textAlign={'center'}>
-              Você ainda não cadastrou nenhum pet
-            </Heading>
+          <Center flexDirection={'column'}>
+            <VStack divider={<StackDivider />}>
+              <Box my={10} w={'100%'}>
+                <HStack justify={'space-around'}>
+                  <Avatar
+                    src={user?.avatar || AvatarPlaceholder.src}
+                    loading="eager"
+                    objectFit="cover"
+                    size={'2xl'}
+                  />
 
-            <Link href="/pets/register">
-              <Button variant={'link'} colorScheme="blue">
-                Cadastre agora
-              </Button>
-            </Link>
-          </VStack>
+                  <Box>
+                    <FormLabel>
+                      nome: <strong>{user?.name}</strong>
+                    </FormLabel>
+
+                    <FormLabel>
+                      Email: <strong>{user?.email}</strong>
+                    </FormLabel>
+
+                    <FormLabel>
+                      WhatsApp: <strong>{user?.phone}</strong>
+                    </FormLabel>
+
+                    <LinkBox>
+                      <Link href={'/profile/update'}>
+                        <Button
+                          rightIcon={<EditIcon />}
+                          mt={2}
+                          w={'xs'}
+                          colorScheme={'purple'}
+                        >
+                          Editar
+                        </Button>
+                      </Link>
+                    </LinkBox>
+                  </Box>
+                </HStack>
+              </Box>
+              <Box>
+                <Heading mt={5}>Seus pets</Heading>
+
+                {userPets.length ? (
+                  <>
+                    <HStack>
+                      {userPets?.map((pet: Pet) => (
+                        <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
+                          <PetCard key={`${pet._id}`} pet={pet} />
+                        </Link>
+                      ))}
+                    </HStack>
+                  </>
+                ) : (
+                  <VStack mt={10}>
+                    <Heading size={'md'} textAlign={'center'}>
+                      Você ainda não cadastrou nenhum pet
+                    </Heading>
+
+                    <Link href="/pets/register">
+                      <Button variant={'link'} colorScheme="blue">
+                        Cadastre agora
+                      </Button>
+                    </Link>
+                  </VStack>
+                )}
+              </Box>
+            </VStack>
+          </Center>
         )}
-      </Flex>
 
-      <Center>
-        <Button
-          isLoading={loading}
-          onClick={logout}
-          maxW="xl"
-          colorScheme="red"
-          my={8}
-          variant="link"
-        >
-          Sair
-        </Button>
-      </Center>
+        <Flex
+          gap={10}
+          align="center"
+          direction={'column'}
+          justify={'center'}
+          wrap="wrap"
+        ></Flex>
+        <Center>
+          <Button
+            isLoading={loading}
+            onClick={logout}
+            maxW="xl"
+            colorScheme="red"
+            my={8}
+            variant="link"
+          >
+            Sair
+          </Button>
+        </Center>
+      </Card>
     </Container>
   )
 }
