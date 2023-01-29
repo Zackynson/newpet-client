@@ -19,12 +19,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
           rel="stylesheet"
         />
-        {/* Google Adsense */}
-        <script
-          data-ad-client="<Your value here>"
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-        ></script>
 
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <script
@@ -34,6 +28,7 @@ export default function Document() {
         <script
           dangerouslySetInnerHTML={{
             __html: `
+            
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
