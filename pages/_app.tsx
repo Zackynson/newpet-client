@@ -13,6 +13,7 @@ import { StyleFunctionProps } from '@chakra-ui/theme-tools'
 
 const theme = extendTheme(
   {
+    useSystemColorMode: false,
     colors: {
       ...chakraTheme.colors,
       brand: chakraTheme.colors.blue,

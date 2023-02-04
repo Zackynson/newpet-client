@@ -40,11 +40,6 @@ export default function Register() {
   const [loading, setLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [isMobile] = useMediaQuery('(max-width: 768px)')
-  const { setColorMode } = useColorMode()
-
-  useEffect(() => {
-    setColorMode('dark')
-  }, [setColorMode])
 
   const handleClick = () => setShowPassword(!showPassword)
 

@@ -27,7 +27,14 @@ export default function Nav() {
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
-              <Button onClick={toggleColorMode}>
+              <Button
+                onClick={toggleColorMode}
+                title={
+                  colorMode === 'light'
+                    ? 'Alterar para tema escuro'
+                    : 'Alterar para tema claro'
+                }
+              >
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
             </Stack>

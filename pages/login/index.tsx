@@ -33,11 +33,6 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 export default function Home() {
   const [show, setShow] = useState<boolean>()
   const [isMobile] = useMediaQuery('(max-width: 768px)')
-  const { setColorMode } = useColorMode()
-
-  useEffect(() => {
-    setColorMode('dark')
-  }, [setColorMode])
 
   const handleClick = () => {
     setShow(!show)
