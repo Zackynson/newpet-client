@@ -199,7 +199,6 @@ export default function Home() {
               objectFit="contain"
               w={'full'}
               display={{ base: 'none', lg: 'flex' }}
-              bg="red"
               alignItems={'center'}
               justifyContent={'center'}
             >
