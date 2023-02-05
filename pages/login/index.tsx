@@ -52,7 +52,7 @@ export default function Home() {
   }
 
   const authenticate = useCallback(
-    async (data: Inputs) => {
+    async (data: any) => {
       // if (!data.email?.length) return toast.error('Email é obrigatório')
       // if (!data.password?.length) return toast.error('Senha é obrigatória')
 
@@ -171,7 +171,8 @@ export default function Home() {
                 <Button
                   isLoading={loading}
                   variant={'solid'}
-                  type="submit"
+                  type="button"
+                  onClick={authenticate}
                   colorScheme={'blue'}
                   w={200}
                   h={6}
