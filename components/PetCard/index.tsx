@@ -14,9 +14,8 @@ import {
 } from '@chakra-ui/react'
 
 import fallbackimage from '@public/assets/fallback.png'
-import { FaCat, FaDog } from 'react-icons/fa'
 
-const PetCard = ({ pet }: { pet: Pet; gray?: boolean }) => {
+const PetCard = ({ pet }: { pet: Pet }) => {
   return (
     <Card w={'xs'}>
       <Stack divider={<StackDivider />}>
