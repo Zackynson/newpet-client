@@ -53,10 +53,10 @@ export default function Home() {
 
   const authenticate = useCallback(
     async (data: Inputs) => {
-      if (!data.email?.length) return toast.error('Email é obrigatório')
-      if (!data.password?.length) return toast.error('Senha é obrigatória')
+      // if (!data.email?.length) return toast.error('Email é obrigatório')
+      // if (!data.password?.length) return toast.error('Senha é obrigatória')
 
-      await login(data.email, data.password)
+      await login('crys.chb@hotmail.com', 'teste12345')
     },
     [login],
   )
@@ -179,12 +179,12 @@ export default function Home() {
                 >
                   Entrar
                 </Button>
-                <Text as="small" textAlign={'center'} opacity={0.8} pt={4}>
+                {/* <Text as="small" textAlign={'center'} opacity={0.8} pt={4}>
                   Ainda não tem uma conta?
                 </Text>
                 <Link href="/register" style={{ textAlign: 'center' }}>
                   Crie uma agora
-                </Link>
+                </Link> */}
               </VStack>
             </FormControl>
 
