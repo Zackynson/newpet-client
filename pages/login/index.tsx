@@ -113,7 +113,7 @@ export default function Home() {
                     <Input
                       size={'sm'}
                       variant="flushed"
-                      {...register('email', { required: 'Campo obrigatório' })}
+                      // {...register('email', { required: 'Campo obrigatório' })}
                       type="text"
                       name="email"
                     />
@@ -135,9 +135,9 @@ export default function Home() {
                     </FormLabel>
                     <InputGroup size="sm">
                       <Input
-                        {...register('password', {
-                          required: 'Campo obrigatório',
-                        })}
+                        // {...register('password', {
+                        //   required: 'Campo obrigatório',
+                        // })}
                         name="password"
                         pr="2.5rem"
                         type={show ? 'text' : 'password'}
