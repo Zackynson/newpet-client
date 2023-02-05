@@ -1,10 +1,9 @@
 import Head from 'next/head'
 import catBackground from '@public/assets/blue_cat.jpg'
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
-import { useAuth } from '@contexts/AuthContext'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import InputMask from 'react-input-mask'
@@ -28,6 +27,8 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 type Inputs = {
   name: string
   email: string
@@ -49,7 +50,7 @@ export default function Register() {
     getValues,
     formState: { errors },
   } = useForm<Inputs>()
-  const { login } = useAuth()
+  const router = useRouter()
 
   const createAndLogin: SubmitHandler<Inputs> = useCallback(
     async (data: Inputs) => {
@@ -60,7 +61,16 @@ export default function Register() {
         await axios.post('/api/register', data)
 
         // login
-        await login(data.email, data.password)
+        const res = await signIn('credentials', {
+          ...data,
+          callbackUrl: '/',
+          redirect: false,
+        })
+
+        if (res?.ok) {
+          toast.success('Autenticado com sucesso')
+          router.push('/')
+        }
       } catch (error: any) {
         if (
           error.response.status === 403 &&
@@ -84,7 +94,7 @@ export default function Register() {
       }
       setLoading(false)
     },
-    [login],
+    [router],
   )
 
   return (

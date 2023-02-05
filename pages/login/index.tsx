@@ -5,7 +5,6 @@ import pugBackground from '@public/assets/blue_dog.jpg'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
-import { useAuth } from '@contexts/AuthContext'
 import {
   Button,
   Input,
@@ -29,10 +28,14 @@ import {
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import { GetServerSideProps } from 'next'
+import { getSession, signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
   const [show, setShow] = useState<boolean>()
   const [isMobile] = useMediaQuery('(max-width: 768px)')
+  const [loading, setLoading] = useState<boolean>()
 
   const handleClick = () => {
     setShow(!show)
@@ -44,7 +47,10 @@ export default function Home() {
     formState: { errors },
   } = useForm<Inputs>()
 
-  const { login, loading } = useAuth()
+  const { data, status } = useSession()
+
+  const router = useRouter()
+  console.log({ data, status })
 
   type Inputs = {
     email: string
@@ -52,18 +58,29 @@ export default function Home() {
   }
 
   const authenticate = useCallback(
-    async (data: any) => {
-      // if (!data.email?.length) return toast.error('Email é obrigatório')
-      // if (!data.password?.length) return toast.error('Senha é obrigatória')
+    async (data: Inputs) => {
+      setLoading(true)
+      const res = await signIn('credentials', {
+        ...data,
+        callbackUrl: '/',
+        redirect: false,
+      })
 
-      await login('crys.chb@hotmail.com', 'teste12345')
+      if (res?.ok) {
+        toast.success('Autenticado com sucesso')
+        router.push('/')
+      }
+
+      if (res?.error) {
+        if (res.status === 401) {
+          toast.error('Email ou senha inválidos')
+        }
+      }
+
+      setLoading(false)
     },
-    [login],
+    [router],
   )
-
-  useEffect(() => {
-    authenticate({})
-  }, [])
 
   return (
     <>
@@ -117,7 +134,7 @@ export default function Home() {
                     <Input
                       size={'sm'}
                       variant="flushed"
-                      // {...register('email', { required: 'Campo obrigatório' })}
+                      {...register('email', { required: 'Campo obrigatório' })}
                       type="text"
                       name="email"
                     />
@@ -139,9 +156,9 @@ export default function Home() {
                     </FormLabel>
                     <InputGroup size="sm">
                       <Input
-                        // {...register('password', {
-                        //   required: 'Campo obrigatório',
-                        // })}
+                        {...register('password', {
+                          required: 'Campo obrigatório',
+                        })}
                         name="password"
                         pr="2.5rem"
                         type={show ? 'text' : 'password'}
@@ -175,8 +192,7 @@ export default function Home() {
                 <Button
                   isLoading={loading}
                   variant={'solid'}
-                  type="button"
-                  onClick={authenticate}
+                  type="submit"
                   colorScheme={'blue'}
                   w={200}
                   h={6}
@@ -184,12 +200,12 @@ export default function Home() {
                 >
                   Entrar
                 </Button>
-                {/* <Text as="small" textAlign={'center'} opacity={0.8} pt={4}>
+                <Text as="small" textAlign={'center'} opacity={0.8} pt={4}>
                   Ainda não tem uma conta?
                 </Text>
                 <Link href="/register" style={{ textAlign: 'center' }}>
                   Crie uma agora
-                </Link> */}
+                </Link>
               </VStack>
             </FormControl>
 
@@ -217,4 +233,23 @@ export default function Home() {
       </Flex>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = (await getSession(context)) as any
+
+  console.log({ session })
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

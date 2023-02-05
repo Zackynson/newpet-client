@@ -12,12 +12,14 @@ import {
   Container,
   Flex,
   FormLabel,
+  Grid,
   Heading,
   HStack,
   Input,
   LinkBox,
   Spinner,
   StackDivider,
+  useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
 import { useCallback, useState } from 'react'
@@ -29,28 +31,30 @@ import { Pet } from 'types/Pet'
 import PetCard from '@components/PetCard'
 import Link from 'next/link'
 import { EditIcon } from '@chakra-ui/icons'
+import { getSession, signOut, useSession } from 'next-auth/react'
 
 function UserPage() {
-  const { user, loading, logout } = useAuth()
   const [loadingPets, setLoadingPets] = useState(false)
   const [userPets, setUserPets] = useState([])
+
+  const { data: session } = useSession()
 
   const loadPets = useCallback(async () => {
     setLoadingPets(true)
     try {
       const res = await axios.get('/api/pets', {
         headers: {
-          authorization: api.defaults.headers.authorization as string,
+          authorization: session?.user.token as string,
         },
       })
-      setUserPets(res.data.filter((p: Pet) => p?.ownerId === user?._id))
+      setUserPets(res.data.filter((p: Pet) => p?.ownerId === session?.user?.id))
     } catch (error) {
       console.error(error)
       toast.error('Ocorreu um erro ao buscar seus pets')
     }
 
     setLoadingPets(false)
-  }, [user])
+  }, [session?.user])
 
   useEffect(() => {
     loadPets()
@@ -59,7 +63,7 @@ function UserPage() {
   return (
     <Container py={10} maxW={'container.xl'}>
       <Head>
-        <title>NEWPET | {user?.name}</title>
+        <title>NEWPET | {session?.user?.name}</title>
         <meta
           name="description"
           content="O melhor app de adoção de animais do Brasil"
@@ -68,8 +72,8 @@ function UserPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Card py={10}>
-        {loading || loadingPets ? (
+      <Card variant={'outline'} py={10}>
+        {loadingPets ? (
           <div
             style={{
               alignSelf: 'center',
@@ -88,7 +92,7 @@ function UserPage() {
               <Box my={10} w={'100%'}>
                 <HStack justify={'space-around'}>
                   <Avatar
-                    src={user?.avatar || AvatarPlaceholder.src}
+                    src={session?.user?.image || AvatarPlaceholder.src}
                     loading="eager"
                     objectFit="cover"
                     size={'2xl'}
@@ -96,15 +100,15 @@ function UserPage() {
 
                   <Box>
                     <FormLabel>
-                      nome: <strong>{user?.name}</strong>
+                      nome: <strong>{session?.user?.name}</strong>
                     </FormLabel>
 
                     <FormLabel>
-                      Email: <strong>{user?.email}</strong>
+                      Email: <strong>{session?.user?.email}</strong>
                     </FormLabel>
 
                     <FormLabel>
-                      WhatsApp: <strong>{user?.phone}</strong>
+                      WhatsApp: <strong>{session?.user?.phone}</strong>
                     </FormLabel>
 
                     <LinkBox>
@@ -127,13 +131,13 @@ function UserPage() {
 
                 {userPets.length ? (
                   <>
-                    <HStack>
+                    <Grid templateColumns={'repeat(3, 1fr)'} gap={5} mt={10}>
                       {userPets?.map((pet: Pet) => (
                         <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
                           <PetCard key={`${pet._id}`} pet={pet} />
                         </Link>
                       ))}
-                    </HStack>
+                    </Grid>
                   </>
                 ) : (
                   <VStack mt={10}>
@@ -162,8 +166,7 @@ function UserPage() {
         ></Flex>
         <Center>
           <Button
-            isLoading={loading}
-            onClick={logout}
+            onClick={() => signOut()}
             maxW="xl"
             colorScheme="red"
             my={8}
@@ -178,9 +181,9 @@ function UserPage() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['newpet-token']: token } = parseCookies(ctx)
+  const session = await getSession(ctx)
 
-  if (!token) {
+  if (!session?.user.token) {
     return {
       redirect: {
         destination: '/login',
@@ -190,7 +193,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {},
+    props: {
+      session,
+    },
   }
 }
 

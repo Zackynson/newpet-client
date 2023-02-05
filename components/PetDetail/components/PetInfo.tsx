@@ -9,8 +9,8 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import { useAuth } from '@contexts/AuthContext'
 import moment from 'moment'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { PetSize } from 'types/enums/pet-size.enum'
 import { Pet } from 'types/Pet'
@@ -58,18 +58,19 @@ const parsePetSize = (size: PetSize) => {
 }
 
 export const PetInfo = ({ pet }: { pet: Pet }) => {
-  const { user } = useAuth()
+  const { data: session } = useSession()
 
   return (
-    <VStack divider={<StackDivider></StackDivider>} align={'start'}>
+    <VStack divider={<StackDivider></StackDivider>} align={'start'} w={'full'}>
       <Flex alignSelf={'stretch'} flex={1} justify="space-between">
         <Heading> Informações</Heading>
-        {pet?.ownerId === user?._id ? (
+        {pet?.ownerId === session?.user?.id ? (
           <Link href={'/pets/' + pet?._id + '/update'}>
             <Button
               rightIcon={<EditIcon />}
               color="white"
               colorScheme={'purple'}
+              bg={'purple.500'}
             >
               Editar
             </Button>
@@ -79,8 +80,8 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
         )}
       </Flex>
       <Grid
-        w={'full'}
-        templateColumns={'repeat(4, 1fr)'}
+        flex={1}
+        templateColumns={'repeat(3, 1fr)'}
         justifyContent="space-around"
         gap={'2'}
         mt={4}
@@ -102,14 +103,6 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
         </Text>
         <Text>
           Cadastrado em:{' '}
-          <strong>
-            {Intl.DateTimeFormat('pt-br').format(
-              moment(pet.updatedAt || pet.createdAt, 'YYYYMMDD').toDate(),
-            )}
-          </strong>
-        </Text>
-        <Text>
-          Ultima atualizacão:{' '}
           <strong>
             {Intl.DateTimeFormat('pt-br').format(
               moment(pet.updatedAt || pet.createdAt, 'YYYYMMDD').toDate(),

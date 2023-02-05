@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
   Box,
   Flex,
@@ -26,8 +26,9 @@ import {
 import NextLink from 'next/link'
 
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { useAuth } from '@contexts/AuthContext'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { signOut, useSession } from 'next-auth/react'
+import { User } from 'next-auth'
 
 const Links = [
   { label: 'Procurar', uri: '/' },
@@ -57,10 +58,16 @@ const NavLink = ({
 )
 
 export default function Nav() {
+  const [user, setUser] = useState<any>()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { colorMode, toggleColorMode } = useColorMode()
-  const { user, logout } = useAuth()
+
+  const { data: session } = useSession()
+
+  useEffect(() => {
+    setUser(session?.user)
+  }, [session])
 
   return (
     <>
@@ -111,12 +118,12 @@ export default function Nav() {
                   cursor={'pointer'}
                   minW={0}
                 >
-                  <Avatar size={'sm'} src={user?.avatar} />
+                  <Avatar size={'sm'} src={user?.image} />
                 </MenuButton>
-                <MenuList alignItems={'center'}>
+                <MenuList zIndex={99} alignItems={'center'}>
                   <br />
                   <Center>
-                    <Avatar size={'2xl'} src={user?.avatar} />
+                    <Avatar size={'2xl'} src={user?.image} />
                   </Center>
                   <br />
                   <Center>
@@ -140,7 +147,7 @@ export default function Nav() {
                     </NextLink>
                   </LinkBox>
 
-                  <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                  <MenuItem onClick={() => signOut()}>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </Stack>

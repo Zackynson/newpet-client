@@ -9,17 +9,21 @@ import { Pet } from 'types/Pet'
 import { Center, Container, Flex, Heading, Spinner } from '@chakra-ui/react'
 import { api } from '@services/api'
 import Link from 'next/link'
+import { getSession, useSession } from 'next-auth/react'
 
 function Pets() {
   const [pets, setPets] = useState([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
+  const { data } = useSession()
+
+  useEffect(() => console.log(data), [data])
 
   const loadPets = useCallback(async () => {
     setLoading(true)
     try {
       const res = await axios.get('/api/pets', {
         headers: {
-          authorization: api.defaults.headers.authorization as string,
+          authorization: data?.user.token,
         },
       })
       setPets(res.data)
@@ -29,7 +33,7 @@ function Pets() {
     }
 
     setLoading(false)
-  }, [])
+  }, [data])
 
   useEffect(() => {
     loadPets()
@@ -85,9 +89,9 @@ function Pets() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['newpet-token']: token } = parseCookies(ctx)
+  const session = await getSession(ctx)
 
-  if (!token) {
+  if (!session) {
     return {
       redirect: {
         destination: '/login',
@@ -97,7 +101,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {},
+    props: {
+      session,
+    },
   }
 }
 

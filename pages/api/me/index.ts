@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { api } from '@services/api'
 
@@ -17,7 +16,7 @@ export default async function handler(
 
   const userResponse = await api.get('auth/me', {
     headers: {
-      Authorization: 'Bearer ' + token
+      Authorization: token
     },
   })
 

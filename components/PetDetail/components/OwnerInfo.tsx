@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react'
 import { api } from '@services/api'
 import axios from 'axios'
+import { useSession } from 'next-auth/react'
 import { useCallback, useMemo, useState } from 'react'
 import {
   AiOutlineMail,
@@ -34,20 +35,24 @@ type Owner = {
 
 const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
   const [owner, setOwner] = useState<Owner>()
+  const { data: session } = useSession()
 
-  const loadOwnerInfo = useCallback(async (id: string) => {
-    try {
-      const response = await axios.get(`/api/owners/get/${id}`, {
-        headers: {
-          authorization: api.defaults.headers.authorization,
-        },
-      })
+  const loadOwnerInfo = useCallback(
+    async (id: string) => {
+      try {
+        const response = await axios.get(`/api/owners/get/${id}`, {
+          headers: {
+            authorization: session?.user.token,
+          },
+        })
 
-      setOwner(response.data as Owner)
-    } catch (error: any) {
-      console.log(error.response)
-    }
-  }, [])
+        setOwner(response.data as Owner)
+      } catch (error: any) {
+        console.log(error.response)
+      }
+    },
+    [session],
+  )
 
   useMemo(() => {
     if (ownerId) {
@@ -62,7 +67,9 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
         onClick={onOpen}
         w={'full'}
         rightIcon={<Icon as={AiOutlineWhatsApp} />}
+        bg={'whatsapp.500'}
         colorScheme={'whatsapp'}
+        color={'white'}
       >
         <Text>Exibir contato do responsável</Text>
       </Button>
@@ -101,7 +108,9 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                     >
                       <Button
                         w="xs"
+                        bg={'whatsapp.500'}
                         colorScheme={'whatsapp'}
+                        color={'white'}
                         rightIcon={<AiOutlineWhatsApp />}
                       >
                         Chamar no whatsapp

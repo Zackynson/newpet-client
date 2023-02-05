@@ -24,8 +24,6 @@ export default async function handler(
 
     const token = loginResponse.data.token
 
-    api.defaults.headers['authorization'] = 'Bearer ' + token;
-
     const userResponse = await api.get('/auth/me', {
       headers: {
         Authorization: 'Bearer ' + token

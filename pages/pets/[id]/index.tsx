@@ -9,19 +9,21 @@ import { useRouter } from 'next/router'
 import PetDetail from '@components/PetDetail'
 import { Spinner } from '@chakra-ui/react'
 import { api } from '@services/api'
+import { getSession, useSession } from 'next-auth/react'
 
 function PetDetailPage() {
   const [pet, setPet] = useState<Pet>()
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
   const router = useRouter()
   const { id } = router.query
+  const { data: session } = useSession()
 
   const loadPet = useCallback(async () => {
     setLoading(true)
     try {
       const res = await axios.get('/api/pets/' + id, {
         headers: {
-          authorization: api.defaults.headers.authorization as string,
+          authorization: session?.user.token as string,
         },
       })
 
@@ -32,7 +34,7 @@ function PetDetailPage() {
     }
 
     setLoading(false)
-  }, [id])
+  }, [id, session])
 
   useEffect(() => {
     loadPet()
@@ -71,9 +73,9 @@ function PetDetailPage() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['newpet-token']: token } = parseCookies(ctx)
+  const session = await getSession(ctx)
 
-  if (!token) {
+  if (!session) {
     return {
       redirect: {
         destination: '/login',
@@ -83,8 +85,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {},
+    props: {
+      session,
+    },
   }
 }
-
 export default PetDetailPage

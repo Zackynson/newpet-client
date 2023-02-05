@@ -37,6 +37,8 @@ import ReactImageUploading from 'react-images-uploading'
 import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
 import { PetType } from 'types/enums/pet-type.enum'
 import { PetSize } from 'types/enums/pet-size.enum'
+import { GetServerSideProps } from 'next'
+import { getSession, useSession } from 'next-auth/react'
 
 const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
@@ -69,6 +71,8 @@ function UpdatePetPage() {
     setValue,
   } = useForm<Input>()
 
+  const { data: session } = useSession()
+
   useEffect(() => {
     if (animalType === 'dog') setAnimalBreedList(dogBreeds)
     if (animalType === 'cat') setAnimalBreedList(catBreeds)
@@ -85,7 +89,7 @@ function UpdatePetPage() {
           { image: imageUrl },
           {
             headers: {
-              authorization: api.defaults.headers.authorization as string,
+              authorization: session?.user.token as string,
             },
           },
         ),
@@ -105,7 +109,7 @@ function UpdatePetPage() {
         setPet(updatedPet)
       }
     },
-    [id, pet],
+    [id, pet, session],
   )
 
   const loadPet = useCallback(async () => {
@@ -113,7 +117,7 @@ function UpdatePetPage() {
     try {
       const res = await axios.get('/api/pets/' + id, {
         headers: {
-          authorization: api.defaults.headers.authorization as string,
+          authorization: session?.user.token as string,
         },
       })
 
@@ -149,7 +153,7 @@ function UpdatePetPage() {
     }
 
     setLoading(false)
-  }, [id, router, setValue])
+  }, [id, router, session, setValue])
 
   useEffect(() => {
     if (id) loadPet()
@@ -170,7 +174,7 @@ function UpdatePetPage() {
                 { image: image },
                 {
                   headers: {
-                    authorization: api.defaults.headers.authorization as string,
+                    authorization: session?.user.token as string,
                   },
                 },
               ),
@@ -193,7 +197,7 @@ function UpdatePetPage() {
             },
             {
               headers: {
-                authorization: api.defaults.headers.authorization as string,
+                authorization: session?.user.token as string,
               },
             },
           ),
@@ -212,7 +216,7 @@ function UpdatePetPage() {
 
       setLoading(false)
     },
-    [addressInfo, date, id, images, router],
+    [session, addressInfo, date, id, images, router],
   )
 
   return (
@@ -418,6 +422,7 @@ function UpdatePetPage() {
                                 my={2}
                                 type="button"
                                 variant={'outline'}
+                                color="red"
                                 colorScheme="red"
                                 onClick={() => onRemoveUploadedImages(image)}
                               >
@@ -450,6 +455,7 @@ function UpdatePetPage() {
                                 my={2}
                                 type="button"
                                 variant={'outline'}
+                                color="red"
                                 colorScheme="red"
                                 onClick={() => onImageRemove(index)}
                               >
@@ -489,6 +495,25 @@ function UpdatePetPage() {
       </Container>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
 }
 
 export default UpdatePetPage

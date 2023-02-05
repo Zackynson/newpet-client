@@ -16,12 +16,7 @@ import {
 import fallbackimage from '@public/assets/fallback.png'
 import { FaCat, FaDog } from 'react-icons/fa'
 
-const PetCard = ({ pet }: { pet: Pet }) => {
-  const PetIcon = useMemo(
-    () => (pet.type === 'cat' ? <Icon as={FaCat} /> : <Icon as={FaDog} />),
-    [pet],
-  )
-
+const PetCard = ({ pet }: { pet: Pet; gray?: boolean }) => {
   return (
     <Card w={'xs'}>
       <Stack divider={<StackDivider />}>
@@ -45,13 +40,7 @@ const PetCard = ({ pet }: { pet: Pet }) => {
           alignItems="center"
           py={2}
         >
-          <Heading
-            overflow={'auto'}
-            textAlign="center"
-            size="sm"
-            mb={2}
-            color="purple.500"
-          >
+          <Heading overflow={'auto'} textAlign="center" size="sm" mb={2}>
             {pet.name}
           </Heading>
         </CardFooter>

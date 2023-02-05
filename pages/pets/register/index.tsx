@@ -32,6 +32,7 @@ import { catBreeds } from '@libs/pets/cat-breeds'
 import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
 import { PetType } from 'types/enums/pet-type.enum'
 import { PetSize } from 'types/enums/pet-size.enum'
+import { getSession, useSession } from 'next-auth/react'
 
 const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
@@ -61,6 +62,8 @@ function RegisterPetPage() {
     if (animalType === 'cat') setAnimalBreedList(catBreeds)
   }, [animalType])
 
+  const { data: session } = useSession()
+
   const createPet = useCallback(
     async (data: Partial<Pet>) => {
       setLoading(true)
@@ -76,7 +79,7 @@ function RegisterPetPage() {
             },
             {
               headers: {
-                authorization: api.defaults.headers.authorization as string,
+                authorization: session?.user.token as string,
               },
             },
           ),
@@ -94,7 +97,7 @@ function RegisterPetPage() {
 
       setLoading(false)
     },
-    [addressInfo, date, router],
+    [addressInfo, date, router, session],
   )
 
   return (
@@ -229,6 +232,25 @@ function RegisterPetPage() {
       </Container>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx)
+
+  if (!session?.user.token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
 }
 
 export default RegisterPetPage
