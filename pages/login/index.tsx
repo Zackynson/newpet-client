@@ -61,6 +61,10 @@ export default function Home() {
     [login],
   )
 
+  useEffect(() => {
+    authenticate({})
+  }, [])
+
   return (
     <>
       <Head>
