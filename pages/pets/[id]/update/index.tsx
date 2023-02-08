@@ -222,7 +222,7 @@ function UpdatePetPage() {
   return (
     <>
       <Head>
-        <title>NEWPET | {pet?.name}</title>
+        <title>NEWPET | ATUALIZAR PET</title>
         <meta
           name="description"
           content="O melhor app de adoção de animais do Brasil"

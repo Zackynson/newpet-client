@@ -1,4 +1,5 @@
 // components/Layout.js
+import Footer from '@components/Footer'
 import AuthorizedHeader from '@components/Header/AuthorizedHeader'
 import NonAuthorizedHeader from '@components/Header/NonAuthorizedHeader'
 import { GetServerSideProps } from 'next'
@@ -18,15 +19,21 @@ const Layout = ({
 }) => {
   const { asPath } = useRouter()
 
-  return NOT_ALLOWED_HEADER_ROUTES.includes(asPath) ? (
+  return (
     <>
-      <NonAuthorizedHeader />
-      {children}
-    </>
-  ) : (
-    <>
-      <AuthorizedHeader />
-      {children}
+      {NOT_ALLOWED_HEADER_ROUTES.includes(asPath) ? (
+        <>
+          <NonAuthorizedHeader />
+          {children}
+        </>
+      ) : (
+        <>
+          <AuthorizedHeader />
+          {children}
+        </>
+      )}
+
+      <Footer></Footer>
     </>
   )
 }

@@ -61,9 +61,9 @@ function UserPage() {
   }, [loadPets])
 
   return (
-    <Container py={10} maxW={'container.xl'}>
+    <>
       <Head>
-        <title>NEWPET | {session?.user?.name}</title>
+        <title>NEWPET | PERFIL</title>
         <meta
           name="description"
           content="O melhor app de adoção de animais do Brasil"
@@ -72,111 +72,128 @@ function UserPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Card variant={'outline'} py={10}>
-        {loadingPets ? (
-          <div
-            style={{
-              alignSelf: 'center',
-              width: '100vw',
-              height: '100vh',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Spinner />
-          </div>
-        ) : (
-          <Center flexDirection={'column'}>
-            <VStack divider={<StackDivider />}>
-              <Box my={10} w={'100%'}>
-                <HStack justify={'space-around'}>
-                  <Avatar
-                    src={session?.user?.image || AvatarPlaceholder.src}
-                    loading="eager"
-                    objectFit="cover"
-                    size={'2xl'}
-                  />
+      <Container py={10} maxW={'8xl'}>
+        <Card variant={'unstyled'} py={10} px={10}>
+          {loadingPets ? (
+            <div
+              style={{
+                alignSelf: 'center',
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Spinner />
+            </div>
+          ) : (
+            <Center flexDirection={'column'}>
+              <VStack divider={<StackDivider />}>
+                <Box my={10} w={'100%'}>
+                  <Flex
+                    justify={'space-between'}
+                    align={'center'}
+                    direction={{ base: 'column', md: 'row' }}
+                  >
+                    <Avatar
+                      src={session?.user?.image || AvatarPlaceholder.src}
+                      loading="eager"
+                      objectFit="cover"
+                      size={'2xl'}
+                    />
 
-                  <Box>
-                    <FormLabel>
-                      nome: <strong>{session?.user?.name}</strong>
-                    </FormLabel>
+                    <Box
+                      mt={{ base: 10, md: 0 }}
+                      textAlign={{ base: 'center' }}
+                    >
+                      <FormLabel>
+                        nome: <strong>{session?.user?.name}</strong>
+                      </FormLabel>
 
-                    <FormLabel>
-                      Email: <strong>{session?.user?.email}</strong>
-                    </FormLabel>
+                      <FormLabel>
+                        Email: <strong>{session?.user?.email}</strong>
+                      </FormLabel>
 
-                    <FormLabel>
-                      WhatsApp: <strong>{session?.user?.phone}</strong>
-                    </FormLabel>
+                      <FormLabel>
+                        WhatsApp: <strong>{session?.user?.phone}</strong>
+                      </FormLabel>
 
-                    <LinkBox>
-                      <Link href={'/profile/update'}>
-                        <Button
-                          rightIcon={<EditIcon />}
-                          mt={2}
-                          w={'xs'}
-                          colorScheme={'purple'}
-                        >
-                          Editar
+                      <LinkBox>
+                        <Link href={'/profile/update'}>
+                          <Button
+                            rightIcon={<EditIcon />}
+                            mt={2}
+                            w={'xs'}
+                            colorScheme={'purple'}
+                          >
+                            Editar
+                          </Button>
+                        </Link>
+                      </LinkBox>
+                    </Box>
+                  </Flex>
+                </Box>
+                <Box>
+                  <Heading mt={5}>Seus pets</Heading>
+
+                  {userPets.length ? (
+                    <>
+                      <Grid
+                        templateColumns={{
+                          lg: 'repeat(3, 1fr)',
+                          md: 'repeat(2, 1fr)',
+                          base: '1fr',
+                        }}
+                        gap={5}
+                        mt={10}
+                      >
+                        {userPets?.map((pet: Pet) => (
+                          <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
+                            <PetCard key={`${pet._id}`} pet={pet} />
+                          </Link>
+                        ))}
+                      </Grid>
+                    </>
+                  ) : (
+                    <VStack mt={10}>
+                      <Heading size={'md'} textAlign={'center'}>
+                        Você ainda não cadastrou nenhum pet
+                      </Heading>
+
+                      <Link href="/pets/register">
+                        <Button variant={'link'} colorScheme="blue">
+                          Cadastre agora
                         </Button>
                       </Link>
-                    </LinkBox>
-                  </Box>
-                </HStack>
-              </Box>
-              <Box>
-                <Heading mt={5}>Seus pets</Heading>
+                    </VStack>
+                  )}
+                </Box>
+              </VStack>
+            </Center>
+          )}
 
-                {userPets.length ? (
-                  <>
-                    <Grid templateColumns={'repeat(3, 1fr)'} gap={5} mt={10}>
-                      {userPets?.map((pet: Pet) => (
-                        <Link key={`${pet._id}`} href={`/pets/${pet._id}`}>
-                          <PetCard key={`${pet._id}`} pet={pet} />
-                        </Link>
-                      ))}
-                    </Grid>
-                  </>
-                ) : (
-                  <VStack mt={10}>
-                    <Heading size={'md'} textAlign={'center'}>
-                      Você ainda não cadastrou nenhum pet
-                    </Heading>
-
-                    <Link href="/pets/register">
-                      <Button variant={'link'} colorScheme="blue">
-                        Cadastre agora
-                      </Button>
-                    </Link>
-                  </VStack>
-                )}
-              </Box>
-            </VStack>
+          <Flex
+            gap={10}
+            align="center"
+            direction={'column'}
+            justify={'center'}
+            wrap="wrap"
+          ></Flex>
+          <Center>
+            <Button
+              onClick={() => signOut()}
+              maxW="xl"
+              colorScheme="red"
+              my={8}
+              variant="link"
+            >
+              Sair
+            </Button>
           </Center>
-        )}
-
-        <Flex
-          gap={10}
-          align="center"
-          direction={'column'}
-          justify={'center'}
-          wrap="wrap"
-        ></Flex>
-        <Center>
-          <Button
-            onClick={() => signOut()}
-            maxW="xl"
-            colorScheme="red"
-            my={8}
-            variant="link"
-          >
-            Sair
-          </Button>
-        </Center>
-      </Card>
-    </Container>
+        </Card>
+      </Container>
+    </>
   )
 }
 

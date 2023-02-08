@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import catBackground from '@public/assets/blue_cat.jpg'
 import { useCallback, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -27,8 +26,9 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
-import { signIn } from 'next-auth/react'
+import { getSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 type Inputs = {
   name: string
   email: string
@@ -131,7 +131,11 @@ export default function Register() {
               h={'100%'}
               display={{ base: 'none', lg: 'block' }}
             >
-              <Image objectFit={'cover'} alt="cat" src={catBackground.src} />
+              <Image
+                objectFit={'cover'}
+                alt="cat"
+                src={'assets/blue_cat.jpg'}
+              />
             </Box>
             <FormControl
               as="form"
@@ -315,4 +319,21 @@ export default function Register() {
       </Flex>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session: any = await getSession(context)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

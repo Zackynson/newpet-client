@@ -1,14 +1,12 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { parseCookies } from 'nookies'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Pet } from 'types/Pet'
 import { useRouter } from 'next/router'
 import PetDetail from '@components/PetDetail'
 import { Spinner } from '@chakra-ui/react'
-import { api } from '@services/api'
 import { getSession, useSession } from 'next-auth/react'
 
 function PetDetailPage() {
@@ -43,7 +41,7 @@ function PetDetailPage() {
   return (
     <>
       <Head>
-        <title>NEWPET | {pet?.name}</title>
+        <title>NEWPET | PET</title>
         <meta
           name="description"
           content="O melhor app de adoção de animais do Brasil"

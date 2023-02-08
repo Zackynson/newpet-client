@@ -26,7 +26,6 @@ type AuthContextData = {
   isAuthenticated: boolean
   loading: boolean
   logout: () => Promise<void>
-  // eslint-disable-next-line no-unused-vars
   login: (email: string, password: string) => Promise<void>
   user: User | null
 }

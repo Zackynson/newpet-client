@@ -1,9 +1,8 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { parseCookies } from 'nookies'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Pet } from 'types/Pet'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import {
   Button,
   Card,
@@ -23,7 +22,6 @@ import {
 import { useForm } from 'react-hook-form'
 import { Breed } from 'types/BreedList'
 import axios from 'axios'
-import { api } from '@services/api'
 import { toast } from 'react-toastify'
 import { SingleDatepicker } from 'chakra-dayzed-datepicker'
 import moment from 'moment'
@@ -103,7 +101,7 @@ function RegisterPetPage() {
   return (
     <>
       <Head>
-        <title>NEWPET | Cadastrar</title>
+        <title>NEWPET | CADASTRAR PET</title>
         <meta
           name="description"
           content="O melhor app de adoção de animais do Brasil"

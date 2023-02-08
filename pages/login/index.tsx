@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
 import Head from 'next/head'
-import styles from './styles.module.css'
-import pugBackground from '@public/assets/blue_dog.jpg'
-import { useCallback, useMemo, useState } from 'react'
+
+import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
 import {
@@ -22,7 +20,6 @@ import {
   VStack,
   Image,
   Heading,
-  useColorMode,
 } from '@chakra-ui/react'
 
 import { useForm } from 'react-hook-form'
@@ -219,7 +216,7 @@ export default function Home() {
               justifyContent={'center'}
             >
               <Image
-                src={pugBackground.src}
+                src="assets/blue_dog.jpg"
                 position="relative"
                 alt="bulldog sitting with a blue background"
               />
@@ -236,9 +233,7 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = (await getSession(context)) as any
-
-  console.log({ session })
+  const session: any = await getSession(context)
 
   if (session) {
     return {

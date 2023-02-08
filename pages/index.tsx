@@ -1,13 +1,11 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { parseCookies } from 'nookies'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import PetCard from '@components/PetCard'
 import { Pet } from 'types/Pet'
 import { Center, Container, Flex, Heading, Spinner } from '@chakra-ui/react'
-import { api } from '@services/api'
 import Link from 'next/link'
 import { getSession, useSession } from 'next-auth/react'
 
@@ -51,7 +49,7 @@ function Pets() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxW="max">
+      <Container maxW="100vw" minH="100vh">
         <Flex gap={'5'} justify="center" p="10" wrap={'wrap'}>
           {loading ? (
             <div
