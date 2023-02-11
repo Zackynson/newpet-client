@@ -16,25 +16,34 @@ export const authOptions: NextAuthOptions= {
       return session
   },
   },
+  secret: process.env.TOKEN_SECRET,
+
   // Configure one or more authentication providers
   providers: [
     Credentials({
     name: "CredentialsProvider", 
     
     credentials:{},
-    async authorize(creds) {
+    
+    async authorize(creds:any) {
 
     axiosRetry(api, { retries: 3 });
 
     console.log({creds})
- 
-    const loginResponse = await api.post('/auth/login', creds)
 
-    const token = loginResponse.data.token
+    let token = ''
+
+    if(!creds?.token){
+      const loginResponse = await api.post('/auth/login', creds)
+      token =  'Bearer ' + loginResponse.data.token
+    } else {
+      token = creds.token
+      console.log({token})
+    }
 
     const userResponse = await api.get('/auth/me', {
       headers:{
-        authorization: 'Bearer ' + token
+        authorization: token
       }
     })
 
@@ -44,13 +53,9 @@ export const authOptions: NextAuthOptions= {
         image: userResponse.data.avatar,
         email: userResponse.data.email, 
         phone: userResponse.data.phone, 
-        token: 'Bearer ' + token, 
-        
+        token, 
       }
   }})
-
-  // ...add more providers here
-    
   ],
 }
 export default NextAuth(authOptions)

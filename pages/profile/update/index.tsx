@@ -21,7 +21,7 @@ import {
 import { UpdateUserDTO } from '@libs/dtos'
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
-import { getSession, signOut, useSession } from 'next-auth/react'
+import { getSession, signIn, signOut, useSession } from 'next-auth/react'
 import Router from 'next/router'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -49,7 +49,7 @@ const UpdateUser = () => {
     async (data: UpdateUserDTO) => {
       const { name, phone } = data
 
-      toast.promise(
+      await toast.promise(
         axios.post(
           `/api/me/update-info`,
           { name, phone },
@@ -66,7 +66,10 @@ const UpdateUser = () => {
         },
       )
 
-      if (images?.[0]?.data_url) {
+      if (
+        images?.[0]?.data_url &&
+        images?.[0]?.data_url !== session?.user.image
+      ) {
         await toast.promise(
           axios.post(
             `/api/me/update-avatar`,
@@ -83,16 +86,11 @@ const UpdateUser = () => {
             pending: 'Atualizando Imagem...',
           },
         )
-
-        const userResponse = await axios.post(`/api/me`, {
-          token: session?.user.token as string,
-        })
-
-        if (session) {
-          session.user.image = userResponse.data.user.avatar
-          Router.reload()
-        }
       }
+
+      await signIn('credentials', {
+        token: session?.user.token,
+      })
     },
     [images, session],
   )
