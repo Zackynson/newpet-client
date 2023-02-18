@@ -59,13 +59,12 @@ export default function Home() {
       setLoading(true)
       const res = await signIn('credentials', {
         ...data,
-        callbackUrl: '/',
         redirect: false,
       })
 
       if (res?.ok) {
         toast.success('Autenticado com sucesso')
-        router.push('/')
+        router.push('/pets')
       }
 
       if (res?.error) {

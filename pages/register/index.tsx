@@ -69,7 +69,7 @@ export default function Register() {
 
         if (res?.ok) {
           toast.success('Autenticado com sucesso')
-          router.push('/')
+          router.push('/petss')
         }
       } catch (error: any) {
         if (
@@ -308,7 +308,10 @@ export default function Register() {
                   <small style={{ textAlign: 'center', marginTop: 10 }}>
                     Já possui uma conta?
                   </small>
-                  <Link href="/" style={{ textAlign: 'center', marginTop: 10 }}>
+                  <Link
+                    href="/login"
+                    style={{ textAlign: 'center', marginTop: 10 }}
+                  >
                     Faça login
                   </Link>
                 </>

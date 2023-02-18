@@ -7,16 +7,20 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   try {
+
+    console.log(req.query)
     const petsResponse = await api.get('pets', {
       headers: {
         authorization: req.headers.authorization
-      }
+      },
+      params:req.query
+      
     })
 
     res.status(200).json(petsResponse.data.data)
   } catch (error: any) {
 
-    // console.log(error.response)
+    console.log(error.response)
     return res.status(error.response.status).json({ message:error.response.data.message })
   }
    

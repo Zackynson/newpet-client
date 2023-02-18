@@ -12,6 +12,8 @@ import {
 } from '@chakra-ui/react'
 import { StyleFunctionProps } from '@chakra-ui/theme-tools'
 import { SessionProvider } from 'next-auth/react'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const theme = extendTheme(
   {
@@ -36,15 +38,28 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   const router = useRouter()
+
   useEffect(() => {
-    const handleRouteChange = (url: any) => {
+    const handleStart = (url: string) => {
+      console.log(`Loading: ${url}`)
+      NProgress.start()
+    }
+
+    const handleStop = (url: any) => {
       gtag.pageview(url)
+      NProgress.done()
     }
-    router.events.on('routeChangeComplete', handleRouteChange)
+
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
+
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleStop)
+      router.events.off('routeChangeError', handleStop)
     }
-  }, [router.events])
+  }, [router])
   return (
     <SessionProvider session={session}>
       <ChakraProvider resetCSS theme={theme} cssVarsRoot="body">

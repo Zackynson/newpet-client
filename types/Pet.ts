@@ -1,3 +1,4 @@
+import { PetAge } from './enums/pet-age.enum';
 import { PetSize } from './enums/pet-size.enum';
 import { PetType } from './enums/pet-type.enum';
 
@@ -20,9 +21,11 @@ export interface Pet {
 
 	address?: string;
 
-	birthDate?: string;
+	age?: PetAge;
 
 	ownerId?: string;
+	
+	gender?: string;
 
 	size?: PetSize;
 

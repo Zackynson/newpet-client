@@ -22,7 +22,7 @@ import OwnerInfo from './components/OwnerInfo'
 const PetDetail = ({ pet }: { pet?: Pet }) => {
   if (!pet)
     return (
-      <Link href="/">
+      <Link href="/pets">
         <Alert status="error">
           <AlertIcon />
           <AlertTitle>Pet não encontrado!</AlertTitle>

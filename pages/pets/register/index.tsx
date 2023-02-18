@@ -31,21 +31,21 @@ import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
 import { PetType } from 'types/enums/pet-type.enum'
 import { PetSize } from 'types/enums/pet-size.enum'
 import { getSession, useSession } from 'next-auth/react'
+import { PetAge } from 'types/enums/pet-age.enum'
 
-const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
   name: string
   type: PetType
   breed: string
-  birthDate: string
+  age: PetAge
   size: PetSize
+  gender: string
 }
 
 function RegisterPetPage() {
   const [loading, setLoading] = useState<boolean>(false)
   const [animalType, setAnimalType] = useState('cat')
   const [animalBreedList, setAnimalBreedList] = useState<Breed[]>(catBreeds)
-  const [date, setDate] = useState<Date>(new Date())
   const [addressInfo, setAddressInfo] = useState<any>()
 
   const router = useRouter()
@@ -72,7 +72,6 @@ function RegisterPetPage() {
             '/api/pets/register',
             {
               ...data,
-              birthDate: date,
               address: addressInfo?.value?.description,
             },
             {
@@ -88,14 +87,14 @@ function RegisterPetPage() {
           },
         )
 
-        router.push('/')
+        router.push('/pets')
       } catch (error) {
         console.error(error)
       }
 
       setLoading(false)
     },
-    [addressInfo, date, router, session],
+    [addressInfo, router, session],
   )
 
   return (
@@ -125,7 +124,7 @@ function RegisterPetPage() {
                   name="name"
                 />
                 {!!errors.name ? (
-                  <FormErrorMessage>Nome é obrigatório.</FormErrorMessage>
+                  <FormErrorMessage>Informe o nome.</FormErrorMessage>
                 ) : (
                   <></>
                 )}
@@ -155,6 +154,99 @@ function RegisterPetPage() {
                 </RadioGroup>
               </FormControl>
 
+              <FormControl mt={4} isInvalid={!!errors.gender}>
+                <FormLabel>Genero</FormLabel>
+                <RadioGroup
+                  onChange={(value) => setAnimalType(value)}
+                  name="gender"
+                  defaultValue="male"
+                  colorScheme={'purple'}
+                >
+                  <Stack spacing={4} direction="row">
+                    <Radio
+                      {...register('gender', { required: true })}
+                      value="male"
+                    >
+                      Macho
+                    </Radio>
+                    <Radio
+                      {...register('gender', { required: true })}
+                      value="female"
+                    >
+                      Femea
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+
+              <FormControl mt={4} isInvalid={!!errors.age}>
+                <FormLabel>Idade</FormLabel>
+                <RadioGroup
+                  onChange={(value) => setAnimalType(value)}
+                  name="age"
+                  defaultValue={PetAge.PUPPY}
+                  colorScheme={'purple'}
+                >
+                  <Stack spacing={4} direction="row">
+                    <Radio
+                      {...register('age', { required: true })}
+                      value={PetAge.PUPPY}
+                    >
+                      Filhote
+                    </Radio>
+                    <Radio
+                      {...register('age', { required: true })}
+                      value={PetAge.YOUNG}
+                    >
+                      Jovem
+                    </Radio>
+                    <Radio
+                      {...register('age', { required: true })}
+                      value={PetAge.ADULT}
+                    >
+                      Adulto
+                    </Radio>
+                    <Radio
+                      {...register('age', { required: true })}
+                      value={PetAge.SENIOR}
+                    >
+                      Senior
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+
+              <FormControl mt={4} isInvalid={!!errors.size}>
+                <FormLabel>Porte</FormLabel>
+                <RadioGroup
+                  onChange={(value) => setAnimalType(value)}
+                  name="size"
+                  defaultValue={PetSize.SMALL}
+                  colorScheme={'purple'}
+                >
+                  <Stack spacing={4} direction="row">
+                    <Radio
+                      {...register('size', { required: true })}
+                      value={PetSize.SMALL}
+                    >
+                      Pequeno
+                    </Radio>
+                    <Radio
+                      {...register('size', { required: true })}
+                      value={PetSize.MEDIUM}
+                    >
+                      Médio
+                    </Radio>
+                    <Radio
+                      {...register('age', { required: true })}
+                      value={PetSize.BIG}
+                    >
+                      Grande
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+
               <FormControl mt={4} isInvalid={!!errors.breed}>
                 <FormLabel>Raça</FormLabel>
 
@@ -169,46 +261,17 @@ function RegisterPetPage() {
                     </option>
                   ))}
                 </Select>
+
+                {!!errors.breed ? (
+                  <FormErrorMessage>
+                    Por favor selecione um item
+                  </FormErrorMessage>
+                ) : (
+                  <></>
+                )}
               </FormControl>
 
-              <FormControl mt={4}>
-                <FormLabel>Data de nascimento</FormLabel>
-
-                <SingleDatepicker
-                  date={date}
-                  onDateChange={setDate}
-                  name="birthDate"
-                  configs={{
-                    dateFormat: ' dd/MM/yyyy',
-                  }}
-                  maxDate={new Date()}
-                  minDate={minDate}
-                  propsConfigs={{
-                    dateNavBtnProps: {
-                      colorScheme: 'blue',
-                      variant: 'solid',
-                    },
-                    dayOfMonthBtnProps: {
-                      defaultBtnProps: {
-                        borderColor: 'blue.300',
-                        bg: 'blue.100',
-                        _hover: {
-                          bg: 'blue.400',
-                        },
-                      },
-                    },
-                  }}
-                />
-              </FormControl>
-
-              <FormLabel mt={10}>Porte</FormLabel>
-              <Select {...register('size', { required: true })} name="size">
-                <option value="small">Pequeno</option>
-                <option value="medium">Médio</option>
-                <option value="big">Grande</option>
-              </Select>
-
-              <FormLabel mt={10}>Endereço onde ele está</FormLabel>
+              <FormLabel mt={4}>Endereço onde ele está</FormLabel>
               <GooglePlacesAutocomplete
                 apiKey="AIzaSyBeAhriPkltT2Z0Pg--4Z5Sm7U7PWLjBAs"
                 selectProps={{

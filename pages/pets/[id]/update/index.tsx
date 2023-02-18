@@ -39,14 +39,15 @@ import { PetType } from 'types/enums/pet-type.enum'
 import { PetSize } from 'types/enums/pet-size.enum'
 import { GetServerSideProps } from 'next'
 import { getSession, useSession } from 'next-auth/react'
+import { PetAge } from 'types/enums/pet-age.enum'
 
-const minDate = moment(new Date()).subtract(26, 'years').toDate()
 type Input = {
   name: string
   type: PetType
   breed: string
-  birthDate: string
+  age: PetAge
   size: PetSize
+  gender: string
 }
 
 function UpdatePetPage() {
@@ -123,7 +124,8 @@ function UpdatePetPage() {
 
       // update form with pet values
       setValue('name', res?.data?.name as string)
-      setValue('birthDate', res?.data?.birthDate as string)
+      setValue('age', res?.data?.age as PetAge)
+      setValue('gender', res?.data?.gender as string)
       setValue('breed', res?.data?.breed as string)
       setValue('type', res?.data?.type as PetType)
       setAddressInfo({
@@ -133,14 +135,6 @@ function UpdatePetPage() {
         },
       })
 
-      if (res?.data?.birthDate?.length) {
-        setDate(
-          new Date(
-            res?.data?.birthDate.split('/').reverse().join('-') as string,
-          ),
-        )
-      }
-
       setAnimalType(res?.data?.type as string)
 
       setPet(res.data)
@@ -149,7 +143,7 @@ function UpdatePetPage() {
       toast.loading(
         'Ocorreu um erro ao buscar esse pet, você será redirecionado para a listagem',
       )
-      router.push('/')
+      router.push('/pets')
     }
 
     setLoading(false)
@@ -192,7 +186,6 @@ function UpdatePetPage() {
             `/api/pets/${id}/update-info/`,
             {
               ...data,
-              birthDate: date,
               address: addressInfo.value.description,
             },
             {
@@ -216,7 +209,7 @@ function UpdatePetPage() {
 
       setLoading(false)
     },
-    [session, addressInfo, date, id, images, router],
+    [session, addressInfo, id, images, router],
   )
 
   return (
@@ -231,7 +224,7 @@ function UpdatePetPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container mt={8} maxW="container.lg" color="#262626">
+      <Container minH={'80vh'} mt={8} maxW="container.lg" color="#262626">
         <Card>
           <CardHeader>
             <Heading>Atualizar cadastro de pet</Heading>
@@ -247,10 +240,9 @@ function UpdatePetPage() {
                     {...register('name', { required: true })}
                     type="text"
                     name="name"
-                    defaultValue={pet?.name}
                   />
                   {!!errors.name ? (
-                    <FormErrorMessage>Nome é obrigatório.</FormErrorMessage>
+                    <FormErrorMessage>Informe o nome.</FormErrorMessage>
                   ) : (
                     <></>
                   )}
@@ -260,21 +252,114 @@ function UpdatePetPage() {
                   <RadioGroup
                     onChange={(value) => setAnimalType(value)}
                     name="type"
-                    defaultValue={pet?.type as string}
-                    colorScheme="purple"
+                    defaultValue={pet?.type}
+                    colorScheme={'purple'}
                   >
-                    <Stack direction={'row'} spacing={4}>
+                    <Stack spacing={4} direction="row">
                       <Radio
                         {...register('type', { required: true })}
                         value="cat"
                       >
-                        <Text>Gato</Text>
+                        Gato
                       </Radio>
                       <Radio
                         {...register('type', { required: true })}
                         value="dog"
                       >
-                        <Text>Cão</Text>
+                        Cão
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+
+                <FormControl mt={4} isInvalid={!!errors.gender}>
+                  <FormLabel>Genero</FormLabel>
+                  <RadioGroup
+                    onChange={(value) => setAnimalType(value)}
+                    name="gender"
+                    defaultValue={pet?.gender}
+                    colorScheme={'purple'}
+                  >
+                    <Stack spacing={4} direction="row">
+                      <Radio
+                        {...register('gender', { required: true })}
+                        value="male"
+                      >
+                        Macho
+                      </Radio>
+                      <Radio
+                        {...register('gender', { required: true })}
+                        value="female"
+                      >
+                        Femea
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+
+                <FormControl mt={4} isInvalid={!!errors.age}>
+                  <FormLabel>Idade</FormLabel>
+                  <RadioGroup
+                    onChange={(value) => setAnimalType(value)}
+                    name="age"
+                    defaultValue={pet?.age}
+                    colorScheme={'purple'}
+                  >
+                    <Stack spacing={4} direction="row">
+                      <Radio
+                        {...register('age', { required: true })}
+                        value={PetAge.PUPPY}
+                      >
+                        Filhote
+                      </Radio>
+                      <Radio
+                        {...register('age', { required: true })}
+                        value={PetAge.YOUNG}
+                      >
+                        Jovem
+                      </Radio>
+                      <Radio
+                        {...register('age', { required: true })}
+                        value={PetAge.ADULT}
+                      >
+                        Adulto
+                      </Radio>
+                      <Radio
+                        {...register('age', { required: true })}
+                        value={PetAge.SENIOR}
+                      >
+                        Senior
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+
+                <FormControl mt={4} isInvalid={!!errors.size}>
+                  <FormLabel>Porte</FormLabel>
+                  <RadioGroup
+                    onChange={(value) => setAnimalType(value)}
+                    name="size"
+                    defaultValue={pet?.size}
+                    colorScheme={'purple'}
+                  >
+                    <Stack spacing={4} direction="row">
+                      <Radio
+                        {...register('size', { required: true })}
+                        value={PetSize.SMALL}
+                      >
+                        Pequeno
+                      </Radio>
+                      <Radio
+                        {...register('size', { required: true })}
+                        value={PetSize.MEDIUM}
+                      >
+                        Médio
+                      </Radio>
+                      <Radio
+                        {...register('age', { required: true })}
+                        value={PetSize.BIG}
+                      >
+                        Grande
                       </Radio>
                     </Stack>
                   </RadioGroup>
@@ -290,74 +375,29 @@ function UpdatePetPage() {
                     defaultValue={pet?.breed}
                   >
                     {animalBreedList.map((breed) => (
-                      <option
-                        selected={breed.name === pet?.breed}
-                        key={breed.name}
-                        value={breed.name}
-                      >
+                      <option key={breed.name} value={breed.name}>
                         {breed.name}
                       </option>
                     ))}
                   </Select>
+
+                  {!!errors.breed ? (
+                    <FormErrorMessage>
+                      Por favor selecione um item
+                    </FormErrorMessage>
+                  ) : (
+                    <></>
+                  )}
                 </FormControl>
 
-                <FormControl mt={4}>
-                  <FormLabel>Data de nascimento</FormLabel>
-
-                  <SingleDatepicker
-                    date={date}
-                    onDateChange={setDate}
-                    name="birthDate"
-                    configs={{
-                      dateFormat: 'dd/MM/yyyy',
-                    }}
-                    maxDate={new Date()}
-                    minDate={minDate}
-                    propsConfigs={{
-                      dateNavBtnProps: {
-                        colorScheme: 'purple',
-                        variant: 'solid',
-                      },
-                      dayOfMonthBtnProps: {
-                        selectedBtnProps: {
-                          borderColor: 'purple.300',
-                          bg: 'purple.400',
-                          _hover: {
-                            bg: 'purple.500',
-                          },
-                        },
-                        defaultBtnProps: {
-                          borderColor: 'purple.300',
-                          bg: 'purple.100',
-                          _hover: {
-                            bg: 'purple.400',
-                          },
-                        },
-                      },
-                    }}
-                  />
-                </FormControl>
-
-                <FormLabel mt={10}>Porte</FormLabel>
-
-                <Select {...register('size', { required: true })} name="size">
-                  <option value="small">Pequeno</option>
-                  <option value="medium">Médio</option>
-                  <option value="big">Grande</option>
-                </Select>
-
-                <FormLabel mt={10}>Endereço onde ele está</FormLabel>
+                <FormLabel mt={4}>Endereço onde ele está</FormLabel>
                 <GooglePlacesAutocomplete
                   apiKey="AIzaSyBeAhriPkltT2Z0Pg--4Z5Sm7U7PWLjBAs"
                   selectProps={{
                     value: addressInfo,
                     onChange: setAddressInfo,
-                    placeholder:
-                      'Digite o endereço onde o pet pode ser encontrado',
-                    colorScheme: 'purple',
                   }}
                 />
-
                 <FormLabel mt={10}>Adicionar imagens</FormLabel>
 
                 <ReactImageUploading

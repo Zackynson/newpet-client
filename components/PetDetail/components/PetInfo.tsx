@@ -12,42 +12,18 @@ import {
 import moment from 'moment'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { PetAge } from 'types/enums/pet-age.enum'
 import { PetSize } from 'types/enums/pet-size.enum'
 import { Pet } from 'types/Pet'
 
-const calculateAge = (date?: string) => {
-  try {
-    if (!date) return 'não informada'
-    var birthDate = moment(date, 'YYYYMMDD')
+const parseAge = (age?: PetAge) => {
+  if (!age) return 'não informada'
+  if (age === PetAge.PUPPY) return 'filhote'
+  if (age === PetAge.YOUNG) return 'jovem'
+  if (age === PetAge.ADULT) return 'adulto'
+  if (age === PetAge.SENIOR) return 'senior'
 
-    const years = moment().diff(birthDate, 'years')
-    if (years > 0)
-      return (
-        <>
-          {' '}
-          {years} {years === 1 ? 'ano' : 'anos'}
-        </>
-      )
-
-    const months = moment().diff(birthDate, 'months')
-    if (months > 0)
-      return (
-        <>
-          {' '}
-          {months} {months === 1 ? 'ano' : 'meses'}
-        </>
-      )
-
-    const days = moment().diff(birthDate, 'days')
-    return (
-      <>
-        {' '}
-        {days} {days === 1 ? 'dia' : 'dias'}
-      </>
-    )
-  } catch (error) {}
-
-  return <></>
+  return 'não informada'
 }
 
 const parsePetSize = (size: PetSize) => {
@@ -96,7 +72,7 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
           Raça: <strong> {pet.breed} </strong>
         </Text>
         <Text>
-          Idade: <strong> {calculateAge(pet.birthDate)} </strong>
+          Idade: <strong> {parseAge(pet.age)} </strong>
         </Text>
         <Text>
           Porte: <strong> {parsePetSize(pet.size as PetSize)} </strong>

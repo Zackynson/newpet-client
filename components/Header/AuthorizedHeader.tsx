@@ -21,6 +21,7 @@ import {
   Heading,
   Switch,
   Text,
+  Card,
 } from '@chakra-ui/react'
 
 import NextLink from 'next/link'
@@ -28,10 +29,9 @@ import NextLink from 'next/link'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { signOut, useSession } from 'next-auth/react'
-import { User } from 'next-auth'
 
 const Links = [
-  { label: 'Procurar', uri: '/' },
+  { label: 'Procurar', uri: '/pets' },
   { label: 'Cadastrar', uri: '/pets/register' },
 ]
 
@@ -71,7 +71,12 @@ export default function Nav() {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.200', 'gray.900')} px={4}>
+      <Card
+        w={'100wh'}
+        zIndex={99}
+        bg={useColorModeValue('gray.200', 'gray.900')}
+        px={4}
+      >
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           {/* Menu mobile */}
           <IconButton
@@ -84,7 +89,7 @@ export default function Nav() {
 
           <HStack spacing={8} alignItems={'center'}>
             <Box>
-              <NextLink href={'/'}>
+              <NextLink href={'/pets'}>
                 <Heading
                   fontFamily={'modak'}
                   letterSpacing="px"
@@ -164,7 +169,7 @@ export default function Nav() {
             </Stack>
           </Box>
         ) : null}
-      </Box>
+      </Card>
     </>
   )
 }

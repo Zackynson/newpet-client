@@ -2,13 +2,16 @@ import { Breed } from "types/BreedList";
 
 export const dogBreeds: Breed[] =  [
     {
+        "name": "Sem raça definida (SRD)"
+    },
+    {
         "name": "Aksaray Malaklisi"
     },
     {
-        "name": "Alaunt"
+        "name": "Alapaha Blue Blood Bulldog"
     },
     {
-        "name": "Alapaha Blue Blood Bulldog"
+        "name": "Alaunt"
     },
     {
         "name": "Alsaciano americano"
@@ -23,10 +26,13 @@ export const dogBreeds: Breed[] =  [
         "name": "American Hairless Terrier"
     },
     {
-        "name": "American staffordshire terrier"
+        "name": "American Working Red"
     },
     {
-        "name": "American Working Red"
+        "name": "American pit bull terrier"
+    },
+    {
+        "name": "American staffordshire terrier"
     },
     {
         "name": "Antigo pointer espanhol"
@@ -53,67 +59,43 @@ export const dogBreeds: Breed[] =  [
         "name": "Boykin spaniel"
     },
     {
+        "name": "Braco alemão de pelo curto"
+    },
+    {
         "name": "Braco húngaro de pelo curto"
     },
     {
         "name": "Broholmer"
     },
     {
-        "name": "Buldogue francês"
-    },
-    {
-        "name": "Buldogue-serrano"
-    },
-    {
-        "name": "Bull terrier"
-    },
-    {
-        "name": "Bull Terrier Miniatura"
-    },
-    {
-        "name": "Bull-mastiff brasileiro"
-    },
-    {
         "name": "Buldogue"
+    },
+    {
+        "name": "Buldogue francês"
     },
     {
         "name": "Buldogue-americano"
     },
     {
-        "name": "Bully Kutta"
+        "name": "Buldogue-serrano"
     },
     {
-        "name": "Cão pastor"
+        "name": "Bull Terrier Miniatura"
+    },
+    {
+        "name": "Bull terrier"
+    },
+    {
+        "name": "Bull-mastiff brasileiro"
+    },
+    {
+        "name": "Bully Kutta"
     },
     {
         "name": "Can de Palleiro"
     },
     {
         "name": "Cane corso"
-    },
-    {
-        "name": "Cão belga de tração"
-    },
-    {
-        "name": "Cão chinês de chongqing"
-    },
-    {
-        "name": "Cão de Castro Laboreiro"
-    },
-    {
-        "name": "Cão de gado transmontano"
-    },
-    {
-        "name": "Cão de Fila de São Miguel"
-    },
-    {
-        "name": "Cão de presa maiorquino"
-    },
-    {
-        "name": "Cão-esquimó-canadense"
-    },
-    {
-        "name": "Cão-pastor-italiano"
     },
     {
         "name": "Catahoula Cur"
@@ -134,7 +116,34 @@ export const dogBreeds: Breed[] =  [
         "name": "Coonhound"
     },
     {
-        "name": "Dálmata"
+        "name": "Cão belga de tração"
+    },
+    {
+        "name": "Cão chinês de chongqing"
+    },
+    {
+        "name": "Cão de Castro Laboreiro"
+    },
+    {
+        "name": "Cão de Fila de São Miguel"
+    },
+    {
+        "name": "Cão de gado transmontano"
+    },
+    {
+        "name": "Cão de presa maiorquino"
+    },
+    {
+        "name": "Cão pastor"
+    },
+    {
+        "name": "Cão-esquimó-canadense"
+    },
+    {
+        "name": "Cão-pastor-italiano"
+    },
+    {
+        "name": "Cão-pastor-rei"
     },
     {
         "name": "Dobermann"
@@ -149,13 +158,16 @@ export const dogBreeds: Breed[] =  [
         "name": "Dogo sardo"
     },
     {
-        "name": "Dogue-de-bordéus"
-    },
-    {
         "name": "Dogue brasileiro"
     },
     {
         "name": "Dogue canário"
+    },
+    {
+        "name": "Dogue-de-bordéus"
+    },
+    {
+        "name": "Dálmata"
     },
     {
         "name": "English White terrier"
@@ -171,6 +183,12 @@ export const dogBreeds: Breed[] =  [
     },
     {
         "name": "Koolie"
+    },
+    {
+        "name": "Labrador retriever"
+    },
+    {
+        "name": "Laika da Yakutia"
     },
     {
         "name": "Lancashire heeler"
@@ -200,10 +218,25 @@ export const dogBreeds: Breed[] =  [
         "name": "Pachón navarro"
     },
     {
-        "name": "Pastor-alemão"
+        "name": "Pastor Belga Groenendael"
     },
     {
         "name": "Pastor americano miniatura"
+    },
+    {
+        "name": "Pastor branco"
+    },
+    {
+        "name": "Pastor do Himalaia"
+    },
+    {
+        "name": "Pastor garafiano"
+    },
+    {
+        "name": "Pastor shiloh"
+    },
+    {
+        "name": "Pastor-alemão"
     },
     {
         "name": "Pastor-belga"
@@ -212,13 +245,13 @@ export const dogBreeds: Breed[] =  [
         "name": "Pastor-belga-malinois"
     },
     {
-        "name": "Pastor Belga Groenendael"
-    },
-    {
-        "name": "Pastor branco"
-    },
-    {
         "name": "Pastor-branco-suíço"
+    },
+    {
+        "name": "Pastor-da-geórgia"
+    },
+    {
+        "name": "Pastor-da-mantiqueira"
     },
     {
         "name": "Pastor-da-rússia-meridional"
@@ -230,52 +263,28 @@ export const dogBreeds: Breed[] =  [
         "name": "Pastor-do-cáucaso"
     },
     {
-        "name": "Pastor garafiano"
-    },
-    {
-        "name": "Pastor do Himalaia"
-    },
-    {
-        "name": "Pastor-holandês"
-    },
-    {
-        "name": "Pastor-da-mantiqueira"
-    },
-    {
-        "name": "Pastor-maremano-abruzês"
-    },
-    {
-        "name": "Cão-pastor-rei"
-    },
-    {
-        "name": "Pastor-romeno-dos-cárpatos"
-    },
-    {
-        "name": "Pastor shiloh"
-    },
-    {
-        "name": "Pastor-da-geórgia"
-    },
-    {
         "name": "Pastor-do-leste-europeu"
     },
     {
         "name": "Pastor-grego"
     },
     {
-        "name": "Patterdale Terrier"
+        "name": "Pastor-holandês"
     },
     {
-        "name": "Braco alemão de pelo curto"
+        "name": "Pastor-maremano-abruzês"
+    },
+    {
+        "name": "Pastor-romeno-dos-cárpatos"
+    },
+    {
+        "name": "Patterdale Terrier"
     },
     {
         "name": "Pinscher alemão"
     },
     {
         "name": "Pinscher miniatura"
-    },
-    {
-        "name": "American pit bull terrier"
     },
     {
         "name": "Pit Monster"
@@ -305,9 +314,6 @@ export const dogBreeds: Breed[] =  [
         "name": "Redbone Coonhound"
     },
     {
-        "name": "Labrador retriever"
-    },
-    {
         "name": "Rottweiler"
     },
     {
@@ -318,9 +324,6 @@ export const dogBreeds: Breed[] =  [
     },
     {
         "name": "Samoieda"
-    },
-    {
-        "name": "São-bernardo"
     },
     {
         "name": "Shih-tzu"
@@ -335,13 +338,13 @@ export const dogBreeds: Breed[] =  [
         "name": "Staffordshire bull terrier"
     },
     {
+        "name": "São-bernardo"
+    },
+    {
         "name": "Terrier"
     },
     {
         "name": "Terrier brasileiro"
-    },
-    {
-        "name": "West highland white terrier"
     },
     {
         "name": "Tosa"
@@ -350,12 +353,15 @@ export const dogBreeds: Breed[] =  [
         "name": "Weimaraner"
     },
     {
-        "name": "Working Pit Bulldog"
+        "name": "West highland white terrier"
     },
     {
-        "name": "Laika da Yakutia"
+        "name": "Working Pit Bulldog"
     },
     {
         "name": "Zwergspitz"
     }
 ]
+
+
+
