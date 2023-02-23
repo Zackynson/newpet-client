@@ -42,6 +42,9 @@ export default function App({
   useEffect(() => {
     const handleStart = (url: string) => {
       console.log(`Loading: ${url}`)
+      NProgress.configure({
+        showSpinner:false,
+      })
       NProgress.start()
     }
 

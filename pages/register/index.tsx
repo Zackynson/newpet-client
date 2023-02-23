@@ -330,7 +330,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (session) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/pets',
         permanent: false,
       },
     }
