@@ -13,7 +13,7 @@ import {
   CardHeader,
 } from '@chakra-ui/react'
 
-import fallbackimage from '@public/assets/fallback.png'
+import fallbackimage from '@public/assets/no-image.png'
 
 const PetCard = ({ pet }: { pet: Pet }) => {
   return (
