@@ -71,13 +71,13 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
         colorScheme={'whatsapp'}
         color={'white'}
       >
-        <Text>Exibir contato do responsável</Text>
+        <Text>Show owner info</Text>
       </Button>
 
       <Modal isOpen={isOpen} size="sm" onClose={onClose}>
         <ModalOverlay backdropFilter="blur(8px)" />
         <ModalContent>
-          <ModalHeader>Responsável</ModalHeader>
+          <ModalHeader>Owner</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack
@@ -102,7 +102,7 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                   <LinkBox>
                     <a
                       target={'_blank'}
-                      aria-label="Conversar no whatsapp"
+                      aria-label="Chat on whatsapp"
                       href={`https://api.whatsapp.com/send/?phone=55${owner.phone}`}
                       rel="noreferrer"
                     >
@@ -113,7 +113,7 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                         color={'white'}
                         rightIcon={<AiOutlineWhatsApp />}
                       >
-                        Chamar no whatsapp
+                        Chat on whatsapp
                       </Button>
                     </a>
                   </LinkBox>
@@ -124,7 +124,7 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                   <LinkBox>
                     <a
                       target={'_blank'}
-                      aria-label="Conversar por email"
+                      aria-label="Send an email"
                       href={`mailto:${owner.email}`}
                       rel="noreferrer"
                     >
@@ -133,7 +133,7 @@ const OwnerInfo = ({ ownerId }: { ownerId?: string }) => {
                         colorScheme={'blue'}
                         rightIcon={<AiOutlineMail />}
                       >
-                        Conversar por email
+                        Send an email
                       </Button>
                     </a>
                   </LinkBox>

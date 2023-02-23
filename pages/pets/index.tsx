@@ -84,7 +84,7 @@ function Pets() {
             <VStack p={5} gap={2} align={'start'} divider={<StackDivider />}>
               {/* type*/}
               <Box>
-                <Text>Tipo</Text>
+                <Text>Type</Text>
                 <RadioGroup
                   name="type"
                   onChange={(e) => {
@@ -96,16 +96,16 @@ function Pets() {
                   defaultValue={undefined}
                 >
                   <VStack ml={2} mt={2} align={'start'}>
-                    <Radio value="">Qualquer</Radio>
-                    <Radio value="dog">Cão</Radio>
-                    <Radio value="cat">Gato</Radio>
+                    <Radio value="">Any</Radio>
+                    <Radio value="dog">Dog</Radio>
+                    <Radio value="cat">Cat</Radio>
                   </VStack>
                 </RadioGroup>
               </Box>
 
               {/* size*/}
               <Box>
-                <Text>Porte</Text>
+                <Text>Size</Text>
                 <RadioGroup
                   name="size"
                   defaultValue={undefined}
@@ -117,17 +117,17 @@ function Pets() {
                   }}
                 >
                   <VStack ml={2} mt={2} align={'start'}>
-                    <Radio value={''}>Qualquer</Radio>
-                    <Radio value={PetSize.SMALL}>Pequeno</Radio>
-                    <Radio value={PetSize.MEDIUM}>Médio</Radio>
-                    <Radio value={PetSize.BIG}>Grande</Radio>
+                    <Radio value={''}>Any</Radio>
+                    <Radio value={PetSize.SMALL}>Small</Radio>
+                    <Radio value={PetSize.MEDIUM}>Medium</Radio>
+                    <Radio value={PetSize.BIG}>Big</Radio>
                   </VStack>
                 </RadioGroup>
               </Box>
 
               {/* gender */}
               <Box>
-                <Text>Genero</Text>
+                <Text>Gender</Text>
                 <RadioGroup
                   defaultValue={undefined}
                   onChange={(e) => {
@@ -138,9 +138,9 @@ function Pets() {
                   }}
                 >
                   <VStack ml={2} mt={2} align={'start'}>
-                    <Radio value={''}>Qualquer</Radio>
-                    <Radio value={'male'}>Macho</Radio>
-                    <Radio value={'female'}>Fêmea</Radio>
+                    <Radio value={''}>Any</Radio>
+                    <Radio value={'male'}>Male</Radio>
+                    <Radio value={'female'}>Female</Radio>
                   </VStack>
                 </RadioGroup>
               </Box>

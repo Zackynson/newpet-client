@@ -108,7 +108,7 @@ export function AuthProvider({ children }: { children: any }) {
         else console.log(router.asPath)
       } catch (error: any) {
         if (error?.response?.status === 401) {
-          toast.error('e-mail ou senha inválidos')
+          toast.error('invalid email or password')
         }
         console.error(error)
       }

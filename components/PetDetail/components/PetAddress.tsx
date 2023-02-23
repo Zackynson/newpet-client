@@ -6,7 +6,7 @@ const PetAddress = ({ pet }: { pet: Pet }) => {
   return (
     <VStack align={'start'} w={'full'}>
       <Heading textAlign={'start'} size={'md'} my={4}>
-        Endereço onde se encontra
+        Where to find {pet.gender === 'male' ? 'him' : 'her'}
       </Heading>
       <iframe
         width="100%"

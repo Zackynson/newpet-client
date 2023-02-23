@@ -39,7 +39,7 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
   return (
     <VStack divider={<StackDivider></StackDivider>} align={'start'} w={'full'}>
       <Flex alignSelf={'stretch'} flex={1} justify="space-between">
-        <Heading> Informações</Heading>
+        <Heading> Information</Heading>
         {pet?.ownerId === session?.user?.id ? (
           <Link href={'/pets/' + pet?._id + '/update'}>
             <Button
@@ -48,7 +48,7 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
               colorScheme={'purple'}
               bg={'purple.500'}
             >
-              Editar
+              Edit
             </Button>
           </Link>
         ) : (
@@ -63,22 +63,22 @@ export const PetInfo = ({ pet }: { pet: Pet }) => {
         mt={4}
       >
         <Text>
-          Nome: <strong> {pet.name}</strong>
+          Name: <strong> {pet.name}</strong>
         </Text>
         <Text>
-          Especie: <strong> {pet.type === 'cat' ? 'gato' : 'cachorro'}</strong>
+          Species: <strong> {pet.type}</strong>
         </Text>
         <Text>
-          Raça: <strong> {pet.breed} </strong>
+          Breed: <strong> {pet.breed} </strong>
         </Text>
         <Text>
-          Idade: <strong> {parseAge(pet.age)} </strong>
+          Age: <strong> {pet.age} </strong>
         </Text>
         <Text>
-          Porte: <strong> {parsePetSize(pet.size as PetSize)} </strong>
+          Size: <strong> {pet.size} </strong>
         </Text>
         <Text>
-          Cadastrado em:{' '}
+          Last update at:{' '}
           <strong>
             {Intl.DateTimeFormat('pt-br').format(
               moment(pet.updatedAt || pet.createdAt, 'YYYYMMDD').toDate(),

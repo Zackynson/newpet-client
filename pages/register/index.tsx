@@ -190,7 +190,7 @@ export default function Register() {
                 </Box>
                 <Box w={'200px'} pb={4}>
                   <FormLabel htmlFor="phone" placeholder="(12) 12345-1234">
-                    DDD + Telefone
+                    whatsapp
                   </FormLabel>
 
                   <Input
@@ -213,14 +213,14 @@ export default function Register() {
                   />
                 </Box>
                 <Box w={'200px'} pb={4}>
-                  <FormLabel htmlFor="password">senha</FormLabel>
+                  <FormLabel htmlFor="password">password</FormLabel>
                   <InputGroup size="sm">
                     <Input
                       {...register('password', {
                         required: 'Campo obrigatório',
                         minLength: {
                           value: 8,
-                          message: 'A senha deve conter no minimo 8 letras',
+                          message: 'Password must have at least 8 characters',
                         },
                       })}
                       name="password"
@@ -253,7 +253,7 @@ export default function Register() {
                 </Box>
                 <Box w={'200px'} pb={4}>
                   <FormLabel htmlFor="confirmPassword">
-                    confirmação de senha
+                    password confirmation
                   </FormLabel>
                   <InputGroup size="sm">
                     <Input
@@ -262,7 +262,7 @@ export default function Register() {
                         minLength: 8,
                         validate: (value) =>
                           value === getValues('password') ||
-                          'Senha e confirmação de senha devem ser iguais',
+                          'Password and Confirmation must be the same',
                       })}
                       name="confirmPassword"
                       pr="2.5rem"
@@ -303,16 +303,16 @@ export default function Register() {
                     h={6}
                     mt={'3'}
                   >
-                    Entrar
+                    Register
                   </Button>
                   <small style={{ textAlign: 'center', marginTop: 10 }}>
-                    Já possui uma conta?
+                    Already have an account?
                   </small>
                   <Link
                     href="/login"
                     style={{ textAlign: 'center', marginTop: 10 }}
                   >
-                    Faça login
+                    Log in
                   </Link>
                 </>
               </VStack>

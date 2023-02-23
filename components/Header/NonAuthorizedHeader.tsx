@@ -32,8 +32,8 @@ export default function Nav() {
                 onClick={toggleColorMode}
                 title={
                   colorMode === 'light'
-                    ? 'Alterar para tema escuro'
-                    : 'Alterar para tema claro'
+                    ? 'Use dark theme'
+                    : 'Use light theme'
                 }
               >
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}

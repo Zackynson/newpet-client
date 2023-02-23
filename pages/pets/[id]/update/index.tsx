@@ -227,7 +227,7 @@ function UpdatePetPage() {
       <Container minH={'80vh'} mt={8} maxW="container.lg" color="#262626">
         <Card>
           <CardHeader>
-            <Heading>Atualizar cadastro de pet</Heading>
+            <Heading>Update pet info</Heading>
           </CardHeader>
           <CardBody>
             {loading ? (
@@ -235,20 +235,20 @@ function UpdatePetPage() {
             ) : (
               <form onSubmit={handleSubmit(updatePet)}>
                 <FormControl isInvalid={!!errors.name}>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <Input
                     {...register('name', { required: true })}
                     type="text"
                     name="name"
                   />
                   {!!errors.name ? (
-                    <FormErrorMessage>Informe o nome.</FormErrorMessage>
+                    <FormErrorMessage>Name is required.</FormErrorMessage>
                   ) : (
                     <></>
                   )}
                 </FormControl>
                 <FormControl mt={4} isInvalid={!!errors.type}>
-                  <FormLabel>Tipo</FormLabel>
+                  <FormLabel>Type</FormLabel>
                   <RadioGroup
                     onChange={(value) => setAnimalType(value)}
                     name="type"
@@ -260,20 +260,20 @@ function UpdatePetPage() {
                         {...register('type', { required: true })}
                         value="cat"
                       >
-                        Gato
+                        Cat
                       </Radio>
                       <Radio
                         {...register('type', { required: true })}
                         value="dog"
                       >
-                        Cão
+                        Dog
                       </Radio>
                     </Stack>
                   </RadioGroup>
                 </FormControl>
 
                 <FormControl mt={4} isInvalid={!!errors.gender}>
-                  <FormLabel>Genero</FormLabel>
+                  <FormLabel>Gender</FormLabel>
                   <RadioGroup
                     onChange={(value) => setAnimalType(value)}
                     name="gender"
@@ -285,20 +285,20 @@ function UpdatePetPage() {
                         {...register('gender', { required: true })}
                         value="male"
                       >
-                        Macho
+                        Male
                       </Radio>
                       <Radio
                         {...register('gender', { required: true })}
                         value="female"
                       >
-                        Femea
+                        Female
                       </Radio>
                     </Stack>
                   </RadioGroup>
                 </FormControl>
 
                 <FormControl mt={4} isInvalid={!!errors.age}>
-                  <FormLabel>Idade</FormLabel>
+                  <FormLabel>Age</FormLabel>
                   <RadioGroup
                     onChange={(value) => setAnimalType(value)}
                     name="age"
@@ -310,19 +310,19 @@ function UpdatePetPage() {
                         {...register('age', { required: true })}
                         value={PetAge.PUPPY}
                       >
-                        Filhote
+                        Puppy
                       </Radio>
                       <Radio
                         {...register('age', { required: true })}
                         value={PetAge.YOUNG}
                       >
-                        Jovem
+                        Young
                       </Radio>
                       <Radio
                         {...register('age', { required: true })}
                         value={PetAge.ADULT}
                       >
-                        Adulto
+                        Adult
                       </Radio>
                       <Radio
                         {...register('age', { required: true })}
@@ -335,7 +335,7 @@ function UpdatePetPage() {
                 </FormControl>
 
                 <FormControl mt={4} isInvalid={!!errors.size}>
-                  <FormLabel>Porte</FormLabel>
+                  <FormLabel>Size</FormLabel>
                   <RadioGroup
                     onChange={(value) => setAnimalType(value)}
                     name="size"
@@ -347,29 +347,29 @@ function UpdatePetPage() {
                         {...register('size', { required: true })}
                         value={PetSize.SMALL}
                       >
-                        Pequeno
+                        Small
                       </Radio>
                       <Radio
                         {...register('size', { required: true })}
                         value={PetSize.MEDIUM}
                       >
-                        Médio
+                        Medium
                       </Radio>
                       <Radio
-                        {...register('age', { required: true })}
+                        {...register('size', { required: true })}
                         value={PetSize.BIG}
                       >
-                        Grande
+                        Big
                       </Radio>
                     </Stack>
                   </RadioGroup>
                 </FormControl>
 
                 <FormControl mt={4} isInvalid={!!errors.breed}>
-                  <FormLabel>Raça</FormLabel>
+                  <FormLabel>Breed</FormLabel>
 
                   <Select
-                    placeholder="Selecione a raça"
+                    placeholder="Select the breed"
                     {...register('breed', { required: true })}
                     name="breed"
                     defaultValue={pet?.breed}
@@ -383,14 +383,14 @@ function UpdatePetPage() {
 
                   {!!errors.breed ? (
                     <FormErrorMessage>
-                      Por favor selecione um item
+                      Please select an item from the list
                     </FormErrorMessage>
                   ) : (
                     <></>
                   )}
                 </FormControl>
 
-                <FormLabel mt={4}>Endereço onde ele está</FormLabel>
+                <FormLabel mt={4}>Address</FormLabel>
                 <GooglePlacesAutocomplete
                   apiKey="AIzaSyBeAhriPkltT2Z0Pg--4Z5Sm7U7PWLjBAs"
                   selectProps={{
@@ -398,7 +398,7 @@ function UpdatePetPage() {
                     onChange: setAddressInfo,
                   }}
                 />
-                <FormLabel mt={10}>Adicionar imagens</FormLabel>
+                <FormLabel mt={10}>Add images</FormLabel>
 
                 <ReactImageUploading
                   multiple
@@ -466,7 +466,7 @@ function UpdatePetPage() {
                                 colorScheme="red"
                                 onClick={() => onRemoveUploadedImages(image)}
                               >
-                                Remover
+                                Remove
                               </Button>
                             </Box>
                           </Flex>
@@ -499,7 +499,7 @@ function UpdatePetPage() {
                                 colorScheme="red"
                                 onClick={() => onImageRemove(index)}
                               >
-                                Remover
+                                Remove
                               </Button>
                             </Box>
                           </Flex>
@@ -507,13 +507,13 @@ function UpdatePetPage() {
 
                         <Button
                           type="button"
-                          style={isDragging ? { color: 'red' } : undefined}
+                          style={isDragging ? { color: 'green' } : undefined}
                           onClick={onImageUpload}
                           {...dragProps}
                           h={40}
                           w={60}
                         >
-                          Clique ou arraste até aqui
+                          Click or drag here
                         </Button>
                       </Grid>
                     </Box>
@@ -526,7 +526,7 @@ function UpdatePetPage() {
                   colorScheme="purple"
                   type="submit"
                 >
-                  Atualizar
+                  Update info
                 </Button>
               </form>
             )}

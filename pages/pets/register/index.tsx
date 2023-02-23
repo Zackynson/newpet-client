@@ -23,8 +23,6 @@ import { useForm } from 'react-hook-form'
 import { Breed } from 'types/BreedList'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { SingleDatepicker } from 'chakra-dayzed-datepicker'
-import moment from 'moment'
 import { dogBreeds } from '@libs/pets/dog-breeds'
 import { catBreeds } from '@libs/pets/cat-breeds'
 import GooglePlacesAutocomplete from 'chakra-ui-google-places-autocomplete'
@@ -81,9 +79,9 @@ function RegisterPetPage() {
             },
           ),
           {
-            success: 'Pet cadastrado com sucesso',
-            pending: 'Cadastrando seu pet',
-            error: 'Ocorreu um erro ao cadastrar seu pet',
+            success: 'Pet registered',
+            pending: 'Registering your pet',
+            error: 'An error occoured while registering your pet',
           },
         )
 
@@ -100,7 +98,7 @@ function RegisterPetPage() {
   return (
     <>
       <Head>
-        <title>NEWPET | CADASTRAR PET</title>
+        <title>NEWPET | PET REGISTRATION </title>
         <meta
           name="description"
           content="O melhor app de adoção de animais do Brasil"
@@ -112,25 +110,25 @@ function RegisterPetPage() {
       <Container my={8} maxW="container.lg" color="#262626">
         <Card>
           <CardHeader>
-            <Heading>Cadastro de pet</Heading>
+            <Heading>Pet registration</Heading>
           </CardHeader>
           <CardBody>
             <form onSubmit={handleSubmit(createPet)}>
               <FormControl isInvalid={!!errors.name}>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <Input
                   {...register('name', { required: true })}
                   type="text"
                   name="name"
                 />
                 {!!errors.name ? (
-                  <FormErrorMessage>Informe o nome.</FormErrorMessage>
+                  <FormErrorMessage>Name is required</FormErrorMessage>
                 ) : (
                   <></>
                 )}
               </FormControl>
               <FormControl mt={4} isInvalid={!!errors.type}>
-                <FormLabel>Tipo</FormLabel>
+                <FormLabel>Type</FormLabel>
                 <RadioGroup
                   onChange={(value) => setAnimalType(value)}
                   name="type"
@@ -142,20 +140,20 @@ function RegisterPetPage() {
                       {...register('type', { required: true })}
                       value="cat"
                     >
-                      Gato
+                      Cat
                     </Radio>
                     <Radio
                       {...register('type', { required: true })}
                       value="dog"
                     >
-                      Cão
+                      Dog
                     </Radio>
                   </Stack>
                 </RadioGroup>
               </FormControl>
 
               <FormControl mt={4} isInvalid={!!errors.gender}>
-                <FormLabel>Genero</FormLabel>
+                <FormLabel>Gender</FormLabel>
                 <RadioGroup
                   onChange={(value) => setAnimalType(value)}
                   name="gender"
@@ -167,20 +165,20 @@ function RegisterPetPage() {
                       {...register('gender', { required: true })}
                       value="male"
                     >
-                      Macho
+                      Male
                     </Radio>
                     <Radio
                       {...register('gender', { required: true })}
                       value="female"
                     >
-                      Femea
+                      Female
                     </Radio>
                   </Stack>
                 </RadioGroup>
               </FormControl>
 
               <FormControl mt={4} isInvalid={!!errors.age}>
-                <FormLabel>Idade</FormLabel>
+                <FormLabel>Age</FormLabel>
                 <RadioGroup
                   onChange={(value) => setAnimalType(value)}
                   name="age"
@@ -192,19 +190,19 @@ function RegisterPetPage() {
                       {...register('age', { required: true })}
                       value={PetAge.PUPPY}
                     >
-                      Filhote
+                      Puppy
                     </Radio>
                     <Radio
                       {...register('age', { required: true })}
                       value={PetAge.YOUNG}
                     >
-                      Jovem
+                      Young
                     </Radio>
                     <Radio
                       {...register('age', { required: true })}
                       value={PetAge.ADULT}
                     >
-                      Adulto
+                      Adult
                     </Radio>
                     <Radio
                       {...register('age', { required: true })}
@@ -217,7 +215,7 @@ function RegisterPetPage() {
               </FormControl>
 
               <FormControl mt={4} isInvalid={!!errors.size}>
-                <FormLabel>Porte</FormLabel>
+                <FormLabel>Size</FormLabel>
                 <RadioGroup
                   onChange={(value) => setAnimalType(value)}
                   name="size"
@@ -229,29 +227,29 @@ function RegisterPetPage() {
                       {...register('size', { required: true })}
                       value={PetSize.SMALL}
                     >
-                      Pequeno
+                      Small
                     </Radio>
                     <Radio
                       {...register('size', { required: true })}
                       value={PetSize.MEDIUM}
                     >
-                      Médio
+                      Medium
                     </Radio>
                     <Radio
-                      {...register('age', { required: true })}
+                      {...register('size', { required: true })}
                       value={PetSize.BIG}
                     >
-                      Grande
+                      Big
                     </Radio>
                   </Stack>
                 </RadioGroup>
               </FormControl>
 
               <FormControl mt={4} isInvalid={!!errors.breed}>
-                <FormLabel>Raça</FormLabel>
+                <FormLabel>Breed</FormLabel>
 
                 <Select
-                  placeholder="Selecione a raça"
+                  placeholder="Select the breed"
                   {...register('breed', { required: true })}
                   name="breed"
                 >
@@ -264,14 +262,14 @@ function RegisterPetPage() {
 
                 {!!errors.breed ? (
                   <FormErrorMessage>
-                    Por favor selecione um item
+                    Please select an item from the list
                   </FormErrorMessage>
                 ) : (
                   <></>
                 )}
               </FormControl>
 
-              <FormLabel mt={4}>Endereço onde ele está</FormLabel>
+              <FormLabel mt={4}>Address</FormLabel>
               <GooglePlacesAutocomplete
                 apiKey="AIzaSyBeAhriPkltT2Z0Pg--4Z5Sm7U7PWLjBAs"
                 selectProps={{
@@ -285,7 +283,7 @@ function RegisterPetPage() {
                 colorScheme="purple"
                 type="submit"
               >
-                Cadastrar
+                Register
               </Button>
             </form>
           </CardBody>

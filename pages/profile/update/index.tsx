@@ -60,9 +60,9 @@ const UpdateUser = () => {
           },
         ),
         {
-          error: 'Erro ao atualizar informações',
-          success: 'Informações atualizadas com sucesso',
-          pending: 'Atualizando informações...',
+          error: 'Error while updating',
+          success: 'Information updated',
+          pending: 'Updating...',
         },
       )
 
@@ -81,9 +81,9 @@ const UpdateUser = () => {
             },
           ),
           {
-            error: 'Erro ao atualizar Imagem',
-            success: 'Imagem atualizada com sucesso',
-            pending: 'Atualizando Imagem...',
+            error: 'Error while uploading image',
+            success: 'Image uploaded',
+            pending: 'Uploading image...',
           },
         )
       }
@@ -96,12 +96,12 @@ const UpdateUser = () => {
   )
 
   return (
-    <Container h={'100%'} py={10} maxW="container.lg">
+    <Container h={'87vh'} py={10} maxW="container.lg">
       <Center h={'100%'}>
         <VStack flex={'1'}>
           <Card flex={1} w="lg">
             <CardHeader textAlign={'center'}>
-              <Heading>Editar perfil</Heading>
+              <Heading>Edit your profile</Heading>
             </CardHeader>
             <CardBody>
               <form onSubmit={handleSubmit(updateProfilePicture)}>
@@ -190,7 +190,7 @@ const UpdateUser = () => {
                       defaultValue={session?.user?.name}
                       {...register('name')}
                     >
-                      <FormLabel htmlFor="name">Nome:</FormLabel>
+                      <FormLabel htmlFor="name">Name:</FormLabel>
                       <Input name="name" defaultValue={session?.user?.name} />
                     </FormControl>
                     <FormControl
@@ -205,7 +205,7 @@ const UpdateUser = () => {
 
                 <CardFooter>
                   <Button colorScheme={'purple'} type="submit" w={'lg'}>
-                    Salvar
+                    Save
                   </Button>
                 </CardFooter>
               </form>

@@ -108,7 +108,7 @@ function UserPage() {
                       textAlign={{ base: 'center' }}
                     >
                       <FormLabel>
-                        nome: <strong>{session?.user?.name}</strong>
+                        Name: <strong>{session?.user?.name}</strong>
                       </FormLabel>
 
                       <FormLabel>
@@ -127,7 +127,7 @@ function UserPage() {
                             w={'xs'}
                             colorScheme={'purple'}
                           >
-                            Editar
+                            Edit
                           </Button>
                         </Link>
                       </LinkBox>
@@ -135,7 +135,7 @@ function UserPage() {
                   </Flex>
                 </Box>
                 <Box>
-                  <Heading mt={5}>Seus pets</Heading>
+                  <Heading mt={5}>Your pets</Heading>
 
                   {userPets.length ? (
                     <>
@@ -158,12 +158,12 @@ function UserPage() {
                   ) : (
                     <VStack mt={10}>
                       <Heading size={'md'} textAlign={'center'}>
-                        Você ainda não cadastrou nenhum pet
+                        You do not have any registered pet pet
                       </Heading>
 
                       <Link href="/pets/register">
                         <Button variant={'link'} colorScheme="blue">
-                          Cadastre agora
+                          Register now
                         </Button>
                       </Link>
                     </VStack>

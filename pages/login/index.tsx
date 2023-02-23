@@ -63,13 +63,13 @@ export default function Home() {
       })
 
       if (res?.ok) {
-        toast.success('Autenticado com sucesso')
+        toast.success('Successfuly authenticated')
         router.push('/pets')
       }
 
       if (res?.error) {
         if (res.status === 401) {
-          toast.error('Email ou senha inválidos')
+          toast.error('Invalid email or password')
         }
       }
 
@@ -148,7 +148,7 @@ export default function Home() {
                       size={'sm'}
                       htmlFor="password"
                     >
-                      senha
+                      password
                     </FormLabel>
                     <InputGroup size="sm">
                       <Input
@@ -197,10 +197,10 @@ export default function Home() {
                   Entrar
                 </Button>
                 <Text as="small" textAlign={'center'} opacity={0.8} pt={4}>
-                  Ainda não tem uma conta?
+                  Need an account?
                 </Text>
                 <Link href="/register" style={{ textAlign: 'center' }}>
-                  Crie uma agora
+                  Create one right now
                 </Link>
               </VStack>
             </FormControl>
@@ -220,8 +220,7 @@ export default function Home() {
                 alt="bulldog sitting with a blue background"
               />
               <Text color={'white'} position={'absolute'} top={'20'}>
-                Chegou a hora de encontrar seu novo pet <br></br> com o melhor
-                app de adoção de animais do Brasil
+                Time to find your new pet<br></br> with the best adoption app in brazil
               </Text>
             </Box>
           </HStack>

@@ -31,8 +31,8 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { signOut, useSession } from 'next-auth/react'
 
 const Links = [
-  { label: 'Procurar', uri: '/pets' },
-  { label: 'Cadastrar', uri: '/pets/register' },
+  { label: 'Search', uri: '/pets' },
+  { label: 'Register', uri: '/pets/register' },
 ]
 
 const NavLink = ({
@@ -138,7 +138,7 @@ export default function Nav() {
                   <MenuDivider />
                   <MenuItem onClick={toggleColorMode}>
                     <Flex align={'center'} justify="space-between" w="100%">
-                      <Text>Tema</Text>
+                      <Text>Theme</Text>
                       {colorMode === 'dark' ? (
                         <MoonIcon color={'purple.400'} />
                       ) : (
@@ -148,7 +148,7 @@ export default function Nav() {
                   </MenuItem>
                   <LinkBox>
                     <NextLink href="/profile" title="Perfil">
-                      <MenuItem>Seu perfil</MenuItem>
+                      <MenuItem>Your profile</MenuItem>
                     </NextLink>
                   </LinkBox>
 
